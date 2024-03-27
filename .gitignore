@@ -1,0 +1,8 @@
+node_modules
+
+# vs folder
+**/.vscode/
+
+**/.DS_Store
+
+

@@ -1,0 +1,12 @@
+{
+  "name": "wr-earthquakes",
+  "version": "1.0.0",
+  "description": "prepare the earthquake dataset",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "author": "Carlos León",
+  "license": "ISC",
+  "type": "module"
+}
