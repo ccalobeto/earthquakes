@@ -1,7 +1,6 @@
 import { polygonContains } from 'https://cdn.jsdelivr.net/npm/d3-polygon@3.0.1/+esm'
 import turfdistance from 'https://cdn.jsdelivr.net/npm/@turf/distance@6.5.0/+esm'
 
-import turfhelpers from 'https://cdn.jsdelivr.net/npm/@turf/helpers@6.5.0/+esm'
 
 export function capitalizeWords(str) {
   // str is a string with uppercase by default
@@ -39,9 +38,8 @@ export function closestLocation(target, data) {
   let closestFeature = null
 
   // Iterate over each feature and calculate the closest distance to the two coordinates
-  var point = turfhelpers.point([-75.343, 39.984]);
   data.features.forEach(feature => {
-    const distance = turfdistance(point, feature, { units: 'kilometers' })
+    const distance = turfdistance(target, feature, { units: 'kilometers' })
     closestFeature = closestDistance < distance ? closestFeature : feature
     closestDistance = Math.min(closestDistance, distance)
   })

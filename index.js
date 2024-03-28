@@ -1,11 +1,12 @@
 import { csv, json } from 'https://cdn.skypack.dev/d3-fetch@3'
 import { timeParse } from "https://cdn.skypack.dev/d3-time-format@4"
+import { format } from 'https://cdn.jsdelivr.net/npm/d3-format@3.1.0/+esm'
 import { geoCentroid } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'
 import * as topojson from 'https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm'
 import rewind from 'https://cdn.jsdelivr.net/npm/@turf/rewind@6.5.0/+esm'
-import { getCountyId, closestLocation, capitalizeWords } from './src/calculations.js'
+import { getCountyId, closestLocation, capitalizeWords, getPropertyName } from './src/calculations.js'
 
-
+const formatNumber = format(".1f")
 const pathInst = "./data/IGP_datos_sismicos.csv"
 const pathHist = "./data/IGP_datos_sismicos-historical.csv"
 
@@ -102,7 +103,7 @@ const rawData = rawDataHist.concat(rawDataInst).map(d => ({
     : closestLocation(d.geometry.coordinates, coastCentroids).id,
   distanceFromCoast: !!getCountyId(districts.features, d.geometry.coordinates)
     ? 0
-    : + format(closestLocation(d.geometry.coordinates, coastCentroids).distance),
+    : + formatNumber(closestLocation(d.geometry.coordinates, coastCentroids).distance),
 })).map(d => ({
   ...d,
   department: capitalizeWords(getPropertyName(d.id.slice(0, 2), departments.features)),
@@ -111,10 +112,33 @@ const rawData = rawDataHist.concat(rawDataInst).map(d => ({
     : NaN,
 }))
 
-console.log(rawDataInst)
-console.log(rawDataHist)
-console.log('districts: ', districts)
-console.log('centroids: ', districtCentroids(districts))
-console.log('coastCentroids: ', coastCentroids)
 
-console.log('rawData: ', rawData)
+// console.log('rawData: ', rawData)
+
+// export the data
+const data = rawData.map(d => ({
+  ...d,
+  lon: d.geometry.coordinates[0],
+  lat: d.geometry.coordinates[1],
+}))
+
+const titleKeys = Object.keys(data[0])
+const refinedData = []
+refinedData.push(titleKeys)
+data.forEach(item => {
+  refinedData.push(Object.values(item))
+})
+
+let csvContent = ''
+refinedData.forEach(row => {
+  csvContent += row.join(',') + '\n'
+})
+
+const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8,' })
+const objUrl = URL.createObjectURL(blob)
+const link = document.createElement('a')
+link.setAttribute('href', objUrl)
+link.setAttribute('download', 'output.csv')
+link.textContent = 'Click to Download'
+
+document.querySelector('body').append(link)
