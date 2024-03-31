@@ -191,13 +191,13 @@ export function circleLegend (data, {
 } = {}) {
   svg.selectAll('g').remove()
   const maxData = max(data)
-  const sel = svg.append('g')
+  const legend = svg.append('g')
     .attr('class', 'cl-wrap')
     // push down to radius of largest circle
     .attr('transform', 'translate(0,' + scale(maxData) + ')')
 
   // set the title legend
-  sel
+  legend
     .append('text')
     .text(height)
     .attr('transform', 'translate(20, -90)') // `translate(0, -90)`
@@ -206,7 +206,8 @@ export function circleLegend (data, {
     .style('font-size', fontSize)
 
   // append the values for circles
-  sel.append('g')
+  legend
+    .append('g')
     .attr('class', 'cl-circle-wrap')
     // .attr('transform', 'translate(200, 200')
     .selectAll('circle')
@@ -221,7 +222,8 @@ export function circleLegend (data, {
     .style('opacity', 0.8)
 
   // append some lines based on values
-  sel.append('g')
+  legend
+    .append('g')
     .attr('class', 'cl-line-wrap')
     .selectAll('line')
     .data(data)
@@ -234,7 +236,8 @@ export function circleLegend (data, {
     .style('stroke-dasharray', ('2,2'))
 
   // append some labels from values
-  sel.append('g')
+  legend
+    .append('g')
     .attr('class', 'cl-text-wrap')
     .selectAll('text')
     .data(data)
@@ -247,5 +250,5 @@ export function circleLegend (data, {
     .style('font-size', fontSize)
     .text(d => d + suffix)
 
-  return sel.node()
+  return legend.node()
 }

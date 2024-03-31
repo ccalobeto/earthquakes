@@ -1,6 +1,5 @@
 import { geoPath } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'
 import { format } from 'https://cdn.jsdelivr.net/npm/d3-format@3.1.0/+esm'
-// import { selectAll } from 'https://cdn.jsdelivr.net/npm/d3-selection@3.0.0/+esm'
 
 export function mapChart (data, {
   svg,
@@ -17,16 +16,13 @@ export function mapChart (data, {
   const formatted = format('.1f')
   const path = geoPath(projection)
 
-  /* const svg = d3.create('svg')
-    .attr('viewBox', `0, 0, ${width}, ${height}`) */
-
   // add map
-  const innerChart = svg
-    .append('g')
-    .attr('transform', 'translate(0, 0)')
-    .attr('class', 'map')
+  // const innerChart = svg
+  //   .append('g')
+  //   .attr('transform', 'translate(0, 0)')
+  //   .attr('class', 'map')
 
-  innerChart
+  svg
     .append('g')
     .attr('class', 'map-features')
     .selectAll('path')
@@ -35,7 +31,7 @@ export function mapChart (data, {
     .attr('d', path)
     .attr('fill', '#ddd')
 
-  innerChart
+  svg
     .append('g')
     .attr('class', 'map-borders')
     .selectAll('path')
@@ -49,7 +45,7 @@ export function mapChart (data, {
     .attr('pointer-events', 'none')
 
   // Add data
-  const circleG = innerChart
+  const circleG = svg
     .append('g')
     .attr('class', 'map-data')
     .selectAll(null)
