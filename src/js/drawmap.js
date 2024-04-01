@@ -17,12 +17,12 @@ export function mapChart (data, {
   const path = geoPath(projection)
 
   // add map
-  // const innerChart = svg
-  //   .append('g')
-  //   .attr('transform', 'translate(0, 0)')
-  //   .attr('class', 'map')
+  const innerChart = svg
+    .append('g')
+    .attr('transform', 'translate(0, 0)')
+    .attr('class', 'map')
 
-  svg
+  innerChart
     .append('g')
     .attr('class', 'map-features')
     .selectAll('path')
@@ -31,7 +31,7 @@ export function mapChart (data, {
     .attr('d', path)
     .attr('fill', '#ddd')
 
-  svg
+  innerChart
     .append('g')
     .attr('class', 'map-borders')
     .selectAll('path')
@@ -45,7 +45,7 @@ export function mapChart (data, {
     .attr('pointer-events', 'none')
 
   // Add data
-  const circleG = svg
+  const circleG = innerChart
     .append('g')
     .attr('class', 'map-data')
     .selectAll(null)
@@ -94,5 +94,5 @@ export function mapChart (data, {
     .attr('x2', -40)
     .attr('y2', -30)
 
-  return svg.node()
+  return innerChart.node()
 }
