@@ -9,7 +9,7 @@ import { circleLegendArr, width, height, magnitude, histMagnitude, segmentation,
 import { circleLegend, barLegend } from './js/legends.js'
 
 const url = 'https://cdn.jsdelivr.net/npm/latam-atlas@0.0.4/files/peru-100k.json'
-const file = '../data/output.csv'
+const file = './data/output.csv'
 
 const pe = await json(url)
 const rawData = await csv(file).then(d => {
@@ -94,6 +94,6 @@ mapChart(data, {
   radiusBy: 'magnitude'
 })
 
-console.log('data: ', data)
-console.log('dataHist:', dataHist)
-console.log('svgCell:', svgCell)
+// console.log('data: ', data)
+// console.log('dataHist:', dataHist)
+// console.log('svgCell:', svgCell)
