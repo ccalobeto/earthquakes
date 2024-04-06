@@ -51,12 +51,14 @@ const depthScale = scaleThreshold()
 
 // Mw moment magnitude
 // M6 is 31.62 times M5. For visualization purpuses we took 10, related of an increase of amplitude between each scale.
-function powerScale (magnitude) {
-  const maxMagnitude = max(data, d => d.magnitude)
-  const timesPerScale = 10
+function powerScale (
+  magnitude,
+  timesPerScale = 30,
+  maxMagnitude = 10
+) {
   const maxPower = Math.pow(timesPerScale, maxMagnitude)
-  const scale = scaleSqrt().domain([0, maxPower]).range([0, maxRadius])
-  return scale(Math.pow(timesPerScale, magnitude))
+  const scaler = scaleSqrt().domain([0, maxPower]).range([0, maxRadius])
+  return scaler(Math.pow(timesPerScale, magnitude))
 }
 
 // const margin = { top: 20, right: 20, bottom: 20, left: 40 }
@@ -84,7 +86,7 @@ barLegend({ // pass in array of values (e.g. min,mean/median & max)
 
 // pass cartography and data
 mapChart(data, {
-  svg: svgCell.attr('transform', `translate(10, 10)`), // select(svgCell).select('.map')
+  svg: svgCell.attr('transform', 'translate(10, 10)'), // select(svgCell).select('.map')
   projection,
   feature: features,
   border: departments,
