@@ -61,9 +61,16 @@ function powerScale (
   return scaler(Math.pow(timesPerScale, magnitude))
 }
 
+// const margin = { top: 20, right: 20, bottom: 20, left: 40 }
+// const width = parseInt(window.getComputedStyle(etendues).width) - margin.left - margin.right
+// const svgCell = document.querySelector('#visualization')
+const svgCell = select('#visualization').append('svg')
+  .attr('viewBox', '0 0 ' + width + ' ' + height)
+  .attr('style', 'background-color:#d1e5f0')
+
 circleLegend(circleLegendArr, { // pass in array of values (e.g. min,mean/median & max)
   // overide defaults
-  svg: select('body').select('g.legend-circle').attr('transform', 'translate(0, ' + (innerHeight - 360) + ')'),
+  svg: svgCell.attr('transform', `translate(0, ${0})`), // select(svgCell).select('g.legendcl')
   domain: [0, 9],
   range: [0, 190], // 190 pixel is a 9 earthquake
   scale: powerScale,
@@ -72,7 +79,7 @@ circleLegend(circleLegendArr, { // pass in array of values (e.g. min,mean/median
 
 barLegend({ // pass in array of values (e.g. min,mean/median & max)
   // overide defaults
-  svg: select('body').select('g.legend-bar').attr('transform', 'translate(0, ' + (innerHeight + 30) + ')'),
+  svg: svgCell.attr('transform', `translate(0, ${0})`), // select(svgCell).select('g.legendbar')
   domain: segmentation.map(d => d.depth),
   range: segmentation.map(d => d.color),
   title: 'Depth (Km)'
@@ -80,7 +87,7 @@ barLegend({ // pass in array of values (e.g. min,mean/median & max)
 
 // pass cartography and data
 mapChart(data, {
-  svg: select('body').select('g.map').attr('transform', 'translate(100, 20)'),
+  svg: svgCell.attr('transform', 'translate(10, 10)'), // select(svgCell).select('.map')
   projection,
   feature: features,
   border: departments,
