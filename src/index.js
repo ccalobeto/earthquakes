@@ -5,7 +5,7 @@ import * as topojson from 'https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+e
 import { geoIdentity } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'
 import { scaleThreshold, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
 import { mapChart } from './js/drawmap.js'
-import { circleLegendArr, width, height, magnitude, histMagnitude, segmentation, maxRadius } from './js/constants.js'
+import { circleLegendArr, width, height, magnitude, histMagnitude, segmentation, maxRadius, innerWidth, innerHeight } from './js/constants.js'
 import { circleLegend, barLegend } from './js/legends.js'
 
 const url = 'https://cdn.jsdelivr.net/npm/latam-atlas@0.0.4/files/peru-100k.json'
@@ -42,7 +42,7 @@ const departments = topojson.feature(pe, pe.objects.level2)
 // const borders = topojson.mesh(pe, pe.objects.departments, (a, b) => a !== b)
 
 // return d3.geoMercator().scale(scale).translate([3/2 * scale, 30])
-const projection = geoIdentity().reflectY(true).fitSize([width, 0.65 * height], features)
+const projection = geoIdentity().reflectY(true).fitSize([innerWidth, innerHeight], features)
 
 // scales
 const depthScale = scaleThreshold()
@@ -61,24 +61,18 @@ function powerScale (
   return scaler(Math.pow(timesPerScale, magnitude))
 }
 
-// const margin = { top: 20, right: 20, bottom: 20, left: 40 }
-// const width = parseInt(window.getComputedStyle(etendues).width) - margin.left - margin.right
-// const svgCell = document.querySelector('#visualization')
-const svgCell = select('#visualization').append('svg')
-  .attr('viewBox', '0 0 ' + width + ' ' + height)
-
 circleLegend(circleLegendArr, { // pass in array of values (e.g. min,mean/median & max)
   // overide defaults
-  svg: svgCell.attr('transform', `translate(10, ${height - 210})`), // select(svgCell).select('g.legendcl')
-  domain: [0, max(circleLegendArr)],
-  range: [0, maxRadius],
+  svg: select('body').select('g.legend-circle').attr('transform', 'translate(0, ' + (innerHeight - 360) + ')'),
+  domain: [0, 9],
+  range: [0, 190], // 190 pixel is a 9 earthquake
   scale: powerScale,
-  title: 'Magnitude'
+  title: 'Magnitude (M)'
 })
 
 barLegend({ // pass in array of values (e.g. min,mean/median & max)
   // overide defaults
-  svg: svgCell.attr('transform', `translate(10, ${height - 150})`), // select(svgCell).select('g.legendbar')
+  svg: select('body').select('g.legend-bar').attr('transform', 'translate(0, ' + (innerHeight + 30) + ')'),
   domain: segmentation.map(d => d.depth),
   range: segmentation.map(d => d.color),
   title: 'Depth (Km)'
@@ -86,7 +80,7 @@ barLegend({ // pass in array of values (e.g. min,mean/median & max)
 
 // pass cartography and data
 mapChart(data, {
-  svg: svgCell.attr('transform', 'translate(10, 10)'), // select(svgCell).select('.map')
+  svg: select('body').select('g.map').attr('transform', 'translate(100, 20)'),
   projection,
   feature: features,
   border: departments,
