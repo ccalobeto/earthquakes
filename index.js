@@ -96,6 +96,7 @@ const rawDataHist = await csv(pathHist).then(d => {
 })
 
 const coastCentroids = coastDistrictCentroids(districtCentroids(districts))
+
 const rawData = rawDataHist.concat(rawDataInst).map(d => ({
   ...d,
   id: !!getCountyId(districts.features, d.geometry.coordinates)
