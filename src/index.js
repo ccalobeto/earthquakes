@@ -35,13 +35,8 @@ const data = rawData.filter(d => d.type === 'Instrumental' && d.magnitude >= mag
 const dataHist = rawData.filter(d => d.type === 'Historical' && d.magnitude >= histMagnitude)
 
 const features = topojson.feature(pe, pe.objects.level2)
-// const districts = topojson.feature(pe, pe.objects.level4)
-// const provinces = topojson.feature(pe, pe.objects.level3)
-
 const departments = topojson.feature(pe, pe.objects.level2)
-// const borders = topojson.mesh(pe, pe.objects.departments, (a, b) => a !== b)
 
-// return d3.geoMercator().scale(scale).translate([3/2 * scale, 30])
 const projection = geoIdentity().reflectY(true).fitSize([innerWidth, innerHeight], features)
 
 // scales
@@ -61,26 +56,18 @@ function powerScale (
   return scaler(Math.pow(timesPerScale, magnitude))
 }
 
-circleLegend(circleLegendArr, { // pass in array of values (e.g. min,mean/median & max)
-  // overide defaults
-  svg: select('body').select('g.legend-circle').attr('transform', 'translate(0, ' + (innerHeight - 360) + ')'),
-  domain: [0, 9],
-  range: [0, 190], // 190 pixel is a 9 earthquake
-  scale: powerScale,
-  title: 'Magnitude (M)'
-})
-
-barLegend({ // pass in array of values (e.g. min,mean/median & max)
-  // overide defaults
-  svg: select('body').select('g.legend-bar').attr('transform', 'translate(0, ' + (innerHeight + 30) + ')'),
-  domain: segmentation.map(d => d.depth),
-  range: segmentation.map(d => d.color),
-  title: 'Depth (Km)'
-})
+// document.getElementById('svg').setAttribute('viewBox', `0 0 ${width} ${height}`)
+const svgSelection = select('#visualization')
+  .append('svg')
+  .attr('viewBox', `0 0 ${innerWidth} ${innerHeight}`)
+  .attr('style', ' background-color: #d1e5f0')
 
 // pass cartography and data
 mapChart(data, {
-  svg: select('body').select('g.map').attr('transform', 'translate(100, 20)'),
+  svg: svgSelection
+    .append('g')
+    .attr('class', 'map')
+    .attr('transform', 'translate(0, 0)'),
   projection,
   feature: features,
   border: departments,
@@ -90,6 +77,28 @@ mapChart(data, {
   radiusBy: 'magnitude'
 })
 
-// console.log('data: ', data)
-// console.log('dataHist:', dataHist)
-// console.log('svgCell:', svgCell)
+circleLegend(circleLegendArr, {
+  // overide defaults
+  svg: svgSelection
+    .append('g')
+    .attr('class', 'legend-circle')
+    .attr('transform', 'translate(0, ' + (innerHeight - 340) + ')'),
+  domain: [0, 9],
+  range: [0, 190], // 190 pixel is a 9 earthquake
+  scale: powerScale,
+  title: 'Magnitude (M)'
+})
+
+barLegend({
+  // overide defaults
+  svg: svgSelection
+    .append('g')
+    .attr('class', 'legend-bar')
+    .attr('transform', 'translate(80,' + (innerHeight + 50) + ')'),
+  domain: segmentation.map(d => d.depth),
+  range: segmentation.map(d => d.color),
+  title: 'Depth (Km)'
+})
+
+console.log('height: ', height)
+console.log('innerheight: ', innerHeight)
