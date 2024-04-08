@@ -4,6 +4,7 @@
   width: 100%;
   max-width: 1200px;
 }
+
 .responsive-svg-container.small {
   margin: 0 auto;
   max-width: 300px;
@@ -14,9 +15,11 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 1.5rem;
 }
+
 #scatterplot text {
   fill: #192e4d;
 }
+
 #scatterplot line,
 #scatterplot path {
   stroke-width: 2;
@@ -27,6 +30,7 @@
   display: flex;
   flex-wrap: wrap;
 }
+
 .filter {
   margin-right: 15px;
   margin-bottom: 15px;
@@ -38,11 +42,13 @@
   cursor: pointer;
   transition: background-color 200ms ease;
 }
+
 .filter-icon,
 .filter-text {
   display: inline-block;
   vertical-align: middle;
 }
+
 .filter-icon {
   width: 30px;
   height: 30px;
@@ -50,14 +56,17 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
+
 .filter-text {
   font-size: 1.8rem;
   color: #f5f9ff;
 }
+
 .filter:hover,
 .filter.active {
   background-color: rgba(25, 46, 77, 1);
 }
+
 .filter.active {
   cursor: default;
 }
@@ -66,19 +75,31 @@
 .legend-sections {
   display: flex;
 }
+
 .legend-section {
   margin-right: 100px;
 }
+
 .legend-conservation-status ul {
   margin: 0;
   padding-left: 5px;
   list-style: none;
 }
+
 .legend-conservation-status li {
   display: flex;
   align-items: center;
   margin: 10px 0;
 }
+
 .legend-conservation-status svg {
   margin-right: 10px;
+}
+
+.footer {
+  text-align: center;
+}
+
+h3 {
+  font-weight: normal;
 }

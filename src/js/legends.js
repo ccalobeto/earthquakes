@@ -171,7 +171,7 @@ export function barLegend ({
 
   svg.append('g')
     .attr('class', 'bar-wrap')
-    .attr('transform', 'translate(5, 20)')
+    .attr('transform', 'translate(5, 0)')
     .append(() => theLegend)
 
   return svg.node()
@@ -194,7 +194,7 @@ export function circleLegend (data, {
   const legend = svg.append('g')
     .attr('class', 'cl-wrap')
     // push down to radius of largest circle
-    .attr('transform', 'translate(0, 20)')
+    .attr('transform', 'translate(0, 0)')
 
   // set the title legend
   legend
