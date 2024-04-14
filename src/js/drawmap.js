@@ -11,7 +11,9 @@ export function mapChart (data, {
   radiusScale,
   radiusBy,
   thresholdBigMagnitude = 8,
-  thresholdMidMagnitude = 7.8
+  thresholdMidMagnitude = 7.8,
+  translationX,
+  translationY
 } = {}) {
   const formatted = format('.1f')
   const path = geoPath(projection)
@@ -19,8 +21,8 @@ export function mapChart (data, {
   // add map
   const innerChart = svg
     .append('g')
-    .attr('transform', 'translate(0, 0)')
-    .attr('class', 'map')
+    .attr('transform', `translate(${translationX}, ${translationY})`)
+    .attr('class', 'map-container')
 
   innerChart
     .append('g')
