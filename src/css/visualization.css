@@ -1,24 +1,30 @@
 /* Responsive container of the svg element */
-.responsive-svg-container {
-  position: relative;
+.container {
+  /*position: relative;*/
   width: 100%;
   max-width: 1200px;
 }
 
-.responsive-svg-container.small {
+.container.small {
   margin: 0 auto;
   max-width: 300px;
 }
 
-
+/*map*/
+.map {
+  position: relative;
+  border: 5px solid brown;
+  overflow: hidden;
 }
 
 /* Legend */
-.legend-sections {
+.legend-circle {
+  position: absolute;
   display: flex;
 }
 
 .legend-bar {
+  position: absolute;
 }
 
 .footer {

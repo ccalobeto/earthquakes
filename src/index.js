@@ -1,11 +1,11 @@
 import { csv, json } from 'https://cdn.jsdelivr.net/npm/d3-fetch@3.0.1/+esm'
 import { select } from 'https://cdn.jsdelivr.net/npm/d3-selection@3.0.0/+esm'
-import { max } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
+// import { max } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
 import * as topojson from 'https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm'
 import { geoIdentity } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'
 import { scaleThreshold, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
 import { mapChart } from './js/drawmap.js'
-import { circleLegendArr, width, height, magnitude, histMagnitude, segmentation, maxRadius, innerWidth, innerHeight } from './js/constants.js'
+import { circleLegendArr, height, magnitude, segmentation, maxRadius, margin, innerHeight, width } from './js/constants.js'
 import { circleLegend, barLegend } from './js/legends.js'
 
 const url = 'https://cdn.jsdelivr.net/npm/latam-atlas@0.0.4/files/peru-100k.json'
@@ -32,12 +32,12 @@ const rawData = await csv(file).then(d => {
 })
 
 const data = rawData.filter(d => d.type === 'Instrumental' && d.magnitude >= magnitude)
-const dataHist = rawData.filter(d => d.type === 'Historical' && d.magnitude >= histMagnitude)
+// const dataHist = rawData.filter(d => d.type === 'Historical' && d.magnitude >= histMagnitude)
 
 const features = topojson.feature(pe, pe.objects.level2)
 const departments = topojson.feature(pe, pe.objects.level2)
 
-const projection = geoIdentity().reflectY(true).fitSize([innerWidth, innerHeight], features)
+const projection = geoIdentity().reflectY(true).fitSize([width, height], features)
 
 // scales
 const depthScale = scaleThreshold()
@@ -56,33 +56,40 @@ function powerScale (
   return scaler(Math.pow(timesPerScale, magnitude))
 }
 
-// document.getElementById('svg').setAttribute('viewBox', `0 0 ${width} ${height}`)
-const svgSelection = select('#visualization')
-  .append('svg')
-  .attr('viewBox', `0 0 ${innerWidth} ${innerHeight}`)
-  .attr('style', ' background-color: #d1e5f0')
-
 // pass cartography and data
+const translation = { translationX: 100, translationY: 0 }
+
+const svgSelection = select('#vis')
+  .append('svg')
+  .attr('viewBox', `0 0 ${width + translation.translationX + margin.right} ${height}`)
+  .attr('width', width)
+  .attr('height', height)
+  .attr('style', ' background-color: #d1e5f0')
+  .attr('class', 'map')
+
 mapChart(data, {
-  svg: svgSelection
-    .append('g')
-    .attr('class', 'map')
-    .attr('transform', 'translate(0, 0)'),
+  svg: svgSelection,
   projection,
   feature: features,
   border: departments,
   colorScale: depthScale,
   colorBy: 'depth',
   radiusScale: powerScale,
-  radiusBy: 'magnitude'
+  radiusBy: 'magnitude',
+  translationX: translation.translationX,
+  translationY: translation.translationY
 })
+
+const maxRadius9 = powerScale(9)
+const paddingLegends = 15
+const barlegendHeigth = 40
 
 circleLegend(circleLegendArr, {
   // overide defaults
   svg: svgSelection
     .append('g')
     .attr('class', 'legend-circle')
-    .attr('transform', 'translate(0, ' + (innerHeight - 340) + ')'),
+    .attr('transform', 'translate(0, ' + (innerHeight - 2 * maxRadius9 - barlegendHeigth - paddingLegends) + ')'),
   domain: [0, 9],
   range: [0, 190], // 190 pixel is a 9 earthquake
   scale: powerScale,
@@ -94,7 +101,7 @@ barLegend({
   svg: svgSelection
     .append('g')
     .attr('class', 'legend-bar')
-    .attr('transform', 'translate(80,' + (innerHeight + 50) + ')'),
+    .attr('transform', 'translate(80,' + (innerHeight - barlegendHeigth) + ')'),
   domain: segmentation.map(d => d.depth),
   range: segmentation.map(d => d.color),
   title: 'Depth (Km)'
