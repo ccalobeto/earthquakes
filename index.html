@@ -4,15 +4,30 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>CEarthquakes in Perú</title>
+	<title>Earthquakes</title>
 	<link rel="stylesheet" type="text/css" href="./src/css/base.css">
 	<link rel="stylesheet" type="text/css" href="./src/css/visualization.css">
 </head>
 
+<!-- viewbox="0 0 800 1200" -->
+
 <body>
 	<div class="container">
-		<h1>Earthquakes in Perú</h1>
-		<div id="visualization" class="responsive-svg-container">
+		<div class="main-info">
+			<h1>Earthquakes in Perú</h1>
+			<h3>The visualization shows all the Earthquakes that had more than 5.5M of intensity since 1960, labelling the
+				ones greater than 7.7M. The variables describe in the visualization are the <b>Moment Magnitude (M)</b> which
+				is
+				the intensity of the event and it is represented by the area of the circle and the <b>Depth</b> of the event
+				represented by the color inside the circle.
+			</h3>
+		</div>
+		<div id="vis" class="visualization-container">
+		</div>
+		<div class="footer">
+			<p>A demonstration chart in JavaScript and D3.js</p>
+			<p><a href="https://www.carlosleon.dev/posts/earthquakes/">Blog Post</a> | <a
+					href="https://github.com/ccalobeto/earthquakes">Code</a></p>
 		</div>
 	</div>
 

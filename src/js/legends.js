@@ -151,7 +151,7 @@ function Legend (color, {
       .attr('fill', 'currentColor')
       .attr('text-anchor', 'start')
       .attr('font-weight', 'bold')
-      .attr('class', 'title')
+      .attr('class', 'title-legend')
       .text(title))
 
   return svg.node()
@@ -171,7 +171,7 @@ export function barLegend ({
 
   svg.append('g')
     .attr('class', 'bar-wrap')
-    .attr('transform', 'translate(0, 20)')
+    .attr('transform', 'translate(5, 0)')
     .append(() => theLegend)
 
   return svg.node()
@@ -184,26 +184,25 @@ export function circleLegend (data, {
   height = range[1] * 2,
   suffix = '', // ability to pass in a suffix
   textPadding = 30,
-  fontSize = 12,
+  fontSize = 15,
   scale,
   title,
   thresholdMagnitude = 8
 } = {}) {
   svg.selectAll('g').remove()
-  const maxData = max(data)
+  // const maxData = max(data)
   const legend = svg.append('g')
     .attr('class', 'cl-wrap')
     // push down to radius of largest circle
-    .attr('transform', 'translate(0,' + scale(maxData) + ')')
+    .attr('transform', 'translate(0, 0)')
 
   // set the title legend
   legend
     .append('text')
-    .text(height)
-    .attr('transform', 'translate(20, -90)') // `translate(0, -90)`
+    .attr('class', 'title-legend')
+    .text(title)
+    .attr('transform', 'translate(80, 0)')
     .attr('text-anchor', 'start')
-    .attr('font-weight', 'bold')
-    .style('font-size', fontSize)
 
   // append the values for circles
   legend
@@ -214,26 +213,26 @@ export function circleLegend (data, {
     .data(data)
     .join('circle')
     .attr('r', d => scale(d))
-    .attr('cx', width)
+    .attr('cx', width / 2)
     .attr('cy', d => height - scale(d)) // - margin.bottom
     .style('fill', 'none')
     .style('stroke', 'black')
-    .attr('stroke-width', d => d >= thresholdMagnitude ? 2 : 0.7)
+    .attr('stroke-width', d => d >= thresholdMagnitude ? 1.5 : 0.7)
     .style('opacity', 0.8)
 
-  // append some lines based on values
-  legend
-    .append('g')
-    .attr('class', 'cl-line-wrap')
-    .selectAll('line')
-    .data(data)
-    .join('line')
-    .attr('x1', width)
-    .attr('x2', width + scale(domain[1]) + 10)
-    .attr('y1', d => height - 2 * scale(d)) // - scale(d)
-    .attr('y2', d => height - 2 * scale(d))
-    .style('stroke', 'black')
-    .style('stroke-dasharray', ('2,2'))
+  // // append some lines based on values
+  // legend
+  //   .append('g')
+  //   .attr('class', 'cl-line-wrap')
+  //   .selectAll('line')
+  //   .data(data)
+  //   .join('line')
+  //   .attr('x1', width)
+  //   .attr('x2', width + scale(domain[1]) + 10)
+  //   .attr('y1', d => height - 2 * scale(d)) // - scale(d)
+  //   .attr('y2', d => height - 2 * scale(d))
+  //   .style('stroke', 'black')
+  //   .style('stroke-dasharray', ('2,2'))
 
   // append some labels from values
   legend
@@ -242,8 +241,8 @@ export function circleLegend (data, {
     .selectAll('text')
     .data(data)
     .join('text')
-    .attr('x', width + scale(domain[1]) + textPadding)
-    .attr('y', d => height - 2 * scale(d) + 5)
+    .attr('x', width / 2 + 3)
+    .attr('y', d => height - 2 * scale(d) - 3)
     .attr('shape-rendering', 'crispEdges')
     .style('text-anchor', 'end')
     .style('fill', 'black')
