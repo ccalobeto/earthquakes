@@ -151,7 +151,7 @@ function Legend (color, {
       .attr('fill', 'currentColor')
       .attr('text-anchor', 'start')
       .attr('font-weight', 'bold')
-      .attr('class', 'title')
+      .attr('class', 'title-legend')
       .text(title))
 
   return svg.node()
@@ -184,7 +184,7 @@ export function circleLegend (data, {
   height = range[1] * 2,
   suffix = '', // ability to pass in a suffix
   textPadding = 30,
-  fontSize = 11,
+  fontSize = 15,
   scale,
   title,
   thresholdMagnitude = 8
@@ -199,11 +199,10 @@ export function circleLegend (data, {
   // set the title legend
   legend
     .append('text')
+    .attr('class', 'title-legend')
     .text(title)
-    .attr('transform', 'translate(80, 0)') // `translate(0, -90)`
+    .attr('transform', 'translate(80, 0)')
     .attr('text-anchor', 'start')
-    .attr('font-weight', 'bold')
-    .style('font-size', fontSize)
 
   // append the values for circles
   legend
