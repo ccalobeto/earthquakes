@@ -84,7 +84,7 @@ export function mapChart (data, {
     .append('tspan')
     .attr('y', d => -(radiusScale(d[radiusBy]) + 20))
     .text(d => {
-      const title = `M${formatted(d[radiusBy])}, ${d.year}`
+      const title = `${formatted(d[radiusBy])}M, ${d.year}`
       return d.magnitude >= thresholdMidMagnitude ? title : null
     })
 
