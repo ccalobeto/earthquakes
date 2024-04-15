@@ -7,6 +7,8 @@ import { scaleThreshold, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale
 import { mapChart } from './js/drawmap.js'
 import { circleLegendArr, height, magnitude, segmentation, maxRadius, margin, innerHeight, width } from './js/constants.js'
 import { circleLegend, barLegend } from './js/legends.js'
+import { mapLabels } from './js/labels.js'
+import { annotation } from 'https://cdn.jsdelivr.net/npm/d3-svg-annotation@2.5.1/+esm'
 
 const url = 'https://cdn.jsdelivr.net/npm/latam-atlas@0.0.4/files/peru-100k.json'
 const file = './data/output.csv'
@@ -31,7 +33,22 @@ const rawData = await csv(file).then(d => {
   }))
 })
 
-const data = rawData.filter(d => d.type === 'Instrumental' && d.magnitude >= magnitude)
+let data = rawData.filter(d => d.type === 'Instrumental' && d.magnitude >= magnitude)
+
+// the closest district is not precise for Pisco Eq, so we fix it
+const piscoEqId = data.filter(d => d.magnitude >= 7.8 && d.year === 2007)[0].eventId
+data = data.map(obj => {
+  if (obj.eventId === piscoEqId) {
+    return {
+      ...obj,
+      distanceFromCoast: '40',
+      department: 'Ica',
+      description: 'Pisco'
+    }
+  }
+  return obj
+})
+
 // const dataHist = rawData.filter(d => d.type === 'Historical' && d.magnitude >= histMagnitude)
 
 const features = topojson.feature(pe, pe.objects.level2)
@@ -64,7 +81,7 @@ const svgSelection = select('#vis')
   .attr('viewBox', `0 0 ${width + translation.translationX + margin.right} ${height}`)
   .attr('width', width)
   .attr('height', height)
-  .attr('style', ' background-color: #d1e5f0')
+  .attr('style', ' background-color: #c5a34f')
   .attr('class', 'map')
 
 mapChart(data, {
@@ -107,5 +124,48 @@ barLegend({
   title: 'Depth (Km)'
 })
 
-console.log('height: ', height)
-console.log('innerheight: ', innerHeight)
+// reference for annotations https://d3-annotation.susielu.com/
+const annotations = [
+  {
+    note: {
+      label: '82km from Ocoña: 65 deads, 220,000 casualties and 24,500 destroyed homes.',
+      title: 'More Powerful',
+      wrap: 250, // try something smaller to see text split in several lines
+      padding: 10 // More = text lower
+
+    },
+    color: ['#cc0000'],
+    x: 713,
+    y: (innerHeight - 135),
+    dy: 10,
+    dx: 60
+  },
+  {
+    note: {
+      label: '70,000 deads, 880,000 casualties and 160,000 destroyed homes only in Callejón of Huaylas.',
+      title: 'More Letal',
+      wrap: 250, // try something smaller to see text split in several lines
+      padding: 10 // More = text lower
+
+    },
+    color: ['#cc0000'],
+    x: 328,
+    y: (innerHeight - 615),
+    dy: 10,
+    dx: 60
+  }]
+
+const makeAnnotations = annotation()
+  .annotations(annotations)
+
+svgSelection
+  .append('g')
+  .call(makeAnnotations)
+
+mapLabels({
+  svg: svgSelection
+    .append('g')
+    .attr('class', 'label-1')
+    .attr('transform', 'translate(-50, ' + (innerHeight + 40) + ')'),
+  message: 'The destruction between consecutive scales is 31.6 times more. Say an 8M earthquake is 31.6 x 31.6 ≈ 1,000 times more powerful than a 6M!'
+})
