@@ -8,6 +8,7 @@ import { mapChart } from './js/drawmap.js'
 import { circleLegendArr, height, magnitude, segmentation, maxRadius, margin, innerHeight, width } from './js/constants.js'
 import { circleLegend, barLegend } from './js/legends.js'
 import { mapLabels } from './js/labels.js'
+import { responsivefy } from './js/responsiveness.js'
 import { annotation } from 'https://cdn.jsdelivr.net/npm/d3-svg-annotation@2.5.1/+esm'
 
 const url = 'https://cdn.jsdelivr.net/npm/latam-atlas@0.0.4/files/peru-100k.json'
@@ -81,6 +82,7 @@ const svgSelection = select('#vis')
   .attr('viewBox', `0 0 ${width + translation.translationX + margin.right} ${height}`)
   .attr('width', width)
   .attr('height', height)
+  .call(responsivefy)
   .attr('style', ' background-color: #c5a34f')
   .attr('class', 'map')
 
