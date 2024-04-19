@@ -5,7 +5,7 @@ import * as topojson from 'https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+e
 import { geoIdentity } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'
 import { scaleThreshold, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
 import { mapChart } from './js/drawmap.js'
-import { circleLegendArr, height, magnitude, segmentation, maxRadius, margin, innerHeight, width } from './js/constants.js'
+import { circleLegendArr, height, magnitude, segmentation, maxRadius, margin, width } from './js/constants.js'
 import { circleLegend, barLegend } from './js/legends.js'
 import { mapLabels } from './js/labels.js'
 import { responsivefy } from './js/responsiveness.js'
@@ -79,9 +79,9 @@ const translation = { translationX: 100, translationY: 0 }
 
 const svgSelection = select('#vis')
   .append('svg')
-  .attr('viewBox', `0 0 ${width + translation.translationX + margin.right} ${height}`)
   .attr('width', width)
   .attr('height', height)
+  // .attr('viewBox', '0 0 1200 1800')
   .call(responsivefy)
   .attr('style', ' background-color: #c5a34f')
   .attr('class', 'map')
@@ -94,9 +94,9 @@ mapChart(data, {
   colorScale: depthScale,
   colorBy: 'depth',
   radiusScale: powerScale,
-  radiusBy: 'magnitude',
-  translationX: translation.translationX,
-  translationY: translation.translationY
+  radiusBy: 'magnitude'
+  // translationX: translation.x,
+  // translationY: translation.y
 })
 
 const maxRadius9 = powerScale(9)

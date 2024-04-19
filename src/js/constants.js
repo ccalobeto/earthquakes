@@ -11,7 +11,4 @@ export const histMagnitude = 8
 export const width = 928
 export const height = 4 / 3 * width
 export const circleLegendArr = [7, 8, 9]
-
 export const margin = ({ top: 0, right: 20, bottom: 0, left: 0 })
-export const innerWidth = width - margin.left - margin.right
-export const innerHeight = height - margin.top - margin.bottom
