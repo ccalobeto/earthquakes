@@ -1,6 +1,6 @@
 /* Responsive container of the svg element */
-.container {
-  /*position: relative;*/
+/*.container {
+  /* position: absolute;
   width: 100%;
   max-width: 1200px;
 }
@@ -39,6 +39,19 @@ h3 {
   font: italic 13px sans-serif;
 }
 
+text>tspan {
+  font: 12px sans-serif;
+}
+
 .title-legend {
   font: bold 13px sans-serif;
+}
+
+.annotation-note-title>tspan {
+  font: 15px sans-serif;
+  font-weight: bold;
+}
+
+.annotation-note-label>tspan {
+  font: 15px sans-serif;
 }
