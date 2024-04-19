@@ -12,8 +12,8 @@ export function mapChart (data, {
   radiusBy,
   thresholdBigMagnitude = 8,
   thresholdMidMagnitude = 7.8,
-  translationX,
-  translationY
+  translationX = 0,
+  translationY = 0
 } = {}) {
   const formatted = format('.1f')
   const path = geoPath(projection)
