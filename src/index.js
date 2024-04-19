@@ -55,7 +55,10 @@ data = data.map(obj => {
 const features = topojson.feature(pe, pe.objects.level2)
 const departments = topojson.feature(pe, pe.objects.level2)
 
-const projection = geoIdentity().reflectY(true).fitSize([width, height], features)
+const innerWidth = width - margin.left - margin.right
+const innerHeight = height - margin.top - margin.bottom
+
+const projection = geoIdentity().reflectY(true).fitSize([innerWidth, innerHeight], features)
 
 // scales
 const depthScale = scaleThreshold()
@@ -74,7 +77,6 @@ function powerScale (
   return scaler(Math.pow(timesPerScale, magnitude))
 }
 
-// pass cartography and data
 const translation = { translationX: 100, translationY: 0 }
 
 const svgSelection = select('#vis')
@@ -108,7 +110,7 @@ circleLegend(circleLegendArr, {
   svg: svgSelection
     .append('g')
     .attr('class', 'legend-circle')
-    .attr('transform', 'translate(0, ' + (innerHeight - 2 * maxRadius9 - barlegendHeigth - paddingLegends) + ')'),
+    .attr('transform', 'translate(0, ' + (innerHeight - 2 * maxRadius9 - 2 * barlegendHeigth - paddingLegends) + ')'),
   domain: [0, 9],
   range: [0, 190], // 190 pixel is a 9 earthquake
   scale: powerScale,
@@ -120,7 +122,7 @@ barLegend({
   svg: svgSelection
     .append('g')
     .attr('class', 'legend-bar')
-    .attr('transform', 'translate(80,' + (innerHeight - barlegendHeigth) + ')'),
+    .attr('transform', 'translate(80,' + (innerHeight - 2 * barlegendHeigth) + ')'),
   domain: segmentation.map(d => d.depth),
   range: segmentation.map(d => d.color),
   title: 'Depth (Km)'
@@ -138,7 +140,7 @@ const annotations = [
     },
     color: ['#cc0000'],
     x: 713,
-    y: (innerHeight - 135),
+    y: (innerHeight - 230),
     dy: 10,
     dx: 60
   },
@@ -151,8 +153,8 @@ const annotations = [
 
     },
     color: ['#cc0000'],
-    x: 328,
-    y: (innerHeight - 615),
+    x: 260,
+    y: (innerHeight - 680),
     dy: 10,
     dx: 60
   }]
@@ -162,12 +164,13 @@ const makeAnnotations = annotation()
 
 svgSelection
   .append('g')
+  .attr('class', 'annotations')
   .call(makeAnnotations)
 
 mapLabels({
   svg: svgSelection
     .append('g')
     .attr('class', 'label-1')
-    .attr('transform', 'translate(-50, ' + (innerHeight + 40) + ')'),
-  message: 'The destruction between consecutive scales is 31.6 times more. Say an 8M earthquake is 31.6 x 31.6 ≈ 1,000 times more powerful than a 6M!'
+    .attr('transform', 'translate(-70, ' + (innerHeight - 20) + ')'),
+  message: 'The destruction between consecutive scales is 31.6 times more. Say an 8M earthquake is 31.6 x 31.6 ≈ 1,000 times  more powerful than a 6M!'
 })
