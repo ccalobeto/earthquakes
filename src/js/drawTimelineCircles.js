@@ -1,8 +1,7 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
-/* eslint-disable no-tabs */
-import * as d3 from 'https://cdn.jsdelivr.net/npm/d3@7.9.0/+esm'
-import { multiFormat } from './utils'
-import { innerWidth, margin, rowHeight, rowPadding } from './constants'
+import { axisBottom } from 'https://cdn.jsdelivr.net/npm/d3-axis@3/+esm'
+import { entries } from 'https://cdn.jsdelivr.net/npm/d3-collection@1.0.7/+esm'
+import { multiFormat } from './utils.js'
+import { innerWidth, margin, rowHeight, rowPadding } from './constants.js'
 
 export function circleTimelineChart (data, {
   svg,
@@ -15,7 +14,7 @@ export function circleTimelineChart (data, {
   textOffset = 3
 } = {}) {
   const xAxis = g => g.attr('transform', `translate(0, ${numTypes * (rowHeight + rowPadding) + rowHeight})`)
-    .call(d3.axisBottom(scaleX).ticks(innerWidth / 50).tickFormat(multiFormat))
+    .call(axisBottom(scaleX).ticks(innerWidth / 50).tickFormat(multiFormat))
     .call(g => g.select('.domain').remove())
 
   const chart = svg
@@ -25,7 +24,7 @@ export function circleTimelineChart (data, {
 
   const typeRows = chart.append('g')
   	.selectAll('g')
-  	.data(d3.entries(types))
+  	.data(entries(types))
     .join('g')
 
   typeRows.append('text')

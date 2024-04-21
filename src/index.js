@@ -6,15 +6,15 @@ import { nest, keys, entries } from 'https://cdn.jsdelivr.net/npm/d3-collection@
 import * as topojson from 'https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm'
 import { geoIdentity } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'
 import { scaleThreshold, scaleSqrt, scaleTime, scaleOrdinal } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
-import { timeParse } from 'https://cdn.jsdelivr.net/npm/d3-time-format@4.2.0/+esm'
-import { timeYear } from 'https://cdn.jsdelivr.net/npm/d3-time@3.0.1/+esm'
+import { timeParse } from 'https://cdn.jsdelivr.net/npm/d3-time-format@4.1.0/+esm'
+import { timeYear } from 'https://cdn.jsdelivr.net/npm/d3-time@3.1.0/+esm'
 import { mapChart } from './js/drawmap.js'
-import { circleLegendArr, height, magnitude, segmentation, maxRadius, margin, width, rowHeight, rowPadding, segmentationMag, heightCircleTimelineChart } from './js/constants.js'
+import { circleLegendArr, height, magnitude, segmentation, maxRadius, margin, width, rowHeight, rowPadding, segmentationMag, heightCircleTimelineChart, innerWidth, innerHeight } from './js/constants.js'
 import { circleLegend, barLegend } from './js/legends.js'
 import { mapLabels } from './js/labels.js'
 import { responsivefy } from './js/responsiveness.js'
 import { annotation } from 'https://cdn.jsdelivr.net/npm/d3-svg-annotation@2.5.1/+esm'
-import { drawTimelineCircles } from './js/drawTimelineCircles.js'
+import { circleTimelineChart } from './js/drawTimelineCircles.js'
 
 const url = 'https://cdn.jsdelivr.net/npm/latam-atlas@0.0.4/files/peru-100k.json'
 const file = './data/output.csv'
@@ -58,9 +58,6 @@ data = data.map(obj => {
 const features = topojson.feature(pe, pe.objects.level2)
 const departments = topojson.feature(pe, pe.objects.level2)
 
-const innerWidth = width - margin.left - margin.right
-const innerHeight = height - margin.top - margin.bottom
-
 const projection = geoIdentity().reflectY(true).fitSize([innerWidth, innerHeight], features)
 
 // scales
@@ -80,7 +77,7 @@ function powerScale (
   return scaler(Math.pow(timesPerScale, magnitude))
 }
 
-const translation = { translationX: 100, translationY: 0 }
+// const translation = { translationX: 100, translationY: 0 }
 
 const svgSelection = select('#vis')
   .append('svg')
@@ -191,14 +188,14 @@ const dataHist = rawData.filter(d => d.magnitude > 7).map(d => {
   })
 })
 
-const minMagnitude = min(dataHist, d => d[vars.r])
-const maxMagnitude = max(dataHist, d => d[vars.r])
-
 const vars = ({
   cx: 'date',
   cy: 'department',
   r: 'magnitude'
 })
+
+const minMagnitude = min(dataHist, d => d[vars.r])
+const maxMagnitude = max(dataHist, d => d[vars.r])
 
 const types = nest()
   .key(d => d[vars.cy])
@@ -237,7 +234,7 @@ const svgCircles = select('#vis')
   .attr('style', ' background-color: #c5a34f')
   .attr('class', 'circle-timeline')
 
-drawTimelineCircles(dataHist, {
+circleTimelineChart(dataHist, {
   svg: svgCircles,
   vars,
   scaleX,
