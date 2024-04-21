@@ -1,15 +1,20 @@
+/* eslint-disable no-tabs */
 import { csv, json } from 'https://cdn.jsdelivr.net/npm/d3-fetch@3.0.1/+esm'
 import { select } from 'https://cdn.jsdelivr.net/npm/d3-selection@3.0.0/+esm'
-// import { max } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
+import { min, max, sum, range } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
+import { nest, keys, entries } from 'https://cdn.jsdelivr.net/npm/d3-collection@1.0.7/+esm'
 import * as topojson from 'https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm'
 import { geoIdentity } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'
-import { scaleThreshold, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
+import { scaleThreshold, scaleSqrt, scaleTime, scaleOrdinal } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
+import { timeParse } from 'https://cdn.jsdelivr.net/npm/d3-time-format@4.2.0/+esm'
+import { timeYear } from 'https://cdn.jsdelivr.net/npm/d3-time@3.0.1/+esm'
 import { mapChart } from './js/drawmap.js'
-import { circleLegendArr, height, magnitude, segmentation, maxRadius, margin, width } from './js/constants.js'
+import { circleLegendArr, height, magnitude, segmentation, maxRadius, margin, width, rowHeight, rowPadding, segmentationMag, heightCircleTimelineChart } from './js/constants.js'
 import { circleLegend, barLegend } from './js/legends.js'
 import { mapLabels } from './js/labels.js'
 import { responsivefy } from './js/responsiveness.js'
 import { annotation } from 'https://cdn.jsdelivr.net/npm/d3-svg-annotation@2.5.1/+esm'
+import { drawTimelineCircles } from './js/drawTimelineCircles.js'
 
 const url = 'https://cdn.jsdelivr.net/npm/latam-atlas@0.0.4/files/peru-100k.json'
 const file = './data/output.csv'
@@ -49,8 +54,6 @@ data = data.map(obj => {
   }
   return obj
 })
-
-// const dataHist = rawData.filter(d => d.type === 'Historical' && d.magnitude >= histMagnitude)
 
 const features = topojson.feature(pe, pe.objects.level2)
 const departments = topojson.feature(pe, pe.objects.level2)
@@ -173,4 +176,73 @@ mapLabels({
     .attr('class', 'label-1')
     .attr('transform', 'translate(-70, ' + (innerHeight - 20) + ')'),
   message: 'The destruction between consecutive scales is 31.6 times more. Say an 8M earthquake is 31.6 x 31.6 ≈ 1,000 times  more powerful than a 6M!'
+})
+
+// construct the timeline chart
+const dataHist = rawData.filter(d => d.magnitude > 7).map(d => {
+  // manipulate strings dates like "Wed Nov 27 1630 15:30:01"
+  const parseDate = timeParse('%a %b %d %Y %H:%M:%S')
+  return ({
+    year: d.year,
+    magnitude: d.magnitude,
+    department: d.department === 'Lima' || d.department === 'Callao' ? 'Lima y Callao' : d.department,
+    date: parseDate(d.utcDate.slice(0, 24)),
+    type: d.type
+  })
+})
+
+const minMagnitude = min(dataHist, d => d[vars.r])
+const maxMagnitude = max(dataHist, d => d[vars.r])
+
+const vars = ({
+  cx: 'date',
+  cy: 'department',
+  r: 'magnitude'
+})
+
+const types = nest()
+  .key(d => d[vars.cy])
+  .rollup(k => ({
+    // total: sum of all earthquake magnitudes in the department
+    total: sum(k, l => l[vars.r]),
+    scale: scaleSqrt()
+      .domain([minMagnitude, maxMagnitude])
+      .range([0, rowHeight / 2]),
+    count: k.length
+  }))
+  .object(dataHist)
+
+const numTypes = keys(types).length
+
+const scaleX = scaleTime()
+  // If you’d like the domain to begin at the start of one year and end at the start of another year, we can use the time interval floor and ceil methods on the timeYear interval
+  .domain([timeYear.floor(min(dataHist, d => d[vars.cx])), timeYear.ceil(max(dataHist, d => d[vars.cx]))])
+  .range([100, innerWidth])
+
+const scaleY = scaleOrdinal()
+  .domain(entries(types).sort((a, b) => {
+    return b.value.total - a.value.total
+  }).map(t => t.key))
+  .range(range(numTypes).map(d => (d * (rowHeight + rowPadding)) + rowHeight))
+
+const colorScale = scaleThreshold()
+  .domain(segmentationMag.map(d => d.magnitude))
+  .range(segmentationMag.map(d => d.color))
+
+const svgCircles = select('#vis')
+  .append('svg')
+  .attr('width', width)
+  .attr('height', heightCircleTimelineChart)
+  .call(responsivefy)
+  .attr('style', ' background-color: #c5a34f')
+  .attr('class', 'circle-timeline')
+
+drawTimelineCircles(dataHist, {
+  svg: svgCircles,
+  vars,
+  scaleX,
+  scaleY,
+  colorScale,
+  types,
+  numTypes
 })
