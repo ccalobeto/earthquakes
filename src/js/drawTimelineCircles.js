@@ -1,54 +1,172 @@
-import { axisBottom } from 'https://cdn.jsdelivr.net/npm/d3-axis@3/+esm'
-import { entries } from 'https://cdn.jsdelivr.net/npm/d3-collection@1.0.7/+esm'
+import { axisTop } from 'https://cdn.jsdelivr.net/npm/d3-axis@3/+esm'
+import { scaleLinear, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
+import { timeYear } from 'https://cdn.jsdelivr.net/npm/d3-time@3.1.0/+esm'
+import { format } from 'https://cdn.jsdelivr.net/npm/d3-format@3.1.0/+esm'
+import { min, max, extent } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
 import { multiFormat } from './utils.js'
-import { innerWidth, margin, rowHeight, rowPadding } from './constants.js'
+import { innerWidth, margin } from './constants.js'
 
 export function circleTimelineChart (data, {
   svg,
   vars,
   scaleX,
-  scaleY,
-  colorScale,
-  types,
-  numTypes,
-  textOffset = 3
+  width,
+  textOffset = 3,
+  rowSize = 40,
+  defaultTextSize = 12,
+  fistRowOffset = 0
 } = {}) {
-  const xAxis = g => g.attr('transform', `translate(0, ${numTypes * (rowHeight + rowPadding) + rowHeight})`)
-    .call(axisBottom(scaleX).ticks(innerWidth / 50).tickFormat(multiFormat))
-    .call(g => g.select('.domain').remove())
+  const formatNum = format('.2f')
+  let height = 0
 
-  const chart = svg
+  for (let i = 0; i < data.length; i++) {
+    height += data[i].departments.length * rowSize
+  }
+  height = height + margin.top + margin.bottom
+
+  const viz = svg
+    .attr('width', width)
+    .attr('height', height)
+
+  const chart = viz
     .append('g')
     .attr('transform', `translate(${margin.left}, ${margin.top})`)
     .attr('class', 'chart')
 
-  const typeRows = chart.append('g')
-    .selectAll('g')
-    .data(entries(types))
-    .join('g')
+  // const keys = Object.keys(data[0])
 
-  typeRows.append('text')
-    .text(d => `${d.key} (${d.value.count})`)
-    .attr('x', -margin.left)
-    .attr('y', d => scaleY(d.key) + textOffset)
+  const xAxisExtent = [
+    timeYear.floor(min(
+      data
+        .map(d => d.departments).flat()
+        .map(d => d.earthquakes).flat(),
+      d => d[vars.cx]
+    )),
+    timeYear.ceil(max(
+      data
+        .map(d => d.departments)
+        .flat()
+        .map(d => d.earthquakes)
+        .flat(),
+      d => d[vars.cx]
+    ))]
 
-  chart.append('g')
-    .selectAll('circle')
-    .attr('class', 'data')
-    .data(data)
-    .join('circle')
-    .attr('cx', d => scaleX(d[vars.cx]))
-    .attr('cy', d => scaleY(d[vars.cy]))
-    .attr('r', d => types[d[vars.cy]].scale(d[vars.r]))
-    .attr('fill', d => d.type === 'Historical' ? 'orange' : 'gray')
-    .attr('stroke', 'red')
-    .attr('stroke-width', d => types[d[vars.cy]].scale(d[vars.r]) / 5)
-    .attr('opacity', 0.5)
+  const xScale = scaleLinear()
+    .domain(xAxisExtent) // TODO make this dynamic
+    .range([310, width - margin.right - margin.left])
 
-  chart
+  const radiusCircleExtent = extent(data
+    .map(d => d.departments).flat()
+    .map(d => d.earthquakes).flat(), d => d[vars.r])
+
+  const rScale = scaleSqrt()
+    .domain(radiusCircleExtent)
+    .range([1, rowSize / 2 - 2])
+
+  const table = chart
     .append('g')
-    .attr('class', 'xAxis')
-    .call(xAxis)
+    .attr('class', 'earthquakes')
+    .attr('transform', 'translate(0, 0)')
 
-  return svg.node()
+  // headers
+  const yAxis = table.append('g')
+    .attr('class', 'axisY')
+    .style('font-size', '12')
+    .style('font-weight', 'bold')
+    .style('font-family', 'sans-serif')
+    .style('fill', '#444')
+
+  yAxis
+    .append('text')
+    .text('REGION')
+    .attr('transform', `translate(0, ${fistRowOffset})`)
+
+  yAxis
+    .append('text')
+    .text('DEPARTMENT')
+    .attr('transform', `translate(100, ${fistRowOffset})`)
+
+  yAxis
+    .append('line')
+    .attr('x1', 0)
+    .attr('x2', width)
+    .attr('y1', rowSize * 0.25)
+    .attr('y2', rowSize * 0.25)
+    .style('stroke', '#444')
+
+  // body
+  const tbody = table.append('g')
+    .attr('class', 'plot')
+    .attr('transform', `translate(0, ${rowSize})`)
+
+  let yOffset = 0
+  for (let i = 0; i < data.length; i++) {
+    const region = data[i].region
+    const departments = data[i].departments
+
+    for (let j = 0; j < departments.length; j++) {
+      const row = tbody
+        .append('g')
+        .attr('transform', `translate(0, ${j * rowSize + yOffset})`)
+
+      // grid line
+      row
+        .append('line')
+        .attr('x1', 100)
+        .attr('x2', width)
+        .attr('y1', rowSize * 0.25)
+        .attr('y2', rowSize * 0.25)
+        .style('stroke', '#eee')
+
+      //  region name
+      const regionCell = row
+        .append('text')
+        .style('font-size', '12')
+        .style('font-family', 'sans-serif')
+        .style('fill', '#444')
+        .attr('transform', 'translate(0, 0)')
+
+      if (j === 0) {
+        regionCell
+          .text(region)
+          .style('font-weight', 'bold')
+      }
+
+      // department name
+      row.append('text')
+        .attr('transform', 'translate(100, 0)')
+        .text(departments[j].department + ' (' + departments[j].earthquakes.length + ')')
+        .style('font-size', '14')
+        .style('color', '#444')
+        .style('font-family', 'sans-serif')
+
+      // circle
+      row.append('g')
+        .attr('class', 'circle')
+        .selectAll('.circle')
+        .data(departments[j].earthquakes)
+        .join('circle')
+        .attr('cx', d => formatNum(scaleX(d[vars.cx])))
+        .attr('cy', d => `${-rowSize / 2 + 8}`)
+        .attr('r', d => formatNum(rScale(d[vars.r])))
+        .attr('fill', d => d.type === 'Historical' ? 'orange' : 'gray')
+        .attr('stroke', d => d.type === 'Historical' ? 'red' : 'black')
+        .attr('opacity', 0.5)
+    }
+    yOffset += departments.length * rowSize
+  }
+
+  /* const xAxis = table
+    .append('g')
+    .attr("transform", 'translate(0, 8)')
+    .call(d3.axisTop(scaleX).ticks(innerWidth/50).tickFormat(multiFormat))
+    //.call(d3.axisTop(xScale).ticks(innerWidth/50).tickFormat(multiFormat))
+    //.call(d3.axisTop().scale(xScale).tickSizeOuter(0).ticks(innerWidth/100).tickFormat(multiFormat))
+    .call(g => g.select(".domain").remove()) */
+  const xAxisGenerator = axisTop(scaleX).ticks(innerWidth / 100).tickFormat(multiFormat)
+  const xAxis = table.append('g').attr('class', 'xAxis').attr('transform', 'translate(0, 8)')
+  xAxis.call(xAxisGenerator).select('.domain').remove()
+  xAxis.selectAll('text').style('font-size', '11px')
+
+  return viz.node()
 }

@@ -25,3 +25,15 @@ export function multiFormat (date) {
               ? formatMonth
               : formatYear)(date)
 }
+
+// get category
+export function getRegion (categories, itemToFind) {
+  let foundCategory
+  for (const category in categories) {
+    if (categories[category].includes(itemToFind)) {
+      foundCategory = category
+      break
+    }
+  }
+  return foundCategory
+}
