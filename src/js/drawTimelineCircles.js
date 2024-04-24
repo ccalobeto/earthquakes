@@ -1,5 +1,6 @@
 import { axisTop } from 'https://cdn.jsdelivr.net/npm/d3-axis@3/+esm'
 import { scaleLinear, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
+import { create } from 'https://cdn.jsdelivr.net/npm/d3-selection@3.0.0/+esm'
 import { timeYear } from 'https://cdn.jsdelivr.net/npm/d3-time@3.1.0/+esm'
 import { format } from 'https://cdn.jsdelivr.net/npm/d3-format@3.1.0/+esm'
 import { min, max, extent } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
@@ -7,14 +8,12 @@ import { multiFormat } from './utils.js'
 import { innerWidth, margin } from './constants.js'
 
 export function circleTimelineChart (data, {
-  svg,
   vars,
   scaleX,
   width,
-  textOffset = 3,
   rowSize = 40,
-  defaultTextSize = 12,
-  fistRowOffset = 0
+  fistRowOffset = 0,
+  leftPositionGridLine = 100
 } = {}) {
   const formatNum = format('.2f')
   let height = 0
@@ -23,17 +22,17 @@ export function circleTimelineChart (data, {
     height += data[i].departments.length * rowSize
   }
   height = height + margin.top + margin.bottom
+  console.log('height_1', height)
 
-  const viz = svg
+  const viz = create('svg')
     .attr('width', width)
     .attr('height', height)
+    .attr('class', 'svg')
 
   const chart = viz
     .append('g')
     .attr('transform', `translate(${margin.left}, ${margin.top})`)
     .attr('class', 'chart')
-
-  // const keys = Object.keys(data[0])
 
   const xAxisExtent = [
     timeYear.floor(min(
@@ -112,13 +111,13 @@ export function circleTimelineChart (data, {
       // grid line
       row
         .append('line')
-        .attr('x1', 100)
+        .attr('x1', leftPositionGridLine)
         .attr('x2', width)
         .attr('y1', rowSize * 0.25)
         .attr('y2', rowSize * 0.25)
         .style('stroke', '#eee')
 
-      //  region name
+      //  category name
       const regionCell = row
         .append('text')
         .style('font-size', '12')
@@ -132,9 +131,9 @@ export function circleTimelineChart (data, {
           .style('font-weight', 'bold')
       }
 
-      // department name
+      // subcategory name
       row.append('text')
-        .attr('transform', 'translate(100, 0)')
+        .attr('transform', `translate(${leftPositionGridLine}, 0)`)
         .text(departments[j].department + ' (' + departments[j].earthquakes.length + ')')
         .style('font-size', '14')
         .style('color', '#444')
@@ -163,7 +162,7 @@ export function circleTimelineChart (data, {
     //.call(d3.axisTop(xScale).ticks(innerWidth/50).tickFormat(multiFormat))
     //.call(d3.axisTop().scale(xScale).tickSizeOuter(0).ticks(innerWidth/100).tickFormat(multiFormat))
     .call(g => g.select(".domain").remove()) */
-  const xAxisGenerator = axisTop(scaleX).ticks(innerWidth / 100).tickFormat(multiFormat)
+  const xAxisGenerator = axisTop(scaleX).ticks(innerWidth / 50).tickFormat(multiFormat)
   const xAxis = table.append('g').attr('class', 'xAxis').attr('transform', 'translate(0, 8)')
   xAxis.call(xAxisGenerator).select('.domain').remove()
   xAxis.selectAll('text').style('font-size', '11px')

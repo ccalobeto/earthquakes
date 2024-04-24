@@ -199,9 +199,6 @@ const vars = ({
   r: 'magnitude'
 })
 
-// const minMagnitude = min(dataHist, d => d[vars.r])
-// const maxMagnitude = max(dataHist, d => d[vars.r])
-
 const transformedData = Array.from(
   group(dataHist, d => d.region, d => d.department)
 ).map(d => {
@@ -218,18 +215,25 @@ const transformedData = Array.from(
 const scaleX = scaleTime()
   // If you’d like the domain to begin at the start of one year and end at the start of another year, we can use the time interval floor and ceil methods on the timeYear interval
   .domain([timeYear.floor(min(dataHist, d => d[vars.cx])), timeYear.ceil(max(dataHist, d => d[vars.cx]))])
-  .range([100, innerWidth])
+  .range([250, innerWidth])
 
-const svgCircles = select('#vis-2')
+/* const svgTimeline = select('#vis-2')
   .append('svg')
   .attr('width', width)
-  .attr('height', heightCircleTimelineChart)
+  .attr('height', width / 2)
   .call(responsivefy)
   .attr('style', ' background-color: #c5a34f')
-  .attr('class', 'circle-timeline')
+  .attr('class', 'circle-timeline') */
 
-circleTimelineChart(transformedData, {
-  svg: svgCircles,
+const chart2 = circleTimelineChart(transformedData, {
+  // svg: svgTimeline,
   vars,
-  scaleX
+  scaleX,
+  width
 })
+
+select('#vis-1').append(() => chart2).call(responsivefy)
+
+// *** refs ***
+// https://stackoverflow.com/questions/72893030/how-to-add-svg-object-in-html
+console.log('dataTransformed', transformedData)
