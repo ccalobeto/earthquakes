@@ -211,23 +211,8 @@ const transformedData = Array.from(
   }
 })
 
-const scaleX = scaleTime()
-  // If you’d like the domain to begin at the start of one year and end at the start of another year, we can use the time interval floor and ceil methods on the timeYear interval
-  .domain([timeYear.floor(min(dataHist, d => d[vars.cx])), timeYear.ceil(max(dataHist, d => d[vars.cx]))])
-  .range([250, innerWidth])
-
-/* const svgTimeline = select('#vis-2')
-  .append('svg')
-  .attr('width', width)
-  .attr('height', width / 2)
-  .call(responsivefy)
-  .attr('style', ' background-color: #c5a34f')
-  .attr('class', 'circle-timeline') */
-
 const chart2 = circleTimelineChart(transformedData, {
-  // svg: svgTimeline,
   vars,
-  scaleX,
   width
 })
 

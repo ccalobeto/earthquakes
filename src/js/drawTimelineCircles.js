@@ -1,15 +1,14 @@
 import { axisTop } from 'https://cdn.jsdelivr.net/npm/d3-axis@3/+esm'
-import { scaleLinear, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
+import { scaleTime, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
 import { create } from 'https://cdn.jsdelivr.net/npm/d3-selection@3.0.0/+esm'
 import { timeYear } from 'https://cdn.jsdelivr.net/npm/d3-time@3.1.0/+esm'
 import { format } from 'https://cdn.jsdelivr.net/npm/d3-format@3.1.0/+esm'
-import { min, max, extent } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
+import { min, max } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
 import { multiFormat } from './utils.js'
 import { innerWidth, margin } from './constants.js'
 
 export function circleTimelineChart (data, {
   vars,
-  scaleX,
   width,
   rowSize = 40,
   fistRowOffset = 0,
@@ -34,33 +33,20 @@ export function circleTimelineChart (data, {
     .attr('transform', `translate(${margin.left}, ${margin.top})`)
     .attr('class', 'chart')
 
+  // flat nested data
+  const events = data.map(d => d.earthquakes).flat()
   const xAxisExtent = [
-    timeYear.floor(min(
-      data
-        .map(d => d.departments).flat()
-        .map(d => d.earthquakes).flat(),
-      d => d[vars.cx]
-    )),
-    timeYear.ceil(max(
-      data
-        .map(d => d.departments)
-        .flat()
-        .map(d => d.earthquakes)
-        .flat(),
-      d => d[vars.cx]
-    ))]
+    timeYear.floor(min(events, d => d[vars.cx])), 
+    timeYear.ceil(max(events, d => d[vars.cx]))
+  ]
 
-  const xScale = scaleLinear()
-    .domain(xAxisExtent) // TODO make this dynamic
+  const xScale = scaleTime()
+    .domain(xAxisExtent)
     .range([310, width - margin.right - margin.left])
 
-  const radiusCircleExtent = extent(data
-    .map(d => d.departments).flat()
-    .map(d => d.earthquakes).flat(), d => d[vars.r])
-
   const rScale = scaleSqrt()
-    .domain(radiusCircleExtent)
-    .range([1, rowSize / 2 - 2])
+    .domain([7, 10])
+    .range([0.1, rowSize / 2 - 2])
 
   const table = chart
     .append('g')
@@ -145,24 +131,17 @@ export function circleTimelineChart (data, {
         .selectAll('.circle')
         .data(departments[j].earthquakes)
         .join('circle')
-        .attr('cx', d => formatNum(scaleX(d[vars.cx])))
+        .attr('cx', d => formatNum(xScale(d[vars.cx])))
         .attr('cy', d => `${-rowSize / 2 + 8}`)
         .attr('r', d => formatNum(rScale(d[vars.r])))
-        .attr('fill', d => d.type === 'Historical' ? 'orange' : 'gray')
-        .attr('stroke', d => d.type === 'Historical' ? 'red' : 'black')
+        .attr('fill', d => d.type === 'Historical' ? 'gray' : 'green')
+        .attr('stroke', d => d.type === 'Historical' ? 'black' : 'yellow')
         .attr('opacity', 0.5)
     }
     yOffset += departments.length * rowSize
   }
 
-  /* const xAxis = table
-    .append('g')
-    .attr("transform", 'translate(0, 8)')
-    .call(d3.axisTop(scaleX).ticks(innerWidth/50).tickFormat(multiFormat))
-    //.call(d3.axisTop(xScale).ticks(innerWidth/50).tickFormat(multiFormat))
-    //.call(d3.axisTop().scale(xScale).tickSizeOuter(0).ticks(innerWidth/100).tickFormat(multiFormat))
-    .call(g => g.select(".domain").remove()) */
-  const xAxisGenerator = axisTop(scaleX).ticks(innerWidth / 50).tickFormat(multiFormat)
+  const xAxisGenerator = axisTop(xScale).ticks(innerWidth / 50).tickFormat(multiFormat)
   const xAxis = table.append('g').attr('class', 'xAxis').attr('transform', 'translate(0, 8)')
   xAxis.call(xAxisGenerator).select('.domain').remove()
   xAxis.selectAll('text').style('font-size', '11px')
