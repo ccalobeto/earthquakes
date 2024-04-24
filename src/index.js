@@ -1,15 +1,14 @@
 /* eslint-disable no-tabs */
 import { csv, json } from 'https://cdn.jsdelivr.net/npm/d3-fetch@3.0.1/+esm'
 import { select } from 'https://cdn.jsdelivr.net/npm/d3-selection@3.0.0/+esm'
-import { min, max, group } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
+import { group } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
 // import observablehqinputs from 'https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.10.6/+esm'
 import * as topojson from 'https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm'
 import { geoIdentity } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'
-import { scaleThreshold, scaleSqrt, scaleTime } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
+import { scaleThreshold, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
 import { timeParse } from 'https://cdn.jsdelivr.net/npm/d3-time-format@4.1.0/+esm'
-import { timeYear } from 'https://cdn.jsdelivr.net/npm/d3-time@3.1.0/+esm'
 import { mapChart } from './js/drawmap.js'
-import { circleLegendArr, height, magnitude, segmentation, maxRadius, width, heightCircleTimelineChart, innerWidth, innerHeight, regions } from './js/constants.js'
+import { circleLegendArr, height, magnitude, segmentation, maxRadius, width, innerWidth, innerHeight, regions } from './js/constants.js'
 import { circleLegend, barLegend } from './js/legends.js'
 import { mapLabels } from './js/labels.js'
 import { responsivefy } from './js/responsiveness.js'
@@ -21,7 +20,7 @@ const url = 'https://cdn.jsdelivr.net/npm/latam-atlas@0.0.4/files/peru-100k.json
 const file = './data/output.csv'
 
 const pe = await json(url)
-const rawData = await csv(file).then(d => {
+let rawData = await csv(file).then(d => {
   return d.map(r => ({
     eventId: +r.eventId,
     utcDate: r.utcDate,
@@ -39,12 +38,10 @@ const rawData = await csv(file).then(d => {
     description: r.description
   }))
 })
-
-let data = rawData.filter(d => d.type === 'Instrumental' && d.magnitude >= magnitude)
-
 // the closest district is not precise for Pisco Eq, so we fix it
-const piscoEqId = data.filter(d => d.magnitude >= 7.8 && d.year === 2007)[0].eventId
-data = data.map(obj => {
+const piscoEqId = rawData.filter(d => d.magnitude >= 7.8 && d.year === 2007)[0].eventId
+
+rawData = rawData.map(obj => {
   if (obj.eventId === piscoEqId) {
     return {
       ...obj,
@@ -55,6 +52,8 @@ data = data.map(obj => {
   }
   return obj
 })
+
+const data = rawData.filter(d => d.type === 'Instrumental' && d.magnitude >= magnitude)
 
 const features = topojson.feature(pe, pe.objects.level2)
 const departments = topojson.feature(pe, pe.objects.level2)

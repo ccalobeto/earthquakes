@@ -10,7 +10,6 @@ export const histMagnitude = 8
 export const aspectRatio = 3 / 2
 export const width = 1100
 export const height = aspectRatio * width
-export const heightCircleTimelineChart = width / 2
 export const circleLegendArr = [7, 8, 9]
 export const margin = ({ top: 20, right: 20, bottom: 20, left: 0 })
 export const innerWidth = width - margin.left - margin.right
