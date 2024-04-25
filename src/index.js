@@ -141,7 +141,7 @@ const annotations = [
     },
     color: ['#cc0000'],
     x: 713,
-    y: (innerHeight - 230),
+    y: (innerHeight - 210),
     dy: 10,
     dx: 60
   },
@@ -155,7 +155,7 @@ const annotations = [
     },
     color: ['#cc0000'],
     x: 260,
-    y: (innerHeight - 680),
+    y: (innerHeight - 660),
     dy: 10,
     dx: 60
   }]
@@ -172,7 +172,7 @@ mapLabels({
   svg: svgSelection
     .append('g')
     .attr('class', 'label-1')
-    .attr('transform', 'translate(-70, ' + (innerHeight - 20) + ')'),
+    .attr('transform', 'translate(-70, ' + (innerHeight + 10) + ')'),
   message: 'The destruction between consecutive scales is 31.6 times more. Say an 8M earthquake is 31.6 x 31.6 ≈ 1,000 times  more powerful than a 6M!'
 })
 
@@ -218,6 +218,52 @@ const chart2 = circleTimelineChart(transformedData, {
 })
 
 select('#vis-1').append(() => chart2).call(responsivefy)
+
+const timeLineAnnotations = [
+  {
+    note: {
+      label: '8.4M Atico, Arequipa',
+      title: 'More Powerful since 1960',
+      wrap: 250, // try something smaller to see text split in several lines
+      padding: 10 // More = text lower
+
+    },
+    color: ['#cc0000'],
+    x: 1045,
+    y: 35,
+    dy: 250,
+    dx: -2
+  },
+  {
+    note: {
+      label: '9.4M Ite, Tacna',
+      title: 'More Powerful in History',
+      wrap: 250, // try something smaller to see text split in several lines
+      padding: 10 // More = text lower
+
+    },
+    color: ['#cc0000'],
+    x: 400,
+    y: 123,
+    dy: 5,
+    dx: 10
+  }]
+
+const makeTimeLineAnnotations = annotation()
+  .annotations(timeLineAnnotations)
+
+select('.chart')
+  .append('g')
+  .attr('class', 'annotations2')
+  .call(makeTimeLineAnnotations)
+
+mapLabels({
+  svg: select('svg')
+    .append('g')
+    .attr('class', 'label-2')
+    .attr('transform', 'translate(-75, 725)'),
+  message: '(*)The plot does not show the true area of the circle. Just per visualization purpuses'
+})
 
 // *** refs ***
 // https://stackoverflow.com/questions/72893030/how-to-add-svg-object-in-html
