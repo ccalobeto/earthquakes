@@ -2,7 +2,8 @@
 import { csv, json } from 'https://cdn.jsdelivr.net/npm/d3-fetch@3.0.1/+esm'
 import { select } from 'https://cdn.jsdelivr.net/npm/d3-selection@3.0.0/+esm'
 import { group } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
-// import observablehqinputs from 'https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.10.6/+esm'
+
+import { range } from 'https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.10.6/+esm'
 import * as topojson from 'https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm'
 import { geoIdentity } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'
 import { scaleThreshold, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
@@ -220,4 +221,6 @@ select('#vis-1').append(() => chart2).call(responsivefy)
 
 // *** refs ***
 // https://stackoverflow.com/questions/72893030/how-to-add-svg-object-in-html
-console.log('dataTransformed', transformedData)
+// console.log('dataHist', dataHist)
+// console.log('dataTransformed', transformedData)
+// console.log('minEarthquake', minEarthquake.value)

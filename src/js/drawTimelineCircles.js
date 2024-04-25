@@ -21,7 +21,6 @@ export function circleTimelineChart (data, {
     height += data[i].departments.length * rowSize
   }
   height = height + margin.top + margin.bottom
-  console.log('height_1', height)
 
   const viz = create('svg')
     .attr('width', width)
@@ -36,7 +35,7 @@ export function circleTimelineChart (data, {
   // flat nested data
   const events = data.map(d => d.earthquakes).flat()
   const xAxisExtent = [
-    timeYear.floor(min(events, d => d[vars.cx])), 
+    timeYear.floor(min(events, d => d[vars.cx])),
     timeYear.ceil(max(events, d => d[vars.cx]))
   ]
 
