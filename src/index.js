@@ -154,8 +154,8 @@ const annotations = [
 
     },
     color: ['#cc0000'],
-    x: 260,
-    y: (innerHeight - 660),
+    x: 235,
+    y: (innerHeight - 790),
     dy: 10,
     dx: 60
   }]
@@ -222,7 +222,7 @@ select('#vis-1').append(() => chart2).call(responsivefy)
 const timeLineAnnotations = [
   {
     note: {
-      label: '8.4M Atico, Arequipa',
+      label: '8.4M Atico, Arequipa (2001)',
       title: 'More Powerful since 1960',
       wrap: 250, // try something smaller to see text split in several lines
       padding: 10 // More = text lower
@@ -236,7 +236,7 @@ const timeLineAnnotations = [
   },
   {
     note: {
-      label: '9.4M Ite, Tacna',
+      label: '9.4M Ite, Tacna (1604)',
       title: 'More Powerful in History',
       wrap: 250, // try something smaller to see text split in several lines
       padding: 10 // More = text lower
