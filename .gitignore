@@ -6,3 +6,9 @@ node_modules
 **/.DS_Store
 .cache
 
+# data/*.*
+# data/information
+# data/output
+
+codebase.md
+.aidigestignore
