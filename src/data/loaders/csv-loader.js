@@ -1,6 +1,6 @@
 // csv-loader.js - Functions for loading CSV data
 import { csv } from 'd3-fetch'
-import { logger } from '../../utils/logger.js'
+// import { logger } from '../../utils/logger.js'
 import { validateInstrumentalData, validateHistoricalData } from '../validators/data-validator.js'
 
 /**
@@ -11,16 +11,16 @@ import { validateInstrumentalData, validateHistoricalData } from '../validators/
  */
 export async function loadInstrumentalData (filePath) {
   try {
-    logger.debug(`Loading instrumental data from: ${filePath}`)
+    // logger.debug(`Loading instrumental data from: ${filePath}`)
     const data = await csv(filePath)
 
     // Validate the data structure
     validateInstrumentalData(data)
-    logger.debug(`Loaded ${data.length} instrumental data records`)
+    // logger.debug(`Loaded ${data.length} instrumental data records`)
 
     return data
   } catch (error) {
-    logger.error('Error loading instrumental data:', error)
+    // logger.error('Error loading instrumental data:', error)
     throw new Error(`Failed to load instrumental data: ${error.message}`)
   }
 }
@@ -33,16 +33,16 @@ export async function loadInstrumentalData (filePath) {
  */
 export async function loadHistoricalData (filePath) {
   try {
-    logger.debug(`Loading historical data from: ${filePath}`)
+    // logger.debug(`Loading historical data from: ${filePath}`)
     const data = await csv(filePath)
 
     // Validate the data structure
     validateHistoricalData(data)
-    logger.debug(`Loaded ${data.length} historical data records`)
+    // logger.debug(`Loaded ${data.length} historical data records`)
 
     return data
   } catch (error) {
-    logger.error('Error loading historical data:', error)
+    // logger.error('Error loading historical data:', error)
     throw new Error(`Failed to load historical data: ${error.message}`)
   }
 }

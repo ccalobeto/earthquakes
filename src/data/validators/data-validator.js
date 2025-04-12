@@ -1,5 +1,5 @@
 // data-validator.js - Validation functions for seismic data
-import { logger } from '../../utils/logger.js'
+// import { logger } from '../../utils/logger.js'
 
 /**
  * Required fields for instrumental data CSV
@@ -52,10 +52,10 @@ export function validateInstrumentalData (data) {
   )
 
   if (invalidCoordinates.length > 0) {
-    logger.warn(`Found ${invalidCoordinates.length} records with invalid coordinates`)
+    // logger.warn(`Found ${invalidCoordinates.length} records with invalid coordinates`)
   }
 
-  logger.debug('Instrumental data validation passed')
+  // logger.debug('Instrumental data validation passed')
 }
 
 /**
@@ -87,10 +87,10 @@ export function validateHistoricalData (data) {
   })
 
   if (invalidDates.length > 0) {
-    logger.warn(`Found ${invalidDates.length} records with invalid dates`)
+    // logger.warn(`Found ${invalidDates.length} records with invalid dates`)
   }
 
-  logger.debug('Historical data validation passed')
+  // logger.debug('Historical data validation passed')
 }
 
 /**
@@ -112,5 +112,5 @@ export function validateGeoEnrichedData (data) {
     throw new Error(`Geo-enriched data missing required fields: ${missingFields.join(', ')}`)
   }
 
-  logger.debug('Geo-enriched data validation passed')
+  // logger.debug('Geo-enriched data validation passed')
 }
