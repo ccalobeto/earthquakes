@@ -32,7 +32,7 @@ export function parseDate (dateString) {
  * @param {string} timeString - Time string in HH:MM:SS format
  * @returns {Date|null} Parsed Date object or null if parsing fails
  */
-export function parseDateTime (dateString, timeString) {
+export function parseDateAndTime (dateString, timeString) {
   try {
     const parser = timeParse('%d/%m/%Y %H:%M:%S')
 

@@ -3,7 +3,7 @@
  * Used primarily for seismic data processing in Peru
  */
 
-import { pointInPolygon } from '@turf/boolean-point-in-polygon'
+import { booleanPointInPolygon } from '@turf/boolean-point-in-polygon'
 import { distance } from '@turf/distance'
 
 /**
@@ -55,7 +55,7 @@ export function getCountyId (features, coordinates) {
   // Find the feature that contains the point
   for (const feature of features) {
     try {
-      if (pointInPolygon(point, feature)) {
+      if (booleanPointInPolygon(point, feature)) {
         return feature.id
       }
     } catch (error) {
