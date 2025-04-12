@@ -1,6 +1,8 @@
 // csv-loader.js - Functions for loading CSV data
-import { csv } from 'd3-fetch'
+import fs from 'node:fs'
+import { csvParse } from 'd3-dsv'
 // import { logger } from '../../utils/logger.js'
+
 import { validateInstrumentalData, validateHistoricalData } from '../validators/data-validator.js'
 
 /**
@@ -12,8 +14,8 @@ import { validateInstrumentalData, validateHistoricalData } from '../validators/
 export async function loadInstrumentalData (filePath) {
   try {
     // logger.debug(`Loading instrumental data from: ${filePath}`)
-    const data = await csv(filePath)
-
+    const csv = fs.readFileSync(filePath, 'utf8')
+    const data = csvParse(csv)
     // Validate the data structure
     validateInstrumentalData(data)
     // logger.debug(`Loaded ${data.length} instrumental data records`)
@@ -34,7 +36,8 @@ export async function loadInstrumentalData (filePath) {
 export async function loadHistoricalData (filePath) {
   try {
     // logger.debug(`Loading historical data from: ${filePath}`)
-    const data = await csv(filePath)
+    const csv = fs.readFileSync(filePath, 'utf8')
+    const data = csvParse(csv)
 
     // Validate the data structure
     validateHistoricalData(data)
