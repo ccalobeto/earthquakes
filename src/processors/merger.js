@@ -28,7 +28,6 @@ export function mergeDatasets (instrumentalData, historicalData, districts, depa
   if (!Array.isArray(instrumentalData) || !Array.isArray(historicalData)) {
     throw new Error('Invalid input data: Both instrumental and historical data must be arrays')
   }
-
   if (!districts || !districts.features || !Array.isArray(districts.features)) {
     throw new Error('Invalid districts data: Missing or malformed features array')
   }
