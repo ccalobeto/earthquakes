@@ -12,3 +12,5 @@ node_modules
 
 codebase.md
 .aidigestignore
+dist
+docs
