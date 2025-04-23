@@ -1,24 +1,23 @@
 /* eslint-disable no-tabs */
-import { csv, json } from 'https://cdn.jsdelivr.net/npm/d3-fetch@3.0.1/+esm'
-import { select } from 'https://cdn.jsdelivr.net/npm/d3-selection@3.0.0/+esm'
-import { group } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
+import { csv, json } from 'd3-fetch'
+import { select } from 'd3-selection'
+import { group } from 'd3-array'
+import { geoIdentity } from 'd3-geo'
+import { scaleThreshold, scaleSqrt } from 'd3-scale'
+import { timeParse } from 'd3-time-format'
+import { annotation } from 'd3-svg-annotation'
+import * as topojson from 'topojson-client'
 
-import { range } from 'https://cdn.jsdelivr.net/npm/@observablehq/inputs@0.10.6/+esm'
-import * as topojson from 'https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/+esm'
-import { geoIdentity } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'
-import { scaleThreshold, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
-import { timeParse } from 'https://cdn.jsdelivr.net/npm/d3-time-format@4.1.0/+esm'
-import { mapChart } from './js/drawmap.js'
 import { circleLegendArr, height, magnitude, segmentation, maxRadius, width, innerWidth, innerHeight, regions } from './js/constants.js'
 import { circleLegend, barLegend } from './js/legends.js'
 import { mapLabels } from './js/labels.js'
 import { responsivefy } from './js/responsiveness.js'
-import { annotation } from 'https://cdn.jsdelivr.net/npm/d3-svg-annotation@2.5.1/+esm'
 import { circleTimelineChart } from './js/drawTimelineCircles.js'
 import { getRegion } from './js/utils.js'
+import { mapChart } from './js/drawmap.js'
 
-const url = 'https://cdn.jsdelivr.net/npm/latam-atlas@0.0.4/files/peru-100k.json'
-const file = './data/output.csv'
+const url = '/earthquakes/data/input/peru-100k.json'
+const file = '/earthquakes/data/output/output.csv'
 
 const pe = await json(url)
 let rawData = await csv(file).then(d => {
