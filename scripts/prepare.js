@@ -20,7 +20,6 @@ async function main () {
     console.log('Geographic data loaded successfully')
 
     // Process coastal districts for distance calculations
-
     const coastCentroids = filterCoastalCentroids(calculateDistrictCentroids(districts))
     console.log('Coastal centroids processed successfully')
 

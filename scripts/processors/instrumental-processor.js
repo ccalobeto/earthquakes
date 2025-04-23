@@ -1,14 +1,13 @@
 // instrumental-processor.js - Processing functions for instrumental seismic data
 import { parseDateAndTime } from '../../scripts/data/transformers/date-transformer.js'
-// import { logger } from '../utils/logger.js'
 
 /**
  * Processes raw instrumental seismic data into standardized format
  * @param {Array} rawData - Array of raw instrumental data objects from CSV
  * @returns {Array} Processed instrumental data array
  */
-export function processInstrumentalData(rawData) {
-  // logger.debug(`Processing ${rawData.length} instrumental data records`)
+export function processInstrumentalData (rawData) {
+  console.log(`Processing ${rawData.length} instrumental data records`)
 
   return rawData.map((row, index) => {
     try {
@@ -21,7 +20,7 @@ export function processInstrumentalData(rawData) {
 
       // Validate coordinates
       if (isNaN(latitude) || isNaN(longitude)) {
-        // logger.warn(`Invalid coordinates in instrumental record ${index}: [${longitude}, ${latitude}]`)
+        console.log(`Invalid coordinates in instrumental record ${index}: [${longitude}, ${latitude}]`)
       }
 
       // Parse numeric values
@@ -44,7 +43,7 @@ export function processInstrumentalData(rawData) {
         type: 'Instrumental'
       }
     } catch (error) {
-      // logger.error(`Error processing instrumental record ${index}:`, error)
+      console.log(`Error processing instrumental record ${index}:`, error)
       // Return null for invalid records to be filtered out later
       return null
     }

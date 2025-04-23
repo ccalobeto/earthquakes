@@ -1,13 +1,12 @@
 // historical-processor.js - Processing functions for historical seismic data
 import { parseDateAndTime, parseDate } from '../../scripts/data/transformers/date-transformer.js'
-// import { logger } from '../utils/logger.js'
 
 /**
  * Processes raw historical seismic data into standardized format
  * @param {Array} rawData - Array of raw historical data objects from CSV
  * @returns {Array} Processed historical data array
  */
-export function processHistoricalData(rawData) {
+export function processHistoricalData (rawData) {
   // logger.debug(`Processing ${rawData.length} historical data records`)
 
   return rawData.map((row, index) => {
@@ -17,7 +16,7 @@ export function processHistoricalData(rawData) {
       const utcDate2 = parseDate(row['fecha UTC'])
 
       if (!utcDate || !utcDate2) {
-        // logger.warn(`Invalid date in historical record ${index}: ${row['fecha UTC']}`)
+        console.log(`Invalid date in historical record ${index}: ${row['fecha UTC']}`)
         return null
       }
 
@@ -56,7 +55,7 @@ export function processHistoricalData(rawData) {
         type: 'Historical'
       }
     } catch (error) {
-      // logger.error(`Error processing historical record ${index}:`, error)
+      console.log(`Error processing historical record ${index}:`, error)
       // Return null for invalid records to be filtered out later
       return null
     }
@@ -69,7 +68,7 @@ export function processHistoricalData(rawData) {
  * @param {string} value - Magnitude value from CSV
  * @returns {number} Parsed magnitude value
  */
-function parseMagnitude(value) {
+function parseMagnitude (value) {
   if (!value) return 0
   return value.includes('-')
     ? parseFloat(value.replace(/[-]/g, ''))
