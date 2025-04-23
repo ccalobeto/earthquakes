@@ -141,27 +141,6 @@ export function filterCoastalCentroids (centroidCollection) {
  * @returns {Object} - Processed geographic data including districts, departments, and coastal centroids
  * @throws {Error} - If processing fails
  */
-export function processGeographicData (geoData) {
-  try {
-    // Extract features from TopoJSON
-    const { districts, departments } = extractGeoFeatures(geoData)
-
-    // Calculate district centroids
-    const districtCentroids = calculateDistrictCentroids(districts)
-
-    // Filter to get coastal centroids
-    const coastalCentroids = filterCoastalCentroids(districtCentroids)
-
-    return {
-      districts,
-      departments,
-      districtCentroids,
-      coastalCentroids
-    }
-  } catch (error) {
-    throw new Error(`Failed to process geographic data: ${error.message}`)
-  }
-}
 
 /**
  * Validates geographic coordinates are within expected boundaries for Peru
@@ -216,7 +195,6 @@ export default {
   extractGeoFeatures,
   calculateDistrictCentroids,
   filterCoastalCentroids,
-  processGeographicData,
   validatePeruCoordinates,
   isOffshorePoint
 }

@@ -1,6 +1,5 @@
 // historical-processor.js - Processing functions for historical seismic data
-import { parseDateAndTime, parseDate } from '../data/transformers/date-transformer.js'
-// import { logger } from '../utils/logger.js'
+import { parseDateAndTime, parseDate } from '../../scripts/data/transformers/date-transformer.js'
 
 /**
  * Processes raw historical seismic data into standardized format
@@ -17,7 +16,7 @@ export function processHistoricalData (rawData) {
       const utcDate2 = parseDate(row['fecha UTC'])
 
       if (!utcDate || !utcDate2) {
-        // logger.warn(`Invalid date in historical record ${index}: ${row['fecha UTC']}`)
+        console.log(`Invalid date in historical record ${index}: ${row['fecha UTC']}`)
         return null
       }
 
@@ -56,7 +55,7 @@ export function processHistoricalData (rawData) {
         type: 'Historical'
       }
     } catch (error) {
-      // logger.error(`Error processing historical record ${index}:`, error)
+      console.log(`Error processing historical record ${index}:`, error)
       // Return null for invalid records to be filtered out later
       return null
     }

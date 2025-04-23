@@ -1,5 +1,4 @@
 // geo-validator.js - Validation functions for geographic data
-// import { logger } from '../../utils/logger.js'
 
 /**
  * Validates geographic data structure
@@ -29,7 +28,7 @@ export function validateGeoData (geoData) {
     throw new Error('Geographic data has invalid topology structure')
   }
 
-  // logger.debug('Geographic data validation passed')
+  console.log('Geographic data validation passed')
 }
 
 /**
@@ -51,8 +50,8 @@ export function validateFeatureCollection (featureCollection) {
   }
 
   if (featureCollection.features.length === 0) {
-    // logger.warn('Feature collection contains no features')
+    console.log('Feature collection contains no features')
   }
 
-  // logger.debug('Feature collection validation passed')
+  console.log('Feature collection validation passed')
 }
