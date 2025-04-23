@@ -1,12 +1,12 @@
 // main.js - Entry point for the seismic data processing pipeline
 import path from 'node:path'
 import { loadConfig } from './config.js'
-import { loadGeoData } from './src/data/loaders/geo-loader.js'
-import { loadInstrumentalData, loadHistoricalData } from './src/data/loaders/csv-loader.js'
-import { processInstrumentalData } from './src/processors/instrumental-processor.js'
-import { processHistoricalData } from './src/processors/historical-processor.js'
-import { mergeDatasets } from './src/processors/merger.js'
-import { exportToCSV } from './src/exporters/csv-exporter.js'
+import { loadGeoData } from '../src/data/loaders/geo-loader.js'
+import { loadInstrumentalData, loadHistoricalData } from '../src/data/loaders/csv-loader.js'
+import { processInstrumentalData } from '../src/processors/instrumental-processor.js'
+import { processHistoricalData } from '../src/processors/historical-processor.js'
+import { mergeDatasets } from '../src/processors/merger.js'
+import { exportToCSV } from '../src/exporters/csv-exporter.js'
 // import { logger } from './src/utils/logger.js'
 
 async function main () {
@@ -20,7 +20,7 @@ async function main () {
     // logger.info('Geographic data loaded successfully')
 
     // Process coastal districts for distance calculations
-    const { filterCoastalCentroids, calculateDistrictCentroids } = await import('./src/processors/geo-processor.js')
+    const { filterCoastalCentroids, calculateDistrictCentroids } = await import('../src/processors/geo-processor.js')
     const coastCentroids = filterCoastalCentroids(calculateDistrictCentroids(districts))
     // logger.info('Coastal centroids processed successfully')
 
