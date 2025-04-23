@@ -1,5 +1,5 @@
 // instrumental-processor.js - Processing functions for instrumental seismic data
-import { parseDateAndTime } from '../data/transformers/date-transformer.js'
+import { parseDateAndTime } from '../../scripts/data/transformers/date-transformer.js'
 // import { logger } from '../utils/logger.js'
 
 /**
@@ -7,7 +7,7 @@ import { parseDateAndTime } from '../data/transformers/date-transformer.js'
  * @param {Array} rawData - Array of raw instrumental data objects from CSV
  * @returns {Array} Processed instrumental data array
  */
-export function processInstrumentalData (rawData) {
+export function processInstrumentalData(rawData) {
   // logger.debug(`Processing ${rawData.length} instrumental data records`)
 
   return rawData.map((row, index) => {

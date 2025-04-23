@@ -1,5 +1,5 @@
 // historical-processor.js - Processing functions for historical seismic data
-import { parseDateAndTime, parseDate } from '../data/transformers/date-transformer.js'
+import { parseDateAndTime, parseDate } from '../../scripts/data/transformers/date-transformer.js'
 // import { logger } from '../utils/logger.js'
 
 /**
@@ -7,7 +7,7 @@ import { parseDateAndTime, parseDate } from '../data/transformers/date-transform
  * @param {Array} rawData - Array of raw historical data objects from CSV
  * @returns {Array} Processed historical data array
  */
-export function processHistoricalData (rawData) {
+export function processHistoricalData(rawData) {
   // logger.debug(`Processing ${rawData.length} historical data records`)
 
   return rawData.map((row, index) => {
@@ -69,7 +69,7 @@ export function processHistoricalData (rawData) {
  * @param {string} value - Magnitude value from CSV
  * @returns {number} Parsed magnitude value
  */
-function parseMagnitude (value) {
+function parseMagnitude(value) {
   if (!value) return 0
   return value.includes('-')
     ? parseFloat(value.replace(/[-]/g, ''))
