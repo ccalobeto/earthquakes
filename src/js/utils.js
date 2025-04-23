@@ -1,5 +1,5 @@
-import { timeFormat } from 'https://cdn.jsdelivr.net/npm/d3-time-format@4.1.0/+esm'
-import { timeSecond, timeMinute, timeHour, timeDay, timeWeek, timeMonth, timeYear } from 'https://cdn.jsdelivr.net/npm/d3-time@3.1.0/+esm'
+import { timeFormat } from 'd3-time-format'
+import { timeSecond, timeMinute, timeHour, timeDay, timeWeek, timeMonth, timeYear } from 'd3-time'
 
 export function multiFormat (date) {
   const formatMillisecond = timeFormat('.%L')
