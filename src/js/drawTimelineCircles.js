@@ -6,6 +6,7 @@ import { format } from 'https://cdn.jsdelivr.net/npm/d3-format@3.1.0/+esm'
 import { min, max } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
 import { multiFormat } from './utils.js'
 import { innerWidth, margin } from './constants.js'
+import { timeFormat } from 'https://cdn.jsdelivr.net/npm/d3-time-format@4/+esm'
 
 export function circleTimelineChart (data, {
   vars,
@@ -15,6 +16,7 @@ export function circleTimelineChart (data, {
   leftPositionGridLine = 100
 } = {}) {
   const formatNum = format('.2f')
+  const formatYear = timeFormat('%Y')
   let height = 0
 
   for (let i = 0; i < data.length; i++) {
@@ -135,10 +137,21 @@ export function circleTimelineChart (data, {
     yOffset += departments.length * rowSize
   }
 
-  const xAxisGenerator = axisTop(xScale).ticks(innerWidth / 50).tickFormat(multiFormat)
-  const xAxis = table.append('g').attr('class', 'xAxis').attr('transform', 'translate(0, 8)')
-  xAxis.call(xAxisGenerator).select('.domain').remove()
-  xAxis.selectAll('text').style('font-size', '11px')
+  const xAxisGenerator = axisTop(xScale)
+    .ticks(timeYear.every(20)) // Set ticks to show every 20 years
+    .tickFormat(formatYear) // Use year format
+
+  const xAxis = table.append('g')
+    .attr('class', 'xAxis')
+    .attr('transform', 'translate(0, 8)')
+
+  xAxis.call(xAxisGenerator)
+    .select('.domain')
+    .remove()
+
+  xAxis.selectAll('text')
+    .style('font-size', '11px')
+    .style('font-family', 'sans-serif')
 
   return viz.node()
 }
