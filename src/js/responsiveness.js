@@ -1,4 +1,4 @@
-import { select } from 'https://cdn.jsdelivr.net/npm/d3-selection@3.0.0/+esm'
+import { select } from 'd3-selection'
 
 export function responsivefy (svg) {
   // get container + svg aspect ratio

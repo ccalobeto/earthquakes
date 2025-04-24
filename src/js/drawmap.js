@@ -1,5 +1,5 @@
-import { geoPath } from 'https://cdn.jsdelivr.net/npm/d3-geo@3/+esm'
-import { format } from 'https://cdn.jsdelivr.net/npm/d3-format@3.1.0/+esm'
+import { geoPath } from 'd3-geo'
+import { format } from 'd3-format'
 
 export function mapChart (data, {
   svg,

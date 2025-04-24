@@ -1,4 +1,4 @@
-import { timeFormat } from 'https://cdn.jsdelivr.net/npm/d3-time-format@4/+esm'
+import { timeFormat } from 'd3-time-format'
 
 export function getRegion (regions, department) {
   return regions[department]

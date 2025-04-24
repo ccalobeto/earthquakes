@@ -1,9 +1,9 @@
-import { create } from 'https://cdn.jsdelivr.net/npm/d3-selection@3.0.0/+esm'
-import { scaleLinear, scaleThreshold, scalePoint } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
-import { axisBottom } from 'https://cdn.jsdelivr.net/npm/d3-axis@3/+esm'
-import { range, quantile } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
-import { interpolate, quantize, interpolateRound } from 'https://cdn.jsdelivr.net/npm/d3-interpolate@3/+esm'
-import { format } from 'https://cdn.jsdelivr.net/npm/d3-format@3.1.0/+esm'
+import { create } from 'd3-selection'
+import { scaleLinear, scaleThreshold, scalePoint } from 'd3-scale'
+import { axisBottom } from 'd3-axis'
+import { range, quantile } from 'd3-array'
+import { interpolate, quantize, interpolateRound } from 'd3-interpolate'
+import { format } from 'd3-format'
 
 function Legend (color, {
   title,

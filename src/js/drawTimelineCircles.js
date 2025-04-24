@@ -1,12 +1,12 @@
-import { axisTop } from 'https://cdn.jsdelivr.net/npm/d3-axis@3/+esm'
-import { scaleTime, scaleSqrt } from 'https://cdn.jsdelivr.net/npm/d3-scale@4/+esm'
-import { create } from 'https://cdn.jsdelivr.net/npm/d3-selection@3.0.0/+esm'
-import { timeYear } from 'https://cdn.jsdelivr.net/npm/d3-time@3.1.0/+esm'
-import { format } from 'https://cdn.jsdelivr.net/npm/d3-format@3.1.0/+esm'
-import { min, max } from 'https://cdn.jsdelivr.net/npm/d3-array@3.2.0/+esm'
-import { multiFormat } from './utils.js'
-import { innerWidth, margin } from './constants.js'
-import { timeFormat } from 'https://cdn.jsdelivr.net/npm/d3-time-format@4/+esm'
+import { axisTop } from 'd3-axis'
+import { scaleTime, scaleSqrt } from 'd3-scale'
+import { create } from 'd3-selection'
+import { timeYear } from 'd3-time'
+import { format } from 'd3-format'
+import { min, max } from 'd3-array'
+import { timeFormat } from 'd3-time-format'
+
+import { margin } from './constants.js'
 
 export function circleTimelineChart (data, {
   vars,
