@@ -1,34 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Earthquakes</title>
-	<link rel="stylesheet" href="./app/css/base.css">
-	<link rel="stylesheet" href="./app/css/visualization.css">
-	<link rel="icon" type="image/png" sizes="32x32" href="./app/images/favicon-96x96.png" />
+	<title>Earthquakes Visualization</title>
+	<link rel="icon" type="image/png" sizes="96x96" href="app/images/favicon-96x96.png">
+	<link rel="stylesheet" href="src/css/base.css">
+	<link rel="stylesheet" href="src/css/visualization.css">
 </head>
-
-<!-- viewbox="0 0 800 1200" -->
 
 <body>
 	<div class="container">
-		<h1>Earthquakes in Perú</h1>
-		<h2>Events by Department</h2>
-		<h3>The visualization shows all the Earthquakes by <b>department</b> that had more than 7M of intensity since there
-			was a
-			record, in color gray for the time of the Colony and Republic and in green with the sismometers. The <b>Moment
-				Magnitude (M)</b> which
-			is the intensity of the event is represented by the area of the circle.
+		<h2>Peru Earthquakes since 1960</h2>
+		<h3>The visualization shows all the Earthquakes that had more than 5.5M of intensity since 1960.
+			The variables describe in the visualization are the <b>Moment Magnitude (M)</b> which is
+			the intensity of the event represented by the area of the circle and the <b>Depth</b> of the event
+			represented by the color inside the circle.
 		</h3>
 		<div id="vis-1" class="circleChart"></div>
 		<div class="main-info">
 			<h2>Where are the events located?</h2>
 			<h3>The visualization shows all the Earthquakes that had more than 5.5M of intensity since 1960, labelling the
 				more intensive ones. The variables describe in the visualization are the <b>Moment Magnitude (M)</b> which
-				is
-				the intensity of the event and it is represented by the area of the circle and the <b>Depth</b> of the event
+				is the intensity of the event and it is represented by the area of the circle and the <b>Depth</b> of the event
 				represented by the color inside the circle.
 			</h3>
 		</div>
@@ -40,10 +35,7 @@
 					href="https://github.com/ccalobeto/earthquakes">Code</a></p>
 		</div>
 	</div>
-
-
-	<!-- Load your scripts here -->
-	<script type="module" src="./app/index.js"></script>
+	<script type="module" src="src/js/index.js"></script>
 </body>
 
 </html>
