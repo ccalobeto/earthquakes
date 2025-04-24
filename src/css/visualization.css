@@ -1,6 +1,53 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.visualization-section {
+  margin-bottom: 3rem;
+}
+
+.section-header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.section-header h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.section-description {
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  color: #666;
+}
+
+.timeline-chart,
+.map-chart {
+  position: relative;
+  width: 100%;
+  margin: 2rem 0;
+}
+
+.chart-container,
+.map-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
 .map {
   position: relative;
   overflow: hidden;
+  width: 100%;
+}
+
+.timeline-legend,
+.map-legend {
+  margin-top: 1rem;
 }
 
 .legend-circle {
@@ -10,14 +57,6 @@
 
 .legend-bar {
   position: absolute;
-}
-
-.footer {
-  text-align: center;
-}
-
-h3 {
-  font-weight: normal;
 }
 
 .labels {
@@ -39,4 +78,29 @@ text>tspan {
 
 .annotation-note-label>tspan {
   font: 15px sans-serif;
+}
+
+.visualization-footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid #eee;
+}
+
+.footer-content {
+  text-align: center;
+}
+
+.footer-links {
+  margin-top: 1rem;
+}
+
+.footer-links a {
+  color: #666;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.footer-links a:hover {
+  color: #333;
+  text-decoration: underline;
 }

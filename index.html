@@ -12,28 +12,46 @@
 
 <body>
 	<div class="container">
-		<h2>Peru Earthquakes since 1960</h2>
-		<h3>The visualization shows all the Earthquakes that had more than 5.5M of intensity since 1960.
-			The variables describe in the visualization are the <b>Moment Magnitude (M)</b> which is
-			the intensity of the event represented by the area of the circle and the <b>Depth</b> of the event
-			represented by the color inside the circle.
-		</h3>
-		<div id="vis-1" class="circleChart"></div>
-		<div class="main-info">
-			<h2>Where are the events located?</h2>
-			<h3>The visualization shows all the Earthquakes that had more than 5.5M of intensity since 1960, labelling the
-				more intensive ones. The variables describe in the visualization are the <b>Moment Magnitude (M)</b> which
-				is the intensity of the event and it is represented by the area of the circle and the <b>Depth</b> of the event
-				represented by the color inside the circle.
-			</h3>
-		</div>
-		<div id="vis" class="visualization-container"></div>
+		<section id="timeline-section" class="visualization-section">
+			<header class="section-header">
+				<h2>Peru Earthquakes since 1960</h2>
+				<p class="section-description">
+					This timeline shows earthquakes with magnitude greater than 5.5M since 1960.
+					The circle's area represents the <b>Moment Magnitude (M)</b>, while the
+					<b>Depth</b> is shown by the circle's color.
+				</p>
+			</header>
+			<div id="vis-1" class="timeline-chart">
+				<div class="chart-container"></div>
+				<div class="timeline-legend"></div>
+			</div>
+		</section>
 
-		<div class="footer">
-			<p>A demonstration chart in JavaScript and D3.js</p>
-			<p><a href="https://www.carlosleon.dev/posts/earthquakes/">Blog Post</a> | <a
-					href="https://github.com/ccalobeto/earthquakes">Code</a></p>
-		</div>
+		<section id="map-section" class="visualization-section">
+			<header class="section-header">
+				<h2>Geographic Distribution of Earthquakes</h2>
+				<p class="section-description">
+					This map displays the spatial distribution of earthquakes exceeding 5.5M since 1960.
+					Notable events are labeled. Circle size indicates <b>Moment Magnitude (M)</b>,
+					and color represents earthquake <b>Depth</b>.
+				</p>
+			</header>
+			<div id="vis" class="map-chart">
+				<div class="map-container"></div>
+				<div class="map-legend"></div>
+				<div class="map-annotations"></div>
+			</div>
+		</section>
+
+		<footer class="visualization-footer">
+			<div class="footer-content">
+				<p>A demonstration chart in JavaScript and D3.js</p>
+				<nav class="footer-links">
+					<a href="https://www.carlosleon.dev/posts/earthquakes/">Blog Post</a> |
+					<a href="https://github.com/ccalobeto/earthquakes">Code</a>
+				</nav>
+			</div>
+		</footer>
 	</div>
 	<script type="module" src="src/js/index.js"></script>
 </body>
