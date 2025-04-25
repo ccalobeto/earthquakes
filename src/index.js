@@ -7,7 +7,6 @@ import { VISUALIZATION_CONFIG, INNER_DIMENSIONS } from './config/constants.js'
 import { createMapChart } from './components/MapChart.js'
 import { createTimelineChart } from './components/TimelineChart.js'
 import { createCircleLegend, createBarLegend } from './components/Legend.js'
-import { makeResponsive } from './utils/responsiveness.js'
 import { createDepthColorScale, calculateMagnitudeRadius } from './utils/scales.js'
 import { transformEarthquakeData, transformTimelineData, filterInstrumentalData } from './utils/transformers.js'
 import styles from './css/Visualization.module.css'
@@ -43,7 +42,6 @@ async function initializeVisualization () {
       .append('svg')
       .attr('width', VISUALIZATION_CONFIG.map.width)
       .attr('height', VISUALIZATION_CONFIG.map.height)
-      .call(makeResponsive)
       .attr('class', styles.map)
 
     // Create map visualization
@@ -95,7 +93,6 @@ async function initializeVisualization () {
 
     select('#vis-1')
       .append(() => timelineChart)
-      .call(makeResponsive)
   } catch (error) {
     console.error('Error initializing visualization:', error)
   }

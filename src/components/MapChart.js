@@ -20,6 +20,9 @@ export function createMapChart (data, {
   translationX = 0,
   translationY = 0
 } = {}) {
+  // Set viewBox for responsive scaling
+  svg.attr('viewBox', `0 0 ${VISUALIZATION_CONFIG.map.width} ${VISUALIZATION_CONFIG.map.height}`)
+
   // Add chart title and description for screen readers
   svg.append('title')
     .text('Earthquake Visualization Map')

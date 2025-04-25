@@ -37,6 +37,19 @@
   overflow: hidden;
 }
 
+.timelineChart {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2/1;
+  overflow: visible;
+}
+
+.mapChart {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 2/3;
+}
+
 .chartContainer,
 .mapContainer {
   position: relative;
@@ -46,11 +59,17 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.mapContainer {
+  width: 100%;
+  height: 100%;
+}
+
 .map {
   position: relative;
   overflow: hidden;
   width: 100%;
   border-radius: 8px;
+  height: auto;
 }
 
 .legendContainer {
@@ -97,6 +116,10 @@
   font-size: 0.9375rem;
 }
 
+.earthquakeTable {
+  transform-origin: top left;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
@@ -108,5 +131,9 @@
 
   .sectionDescription {
     font-size: 1rem;
+  }
+
+  .timelineChart {
+    aspect-ratio: 3/2;
   }
 }

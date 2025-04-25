@@ -32,8 +32,7 @@ export function createTimelineChart (data, {
 
   // Create main SVG container with accessibility attributes
   const viz = create('svg')
-    .attr('width', width)
-    .attr('height', height)
+    .attr('viewBox', `0 0 ${width} ${height}`)
     .attr('class', styles.timelineChart)
     .attr('role', 'img')
     .attr('aria-label', 'Timeline of earthquakes in Peru')
