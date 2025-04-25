@@ -1,61 +1,43 @@
 import { csv, json } from 'd3-fetch'
 import { select } from 'd3-selection'
-import { group } from 'd3-array'
 import { geoIdentity } from 'd3-geo'
-import { scaleThreshold } from 'd3-scale'
-import { timeParse } from 'd3-time-format'
 import * as topojson from 'topojson-client'
 
 import { VISUALIZATION_CONFIG, INNER_DIMENSIONS } from './config/constants.js'
 import { createMapChart } from './components/MapChart.js'
 import { createTimelineChart } from './components/TimelineChart.js'
 import { createCircleLegend, createBarLegend } from './components/Legend.js'
-import { makeResponsive, calculateResponsiveRadius } from './utils/responsiveness.js'
-import { getRegionFromCategories } from './utils/formatters.js'
+import { makeResponsive } from './utils/responsiveness.js'
+import { createDepthColorScale, calculateMagnitudeRadius } from './utils/scales.js'
+import { transformEarthquakeData, transformTimelineData, filterInstrumentalData } from './utils/transformers.js'
 import styles from './css/Visualization.module.css'
 
 async function initializeVisualization () {
   try {
+    // Load and transform data
     const [geoData, earthquakeData] = await Promise.all([
       json('/earthquakes/data/input/peru-100k.json'),
-      csv('/earthquakes/data/output/output.csv').then(data => data.map(row => ({
-        eventId: +row.eventId,
-        utcDate: row.utcDate,
-        geometry: {
-          type: 'Point',
-          coordinates: [+row.lon, +row.lat]
-        },
-        depth: +row.depth,
-        magnitude: +row.magnitude,
-        year: +row.year,
-        type: row.type,
-        id: row.id,
-        distanceFromCoast: +row.distanceFromCoast,
-        department: row.department,
-        description: row.description
-      })))
+      csv('/earthquakes/data/output/output.csv').then(transformEarthquakeData)
     ])
 
+    // Fix Pisco earthquake data
     const piscoEarthquake = earthquakeData.find(d => d.magnitude >= 7.8 && d.year === 2007)
     if (piscoEarthquake) {
-      piscoEarthquake.distanceFromCoast = '40'
+      piscoEarthquake.distanceFromCoast = 40
       piscoEarthquake.department = 'Ica'
       piscoEarthquake.description = 'Pisco'
     }
 
-    const instrumentalData = earthquakeData.filter(
-      d => d.type === 'Instrumental' && d.magnitude >= VISUALIZATION_CONFIG.map.magnitudeThreshold
-    )
-
+    // Process geographic data
     const features = topojson.feature(geoData, geoData.objects.level2)
     const departments = topojson.feature(geoData, geoData.objects.level2)
     const projection = geoIdentity()
       .reflectY(true)
       .fitSize([INNER_DIMENSIONS.width, INNER_DIMENSIONS.height], features)
 
-    const depthScale = scaleThreshold()
-      .domain(VISUALIZATION_CONFIG.map.depthSegmentation.map(d => d.depth))
-      .range(VISUALIZATION_CONFIG.map.depthSegmentation.map(d => d.color))
+    // Filter instrumental data and create map visualization
+    const instrumentalData = filterInstrumentalData(earthquakeData)
+    const depthScale = createDepthColorScale()
 
     const mapSvg = select('#vis')
       .append('svg')
@@ -64,6 +46,7 @@ async function initializeVisualization () {
       .call(makeResponsive)
       .attr('class', styles.map)
 
+    // Create map visualization
     createMapChart(instrumentalData, {
       svg: mapSvg,
       projection,
@@ -71,15 +54,12 @@ async function initializeVisualization () {
       border: departments,
       colorScale: depthScale,
       colorBy: 'depth',
-      radiusScale: magnitude => calculateResponsiveRadius(magnitude, {
-        maxRadius: VISUALIZATION_CONFIG.map.maxRadius
-      }),
+      radiusScale: magnitude => calculateMagnitudeRadius(magnitude),
       radiusBy: 'magnitude'
     })
 
-    const maxRadius9 = calculateResponsiveRadius(9, {
-      maxRadius: VISUALIZATION_CONFIG.map.maxRadius
-    })
+    // Add legends to map
+    const maxRadius9 = calculateMagnitudeRadius(9)
 
     createCircleLegend(VISUALIZATION_CONFIG.legend.circle.magnitudes, {
       svg: mapSvg.append('g')
@@ -90,9 +70,7 @@ async function initializeVisualization () {
           2 * VISUALIZATION_CONFIG.legend.barHeight -
           VISUALIZATION_CONFIG.legend.padding
         })`),
-      scale: magnitude => calculateResponsiveRadius(magnitude, {
-        maxRadius: VISUALIZATION_CONFIG.map.maxRadius
-      }),
+      scale: magnitude => calculateMagnitudeRadius(magnitude),
       title: 'Magnitude (M)'
     })
 
@@ -108,50 +86,10 @@ async function initializeVisualization () {
       title: 'Depth (Km)'
     })
 
-    const timelineData = earthquakeData
-      .filter(d => d.magnitude >= 7)
-      .map((d, i) => {
-        const parseDate = timeParse('%a %b %d %Y %H:%M:%S')
-        return {
-          eventId: i,
-          year: d.year,
-          magnitude: d.magnitude,
-          department: d.department === 'Lima' || d.department === 'Callao'
-            ? 'Lima y Callao'
-            : d.department,
-          date: parseDate(d.utcDate.slice(0, 24)),
-          type: d.type
-        }
-      })
-      .map(d => ({
-        ...d,
-        region: getRegionFromCategories(VISUALIZATION_CONFIG.regions, d.department)
-      }))
-
-    const vars = {
-      cx: 'date',
-      cy: 'department',
-      r: 'magnitude'
-    }
-
-    const transformedData = Array.from(
-      group(timelineData, d => d.region, d => d.department)
-    ).map(d => ({
-      region: d[0],
-      departments: Array.from(d[1])
-        .map(d2 => ({
-          department: d2[0],
-          earthquakes: d2[1],
-          count: d2[1].length
-        }))
-        .sort((a, b) => b.count - a.count),
-      earthquakes: Array.from(d[1])
-        .map(e => e[1])
-        .flat()
-    }))
-
+    // Create timeline visualization
+    const transformedData = transformTimelineData(earthquakeData)
     const timelineChart = createTimelineChart(transformedData, {
-      vars,
+      vars: { cx: 'date', cy: 'department', r: 'magnitude' },
       width: VISUALIZATION_CONFIG.map.width
     })
 
