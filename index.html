@@ -4,56 +4,54 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Earthquakes Visualization</title>
-	<link rel="icon" type="image/png" sizes="96x96" href="app/images/favicon-96x96.png">
-	<link rel="stylesheet" href="src/css/base.css">
-	<link rel="stylesheet" href="src/css/visualization.css">
+	<title>Peru Earthquakes Visualization</title>
+	<script type="module" src="/src/js/index.js"></script>
 </head>
 
 <body>
-	<div class="container">
-		<section id="timeline-section" class="visualization-section">
-			<header class="section-header">
-				<h2>Peru Earthquakes since 1960</h2>
-				<p class="section-description">
-					This timeline shows earthquakes with magnitude greater than 5.5M since 1960.
-					The circle's area represents the <b>Moment Magnitude (M)</b>, while the
-					<b>Depth</b> is shown by the circle's color.
+	<main class="container">
+		<section id="timeline-section" class="visualizationSection">
+			<header class="sectionHeader">
+				<h2 class="sectionTitle">Historical Timeline of Major Earthquakes</h2>
+				<p class="sectionDescription">
+					Timeline showing earthquakes of magnitude 7.0 or greater since historical records began.
+					Circle size indicates magnitude, and color distinguishes between historical and instrumental records.
 				</p>
 			</header>
-			<div id="vis-1" class="timeline-chart">
-				<div class="chart-container"></div>
-				<div class="timeline-legend"></div>
+			<div id="vis-1" class="timelineChart">
+				<div class="chartContainer"></div>
+				<div class="timelineLegend"></div>
 			</div>
 		</section>
 
-		<section id="map-section" class="visualization-section">
-			<header class="section-header">
-				<h2>Geographic Distribution of Earthquakes</h2>
-				<p class="section-description">
+		<section id="map-section" class="visualizationSection">
+			<header class="sectionHeader">
+				<h2 class="sectionTitle">Geographic Distribution of Earthquakes</h2>
+				<p class="sectionDescription">
 					This map displays the spatial distribution of earthquakes exceeding 5.5M since 1960.
 					Notable events are labeled. Circle size indicates <b>Moment Magnitude (M)</b>,
 					and color represents earthquake <b>Depth</b>.
 				</p>
 			</header>
-			<div id="vis" class="map-chart">
-				<div class="map-container"></div>
-				<div class="map-legend"></div>
-				<div class="map-annotations"></div>
+			<div id="vis" class="mapChart">
+				<div class="mapContainer"></div>
+				<div class="legendContainer">
+					<div class="legendBar"></div>
+					<div class="legendCircle"></div>
+				</div>
 			</div>
 		</section>
 
-		<footer class="visualization-footer">
-			<div class="footer-content">
-				<p>A demonstration chart in JavaScript and D3.js</p>
-				<nav class="footer-links">
-					<a href="https://www.carlosleon.dev/posts/earthquakes/">Blog Post</a> |
-					<a href="https://github.com/ccalobeto/earthquakes">Code</a>
+		<footer class="visualizationFooter">
+			<div class="footerContent">
+				<p>A demonstration visualization in JavaScript and D3.js</p>
+				<nav class="footerLinks">
+					<a href="https://github.com/username/earthquakes">Source Code</a> |
+					<a href="https://www.example.com/data">Data Source</a>
 				</nav>
 			</div>
 		</footer>
-	</div>
-	<script type="module" src="src/js/index.js"></script>
+	</main>
 </body>
 
 </html>

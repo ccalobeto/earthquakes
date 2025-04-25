@@ -1,0 +1,112 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.visualizationSection {
+  margin-bottom: 3rem;
+}
+
+.sectionHeader {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.sectionTitle {
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.sectionDescription {
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.timelineChart,
+.mapChart {
+  position: relative;
+  width: 100%;
+  margin: 2rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.chartContainer,
+.mapContainer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.map {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.legendContainer {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+}
+
+.legendCircle {
+  position: absolute;
+  display: flex;
+}
+
+.legendBar {
+  position: absolute;
+}
+
+.labels {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-style: italic;
+  font-size: 0.875rem;
+}
+
+.text {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.75rem;
+}
+
+.legendTitle {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.annotationTitle {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.annotationLabel {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.9375rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .sectionDescription {
+    font-size: 1rem;
+  }
+}
