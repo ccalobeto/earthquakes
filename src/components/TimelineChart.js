@@ -7,7 +7,7 @@ import { min, max } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
 
 import { VISUALIZATION_CONFIG } from '../config/constants.js'
-import styles from '../css/Visualization.module.css'
+// import styles from '../css/Visualization.module.css'
 
 /**
  * Creates an accessible timeline visualization of earthquakes
@@ -33,7 +33,7 @@ export function createTimelineChart (data, {
   // Create main SVG container with accessibility attributes
   const viz = create('svg')
     .attr('viewBox', `0 0 ${width} ${height}`)
-    .attr('class', styles.timelineChart)
+    .attr('class', 'timelineChart')
     .attr('role', 'img')
     .attr('aria-label', 'Timeline of earthquakes in Peru')
 
@@ -47,7 +47,7 @@ export function createTimelineChart (data, {
   const chart = viz
     .append('g')
     .attr('transform', `translate(${VISUALIZATION_CONFIG.timeline.margins.left}, ${VISUALIZATION_CONFIG.timeline.margins.top})`)
-    .attr('class', styles.timelineContent)
+    .attr('class', 'timelineContent')
     .attr('role', 'graphics-document')
     .attr('aria-roledescription', 'Timeline visualization')
 
@@ -69,12 +69,12 @@ export function createTimelineChart (data, {
   // Create main table structure
   const table = chart
     .append('g')
-    .attr('class', styles.earthquakeTable)
+    .attr('class', 'earthquakeTable')
     .attr('transform', 'translate(0, 0)')
 
   // Add header section with proper ARIA labels
   const yAxis = table.append('g')
-    .attr('class', styles.axisY)
+    .attr('class', 'axisY')
     .attr('role', 'graphics-symbol')
     .attr('aria-label', 'Timeline headers')
     .style('font-size', VISUALIZATION_CONFIG.timeline.fontSizes.header)
@@ -110,7 +110,7 @@ export function createTimelineChart (data, {
 
   // Create table body
   const tbody = table.append('g')
-    .attr('class', styles.timelinePlot)
+    .attr('class', 'timelinePlot')
     .attr('transform', `translate(0, ${rowSize})`)
 
   // Render data rows
@@ -162,7 +162,7 @@ export function createTimelineChart (data, {
 
       // Add earthquake circles
       const earthquakeGroup = row.append('g')
-        .attr('class', styles.earthquakeCircles)
+        .attr('class', 'earthquakeCircles')
         .attr('role', 'graphics-symbol')
         .attr('aria-label', `Earthquakes in ${departments[j].department}`)
 
@@ -191,7 +191,7 @@ export function createTimelineChart (data, {
     .tickFormat(formatYear)
 
   const xAxis = table.append('g')
-    .attr('class', styles.xAxis)
+    .attr('class', 'xAxis')
     .attr('role', 'graphics-symbol')
     .attr('aria-label', 'Timeline years')
     .attr('transform', 'translate(0, 8)')

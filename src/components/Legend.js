@@ -2,7 +2,7 @@ import { create } from 'd3-selection'
 import { scaleLinear, scaleThreshold } from 'd3-scale'
 import { axisBottom } from 'd3-axis'
 import { quantize, interpolate, interpolateRound } from 'd3-interpolate'
-import styles from '../css/Visualization.module.css'
+// import styles from '../css/Visualization.module.css'
 
 /**
  * Creates an accessible color or circle size legend
@@ -80,7 +80,7 @@ function createLegend (color, {
       .attr('fill', 'currentColor')
       .attr('text-anchor', 'start')
       .attr('font-weight', 'bold')
-      .attr('class', styles.titleLegend)
+      .attr('class', 'titleLegend')
       .attr('role', 'heading')
       .attr('aria-level', '2')
       .text(title))
@@ -104,7 +104,7 @@ export function createBarLegend ({
   })
 
   svg.append('g')
-    .attr('class', styles.barLegend)
+    .attr('class', 'barLegend')
     .attr('role', 'complementary')
     .attr('aria-label', `${title} scale`)
     .attr('transform', 'translate(5, 0)')
@@ -132,7 +132,7 @@ export function createCircleLegend (data, {
   svg.selectAll('g').remove()
 
   const legend = svg.append('g')
-    .attr('class', styles.circleLegend)
+    .attr('class', 'circleLegend')
     .attr('role', 'complementary')
     .attr('aria-label', `${title} scale`)
     .attr('transform', 'translate(0, 0)')
@@ -140,7 +140,7 @@ export function createCircleLegend (data, {
   // Add title
   legend
     .append('text')
-    .attr('class', styles.titleLegend)
+    .attr('class', 'titleLegend')
     .text(title)
     .attr('transform', 'translate(80, 0)')
     .attr('text-anchor', 'start')
@@ -150,7 +150,7 @@ export function createCircleLegend (data, {
   // Create circles group
   const circles = legend
     .append('g')
-    .attr('class', styles.circleLegendWrap)
+    .attr('class', 'circleLegendWrap')
     .attr('role', 'list')
     .selectAll('g')
     .data(data)

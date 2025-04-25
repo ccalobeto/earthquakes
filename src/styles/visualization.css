@@ -4,23 +4,23 @@
   padding: 2rem;
 }
 
-.visualizationSection {
+.visualization-section {
   margin-bottom: 3rem;
 }
 
-.sectionHeader {
+.section-header {
   margin-bottom: 2rem;
   text-align: center;
 }
 
-.sectionTitle {
+.section-header h2 {
   margin-bottom: 1rem;
   color: #333;
   font-size: 2rem;
   font-weight: 600;
 }
 
-.sectionDescription {
+.section-description {
   max-width: 800px;
   margin: 0 auto;
   line-height: 1.6;
@@ -28,8 +28,8 @@
   font-size: 1.1rem;
 }
 
-.timelineChart,
-.mapChart {
+.timeline-chart,
+.map-chart {
   position: relative;
   width: 100%;
   margin: 2rem 0;
@@ -37,21 +37,21 @@
   overflow: hidden;
 }
 
-.timelineChart {
+.timeline-chart {
   width: 100%;
   height: auto;
   aspect-ratio: 2/1;
   overflow: visible;
 }
 
-.mapChart {
+.map-chart {
   width: 100%;
   height: auto;
   aspect-ratio: 2/3;
 }
 
-.chartContainer,
-.mapContainer {
+.chart-container,
+.map-container {
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -59,7 +59,7 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.mapContainer {
+.map-container {
   width: 100%;
   height: 100%;
 }
@@ -72,19 +72,20 @@
   height: auto;
 }
 
-.legendContainer {
+.timeline-legend,
+.map-legend {
   margin-top: 1rem;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.9);
   border-radius: 6px;
 }
 
-.legendCircle {
+.legend-circle {
   position: absolute;
   display: flex;
 }
 
-.legendBar {
+.legend-bar {
   position: absolute;
 }
 
@@ -94,24 +95,24 @@
   font-size: 0.875rem;
 }
 
-.text {
+text>tspan {
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 0.75rem;
 }
 
-.legendTitle {
+.title-legend {
   font-family: system-ui, -apple-system, sans-serif;
   font-weight: 600;
   font-size: 0.875rem;
 }
 
-.annotationTitle {
+.annotation-note-title>tspan {
   font-family: system-ui, -apple-system, sans-serif;
   font-weight: 600;
   font-size: 0.9375rem;
 }
 
-.annotationLabel {
+.annotation-note-label>tspan {
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 0.9375rem;
 }
@@ -120,20 +121,45 @@
   transform-origin: top left;
 }
 
+.visualization-footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid #eee;
+}
+
+.footer-content {
+  text-align: center;
+}
+
+.footer-links {
+  margin-top: 1rem;
+}
+
+.footer-links a {
+  color: #666;
+  text-decoration: none;
+  margin: 0 0.5rem;
+}
+
+.footer-links a:hover {
+  color: #333;
+  text-decoration: underline;
+}
+
 @media (max-width: 768px) {
   .container {
     padding: 1rem;
   }
 
-  .sectionTitle {
+  .section-header h2 {
     font-size: 1.5rem;
   }
 
-  .sectionDescription {
+  .section-description {
     font-size: 1rem;
   }
 
-  .timelineChart {
+  .timeline-chart {
     aspect-ratio: 3/2;
   }
 }

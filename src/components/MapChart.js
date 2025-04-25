@@ -1,7 +1,7 @@
 import { geoPath } from 'd3-geo'
 import { VISUALIZATION_CONFIG } from '../config/constants.js'
 import { formatMagnitude } from '../utils/formatters.js'
-import styles from '../css/Visualization.module.css'
+// import styles from '../css/Visualization.module.css'
 
 /**
  * Creates an accessible map chart visualization for earthquake data
@@ -35,7 +35,7 @@ export function createMapChart (data, {
   const mapContainer = svg
     .append('g')
     .attr('transform', `translate(${translationX}, ${translationY})`)
-    .attr('class', styles.mapContainer)
+    .attr('class', 'mapContainer')
     .attr('role', 'graphics-document')
     .attr('aria-label', 'Map of Peru showing earthquake locations')
     .attr('aria-roledescription', 'Map visualization')
@@ -43,7 +43,7 @@ export function createMapChart (data, {
   // Render map features
   mapContainer
     .append('g')
-    .attr('class', styles.mapFeatures)
+    .attr('class', 'mapFeatures')
     .attr('role', 'graphics-symbol')
     .attr('aria-label', 'Peru regions boundaries')
     .selectAll('path')
@@ -55,7 +55,7 @@ export function createMapChart (data, {
   // Render borders
   mapContainer
     .append('g')
-    .attr('class', styles.mapBorders)
+    .attr('class', 'mapBorders')
     .selectAll('path')
     .data(border.features)
     .join('path')
@@ -69,7 +69,7 @@ export function createMapChart (data, {
   // Render earthquake data points
   const circles = mapContainer
     .append('g')
-    .attr('class', styles.mapData)
+    .attr('class', 'mapData')
     .attr('role', 'graphics-symbol')
     .attr('aria-label', 'Earthquake locations')
     .selectAll('g')

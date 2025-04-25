@@ -9,7 +9,7 @@ import { createTimelineChart } from './components/TimelineChart.js'
 import { createCircleLegend, createBarLegend } from './components/Legend.js'
 import { createDepthColorScale, calculateMagnitudeRadius } from './utils/scales.js'
 import { transformEarthquakeData, transformTimelineData, filterInstrumentalData } from './utils/transformers.js'
-import styles from './css/Visualization.module.css'
+// import styles from './css/Visualization.module.css'
 
 async function initializeVisualization () {
   try {
@@ -42,7 +42,7 @@ async function initializeVisualization () {
       .append('svg')
       .attr('width', VISUALIZATION_CONFIG.map.width)
       .attr('height', VISUALIZATION_CONFIG.map.height)
-      .attr('class', styles.map)
+      .attr('class', 'map')
 
     // Create map visualization
     createMapChart(instrumentalData, {
@@ -61,7 +61,7 @@ async function initializeVisualization () {
 
     createCircleLegend(VISUALIZATION_CONFIG.legend.circle.magnitudes, {
       svg: mapSvg.append('g')
-        .attr('class', styles.legendCircle)
+        .attr('class', 'legendCircle')
         .attr('transform', `translate(0,${
           INNER_DIMENSIONS.height -
           2 * maxRadius9 -
@@ -74,7 +74,7 @@ async function initializeVisualization () {
 
     createBarLegend({
       svg: mapSvg.append('g')
-        .attr('class', styles.legendBar)
+        .attr('class', 'legendBar')
         .attr('transform', `translate(80,${
           INNER_DIMENSIONS.height -
           2 * VISUALIZATION_CONFIG.legend.barHeight
