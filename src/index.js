@@ -6,13 +6,13 @@ import { scaleThreshold } from 'd3-scale'
 import { timeParse } from 'd3-time-format'
 import * as topojson from 'topojson-client'
 
-import { VISUALIZATION_CONFIG, INNER_DIMENSIONS } from '../config/constants.js'
-import { createMapChart } from '../components/MapChart.js'
-import { createTimelineChart } from '../components/TimelineChart.js'
-import { createCircleLegend, createBarLegend } from '../components/Legend.js'
-import { makeResponsive, calculateResponsiveRadius } from '../utils/responsiveness.js'
-import { getRegionFromCategories } from '../utils/formatters.js'
-import styles from '../css/Visualization.module.css'
+import { VISUALIZATION_CONFIG, INNER_DIMENSIONS } from './config/constants.js'
+import { createMapChart } from './components/MapChart.js'
+import { createTimelineChart } from './components/TimelineChart.js'
+import { createCircleLegend, createBarLegend } from './components/Legend.js'
+import { makeResponsive, calculateResponsiveRadius } from './utils/responsiveness.js'
+import { getRegionFromCategories } from './utils/formatters.js'
+import styles from './css/Visualization.module.css'
 
 async function initializeVisualization () {
   try {
