@@ -67,8 +67,8 @@ export function getRegionFromCategories (regions, department) {
       }
     }
 
-    // console.warn(`No region found for department: ${department}`)
-    // return null
+    console.warn(`No region found for department: ${department}`)
+    return null
   } catch (error) {
     console.error('Error finding region:', error)
     return null

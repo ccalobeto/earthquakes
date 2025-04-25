@@ -37,13 +37,6 @@ export function createTimelineChart (data, {
     .attr('role', 'img')
     .attr('aria-label', 'Timeline of earthquakes in Peru')
 
-  // Add descriptive title and description for screen readers
-  viz.append('title')
-    .text('Earthquake Timeline Visualization')
-
-  viz.append('desc')
-    .text('Timeline showing historical earthquakes in Peru organized by regions and departments')
-
   const chart = viz
     .append('g')
     .attr('transform', `translate(${VISUALIZATION_CONFIG.timeline.margins.left}, ${VISUALIZATION_CONFIG.timeline.margins.top})`)
@@ -194,7 +187,7 @@ export function createTimelineChart (data, {
     .attr('class', 'xAxis')
     .attr('role', 'graphics-symbol')
     .attr('aria-label', 'Timeline years')
-    .attr('transform', 'translate(0, 8)')
+    .attr('transform', 'translate(0, 10)')
     .style('font-family', 'sans-serif')
 
   xAxis.call(xAxisGenerator)

@@ -2,7 +2,7 @@ export const VISUALIZATION_CONFIG = {
   // Map constants
   map: {
     width: 1200,
-    height: 1800,
+    height: 1200,
     margin: { top: 10, right: 30, bottom: 10, left: 80 },
     maxRadius: 1000,
     magnitudeThreshold: 5.5,
@@ -17,7 +17,7 @@ export const VISUALIZATION_CONFIG = {
   // Geographic regions
   regions: {
     Coast: [
-      'Lima y Callao', 'Moquegua', 'Tacna', 'Lambayeque',
+      'Lima', 'Callao', 'Moquegua', 'Tacna', 'Lambayeque',
       'La Libertad', 'Ica', 'Piura', 'Tumbes', 'Ancash', 'Arequipa'
     ],
     Mountains: [
@@ -56,7 +56,7 @@ export const VISUALIZATION_CONFIG = {
       top: 30,
       right: 30,
       bottom: 30,
-      left: 80
+      left: 0
     }
   }
 }

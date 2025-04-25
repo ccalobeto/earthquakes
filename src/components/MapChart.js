@@ -23,13 +23,6 @@ export function createMapChart (data, {
   // Set viewBox for responsive scaling
   svg.attr('viewBox', `0 0 ${VISUALIZATION_CONFIG.map.width} ${VISUALIZATION_CONFIG.map.height}`)
 
-  // Add chart title and description for screen readers
-  svg.append('title')
-    .text('Earthquake Visualization Map')
-
-  svg.append('desc')
-    .text('Interactive map showing earthquakes in Peru, with circles representing magnitude and colors representing depth.')
-
   const path = geoPath(projection)
 
   const mapContainer = svg
