@@ -20,13 +20,12 @@ export function createDepthColorScale () {
  * @returns {Function} Scale function that converts magnitude to radius
  */
 export function createMagnitudeScale ({
-  timesPerScale = 30,
   maxMagnitude = 10,
   maxRadius = VISUALIZATION_CONFIG.map.maxRadius
 } = {}) {
-  const maxPower = Math.pow(timesPerScale, maxMagnitude)
+  const Emax = Math.pow(10, 1.5 * maxMagnitude + 4.8)
   return scaleSqrt()
-    .domain([0, maxPower])
+    .domain([0, Emax])
     .range([0, maxRadius])
 }
 
@@ -38,6 +37,6 @@ export function createMagnitudeScale ({
  */
 export function calculateMagnitudeRadius (magnitude, options = {}) {
   const scale = createMagnitudeScale(options)
-  const { timesPerScale = 30 } = options
-  return scale(Math.pow(timesPerScale, magnitude))
+  const E = Math.pow(10, 1.5 * magnitude + 4.8)
+  return scale(E)
 }
