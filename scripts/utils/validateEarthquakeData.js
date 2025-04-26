@@ -1,5 +1,5 @@
 import { readFileSync } from 'fs'
-import { findOutOfBoundsRecords, printInvalidRecords } from './validateGeographicBounds.js'
+import { findOutOfBoundsRecords, printInvalidRecords } from './validateGeoBounds.js'
 import * as d3 from 'd3'
 
 try {
