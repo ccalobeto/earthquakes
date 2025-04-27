@@ -15,10 +15,13 @@
 	<main class="container">
 		<section id="timeline-section" class="visualization-section">
 			<header class="section-header">
-				<h2 class="section-title">Historical Timeline of Major Earthquakes</h2>
+				<h2 class="section-title">Cronología de Sismos por Departamento</h2>
 				<p class="section-description">
-					Timeline showing earthquakes of magnitude 7.0 or greater since historical records began.
-					Circle size indicates magnitude, and color distinguishes between historical and instrumental records.
+					Esta visualización presenta la cronología de sismos con magnitud superior a 7M registrados en cada
+					departamento.
+					Los eventos están diferenciados por época: en gris los ocurridos durante la Colonia y República temprana,
+					y en verde aquellos registrados con instrumentación sismológica moderna. El área de cada círculo representa
+					la Magnitud del Momento (M), que indica la energía liberada por el sismo.
 				</p>
 			</header>
 			<div id="vis-1">
@@ -27,11 +30,13 @@
 
 		<section id="map-section" class="visualization-section">
 			<header class="section-header">
-				<h2 class="section-title">Geographic Distribution of Earthquakes</h2>
+				<h2 class="section-title">Distribución Espacial de Eventos Sísmicos</h2>
 				<p class="section-description">
-					This map displays the spatial distribution of earthquakes exceeding 5.5M since 1960.
-					Notable events are labeled. Circle size indicates <b>Moment Magnitude (M)</b>,
-					and color represents earthquake <b>Depth</b>.
+					Este mapa muestra la distribución geográfica de sismos con magnitud superior a 5.5M desde 1960,
+					destacando los eventos de mayor intensidad. La visualización incorpora dos variables principales:
+					la <b>Magnitud del Momento (M)</b>, representada por el tamaño del círculo, que indica la energía
+					liberada por el sismo; y la <b>Profundidad Focal</b>, indicada por la escala de color, que señala
+					la ubicación del hipocentro bajo la superficie terrestre.
 				</p>
 			</header>
 			<div id="vis">
@@ -40,10 +45,10 @@
 
 		<footer class="visualization-footer">
 			<div class="footer-content">
-				<p>A demonstration visualization in JavaScript and D3.js</p>
+				<p>Visualización desarrollada con JavaScript y D3.js</p>
 				<nav class="footer-links">
-					<a href="https://github.com/username/earthquakes">Source Code</a> |
-					<a href="https://www.example.com/data">Data Source</a>
+					<a href="https://www.carlosleon.dev/posts/earthquakes">Blog Post</a> |
+					<a href="https://github.com/ccalobeto/earthquakes">Code</a>
 				</nav>
 			</div>
 		</footer>
