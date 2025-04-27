@@ -33,14 +33,14 @@ export function createTimelineChart (data, {
   // Create main SVG container with accessibility attributes
   const viz = create('svg')
     .attr('viewBox', `0 0 ${width} ${height}`)
-    .attr('class', 'timelineChart')
+    .attr('class', 'timeline-chart')
     .attr('role', 'img')
     .attr('aria-label', 'Timeline of earthquakes in Peru')
 
   const chart = viz
     .append('g')
     .attr('transform', `translate(${VISUALIZATION_CONFIG.timeline.margins.left}, ${VISUALIZATION_CONFIG.timeline.margins.top})`)
-    .attr('class', 'timelineContent')
+    .attr('class', 'timeline-content')
     .attr('role', 'graphics-document')
     .attr('aria-roledescription', 'Timeline visualization')
 
@@ -62,7 +62,7 @@ export function createTimelineChart (data, {
   // Create main table structure
   const table = chart
     .append('g')
-    .attr('class', 'earthquakeTable')
+    .attr('class', 'earthquake-table')
     .attr('transform', 'translate(0, 0)')
 
   // Add header section with proper ARIA labels
@@ -155,7 +155,7 @@ export function createTimelineChart (data, {
 
       // Add earthquake circles
       const earthquakeGroup = row.append('g')
-        .attr('class', 'earthquakeCircles')
+        .attr('class', 'earthquake-circles')
         .attr('role', 'graphics-symbol')
         .attr('aria-label', `Earthquakes in ${departments[j].department}`)
 

@@ -80,7 +80,7 @@ function createLegend (color, {
       .attr('fill', 'currentColor')
       .attr('text-anchor', 'start')
       .attr('font-weight', 'bold')
-      .attr('class', 'titleLegend')
+      .attr('class', 'title-legend')
       .attr('role', 'heading')
       .attr('aria-level', '2')
       .text(title))
@@ -104,7 +104,7 @@ export function createBarLegend ({
   })
 
   svg.append('g')
-    .attr('class', 'barLegend')
+    .attr('class', 'bar-legend')
     .attr('role', 'complementary')
     .attr('aria-label', `${title} scale`)
     .attr('transform', 'translate(5, 0)')
@@ -132,7 +132,7 @@ export function createCircleLegend (data, {
   svg.selectAll('g').remove()
 
   const legend = svg.append('g')
-    .attr('class', 'circleLegend')
+    .attr('class', 'circle-legend')
     .attr('role', 'complementary')
     .attr('aria-label', `${title} scale`)
     .attr('transform', 'translate(0, 0)')
@@ -140,7 +140,7 @@ export function createCircleLegend (data, {
   // Add title
   legend
     .append('text')
-    .attr('class', 'titleLegend')
+    .attr('class', 'title-legend')
     .text(title)
     .attr('transform', 'translate(80, 0)')
     .attr('text-anchor', 'start')
@@ -150,7 +150,7 @@ export function createCircleLegend (data, {
   // Create circles group
   const circles = legend
     .append('g')
-    .attr('class', 'circleLegendWrap')
+    .attr('class', 'circle-legend-wrap')
     .attr('role', 'list')
     .selectAll('g')
     .data(data)

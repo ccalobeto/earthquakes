@@ -72,20 +72,12 @@
   height: auto;
 }
 
-.timeline-legend,
-.map-legend {
-  margin-top: 1rem;
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 6px;
-}
-
-.legend-circle {
+.circle-legend {
   position: absolute;
   display: flex;
 }
 
-.legend-bar {
+.bar-legend {
   position: absolute;
 }
 
@@ -117,7 +109,7 @@ text>tspan {
   font-size: 0.9375rem;
 }
 
-.earthquakeTable {
+.earthquake-table {
   transform-origin: top left;
 }
 

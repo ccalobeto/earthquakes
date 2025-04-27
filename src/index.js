@@ -40,9 +40,6 @@ async function initializeVisualization () {
 
     const mapSvg = select('#vis')
       .append('svg')
-      // .attr('width', VISUALIZATION_CONFIG.map.width)
-      // .attr('height', VISUALIZATION_CONFIG.map.height)
-      // .attr('class', 'map')
 
     // Create map visualization
     createMapChart(instrumentalData, {
@@ -61,7 +58,7 @@ async function initializeVisualization () {
 
     createCircleLegend(VISUALIZATION_CONFIG.legend.circle.magnitudes, {
       svg: mapSvg.append('g')
-        .attr('class', 'legendCircle')
+        // .attr('class', 'legend-circle')
         .attr('transform', `translate(0,${
           INNER_DIMENSIONS.height -
           2 * maxRadius9 -
@@ -74,7 +71,7 @@ async function initializeVisualization () {
 
     createBarLegend({
       svg: mapSvg.append('g')
-        .attr('class', 'legendBar')
+        // .attr('class', 'legend-bar')
         .attr('transform', `translate(80,${
           INNER_DIMENSIONS.height -
           2 * VISUALIZATION_CONFIG.legend.barHeight

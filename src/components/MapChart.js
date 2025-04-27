@@ -36,7 +36,7 @@ export function createMapChart (data, {
   const mapContainer = svg
     .append('g')
     .attr('transform', `translate(${translationX}, ${translationY})`)
-    .attr('class', 'mapContainer')
+    .attr('class', 'map-container')
     .attr('role', 'graphics-document')
     .attr('aria-label', 'Map of Peru showing earthquake locations')
     .attr('aria-roledescription', 'Map visualization')
@@ -44,7 +44,7 @@ export function createMapChart (data, {
   // Render map features
   mapContainer
     .append('g')
-    .attr('class', 'mapFeatures')
+    .attr('class', 'map-features')
     .attr('role', 'graphics-symbol')
     .attr('aria-label', 'Peru regions boundaries')
     .selectAll('path')
@@ -56,7 +56,7 @@ export function createMapChart (data, {
   // Render borders
   mapContainer
     .append('g')
-    .attr('class', 'mapBorders')
+    .attr('class', 'map-borders')
     .selectAll('path')
     .data(border.features)
     .join('path')
