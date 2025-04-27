@@ -22,8 +22,14 @@ export function createMapChart (data, {
 } = {}) {
   // Set viewBox for responsive scaling
   const width = VISUALIZATION_CONFIG.map.width
-  const height = width * 1.5
-  svg.attr('viewBox', `0 0 ${width} ${height}`)
+  const height = width * (3 / 2)
+
+  svg
+    .attr('width', width)
+    .attr('height', height)
+    .attr('viewBox', `0 0 ${width} ${height}`)
+    .attr('class', 'map')
+    .attr('preserveAspectRatio', 'xMinYMin meet')
 
   const path = geoPath(projection)
 

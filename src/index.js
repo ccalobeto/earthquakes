@@ -32,7 +32,7 @@ async function initializeVisualization () {
     const departments = topojson.feature(geoData, geoData.objects.level2)
     const projection = geoIdentity()
       .reflectY(true)
-      .fitSize([INNER_DIMENSIONS.width, INNER_DIMENSIONS.height], features)
+      .fitSize([INNER_DIMENSIONS.width, INNER_DIMENSIONS.width * (3 / 2)], features)
 
     // Filter instrumental data and create map visualization
     const instrumentalData = filterInstrumentalData(earthquakeData)
@@ -40,9 +40,9 @@ async function initializeVisualization () {
 
     const mapSvg = select('#vis')
       .append('svg')
-      .attr('width', VISUALIZATION_CONFIG.map.width)
-      .attr('height', VISUALIZATION_CONFIG.map.height)
-      .attr('class', 'map')
+      // .attr('width', VISUALIZATION_CONFIG.map.width)
+      // .attr('height', VISUALIZATION_CONFIG.map.height)
+      // .attr('class', 'map')
 
     // Create map visualization
     createMapChart(instrumentalData, {
