@@ -40,7 +40,11 @@ function createLegend (color, {
   const tickAdjust = g => g.selectAll('.tick line').attr('y1', marginTop + marginBottom - height)
   let x
 
-  if (color.interpolate) {
+  if (color.type === 'threshold') {
+    x = scaleLinear()
+      .domain([0, color.domain().length] - 1)
+      .range([marginLeft, width - marginRight])
+  } else if (color.interpolate) {
     const n = Math.min(color.domain().length, color.range().length)
     x = color.copy().rangeRound(quantize(interpolate(marginLeft, width - marginRight), n))
   } else if (color.interpolator) {
@@ -68,10 +72,9 @@ function createLegend (color, {
   g.append('g')
     .attr('transform', `translate(0,${height - marginBottom})`)
     .call(axisBottom(x)
-      .ticks(ticks, typeof tickFormat === 'string' ? tickFormat : undefined)
-      .tickFormat(typeof tickFormat === 'function' ? tickFormat : undefined)
-      .tickSize(tickSize)
-      .tickValues(tickValues))
+      .tickValues(tickValues ? [...Array(color.domain().length).keys()] : null) // Generate tick positions
+      .tickFormat((d, i) => tickFormat ? tickFormat(color.domain()[i]) : color.domain()[i]) // Format ticks using domain values
+      .tickSize(tickSize))
     .call(tickAdjust)
     .call(g => g.select('.domain').remove())
     .call(g => g.append('text')
@@ -97,10 +100,20 @@ export function createBarLegend ({
   range = [0, 80],
   title
 } = {}) {
-  const legend = createLegend(scaleThreshold(domain, range), {
+  const tickFormat = d => {
+    return `${d}${d === domain[domain.length - 1] ? '+' : ''}`
+  }
+
+  const scale = scaleThreshold()
+    .domain(domain)
+    .range(range)
+
+  const legend = createLegend(scale, {
     title,
-    tickSize: 0,
-    width: 200
+    tickSize: 6,
+    width: 200,
+    tickValues: domain, // Explicitly set tick values to match domain
+    tickFormat // Use custom format function
   })
 
   svg.append('g')
@@ -123,7 +136,7 @@ export function createCircleLegend (data, {
   width = range[1] * 2,
   height = range[1] * 2,
   suffix = '',
-  textPadding = 30,
+  textPadding = 5,
   fontSize = 15,
   scale,
   title,
@@ -142,7 +155,7 @@ export function createCircleLegend (data, {
     .append('text')
     .attr('class', 'title-legend')
     .text(title)
-    .attr('transform', 'translate(80, 0)')
+    .attr('transform', 'translate(-30, -220)')
     .attr('text-anchor', 'start')
     .attr('role', 'heading')
     .attr('aria-level', '2')
@@ -173,13 +186,13 @@ export function createCircleLegend (data, {
   // Add labels
   circles
     .append('text')
-    .attr('x', width / 2 + 3)
+    .attr('x', width / 2 + textPadding)
     .attr('y', d => height - 2 * scale(d) - 3)
     .attr('shape-rendering', 'crispEdges')
     .style('text-anchor', 'end')
     .style('fill', 'black')
     .style('font-size', fontSize)
-    .text(d => d + suffix)
+    .text(d => d > 6 ? d + suffix : '')
     .attr('role', 'presentation')
 
   return legend.node()

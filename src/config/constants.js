@@ -16,15 +16,15 @@ export const VISUALIZATION_CONFIG = {
 
   // Geographic regions
   regions: {
-    Coast: [
+    Costa: [
       'Lima', 'Callao', 'Moquegua', 'Tacna', 'Lambayeque',
       'La Libertad', 'Ica', 'Piura', 'Tumbes', 'Ancash', 'Arequipa'
     ],
-    Mountains: [
+    Sierra: [
       'Cajamarca', 'San Martin', 'Huanuco', 'Pasco', 'Junin',
       'Ayacucho', 'Huancavelica', 'Apurimac', 'Cusco', 'Puno'
     ],
-    Jungle: [
+    Selva: [
       'Amazonas', 'Loreto', 'Madre De Dios', 'Ucayali'
     ]
   },

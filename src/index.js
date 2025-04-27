@@ -32,7 +32,6 @@ async function initializeVisualization () {
     const departments = topojson.feature(geoData, geoData.objects.level2)
     const projection = geoIdentity()
       .reflectY(true)
-      .fitSize([INNER_DIMENSIONS.width, INNER_DIMENSIONS.width * (3 / 2)], features)
 
     // Filter instrumental data and create map visualization
     const instrumentalData = filterInstrumentalData(earthquakeData)
@@ -53,32 +52,23 @@ async function initializeVisualization () {
       radiusBy: 'magnitude'
     })
 
-    // Add legends to map
-    const maxRadius9 = calculateMagnitudeRadius(9)
-
     createCircleLegend(VISUALIZATION_CONFIG.legend.circle.magnitudes, {
       svg: mapSvg.append('g')
-        // .attr('class', 'legend-circle')
-        .attr('transform', `translate(0,${
-          INNER_DIMENSIONS.height -
-          2 * maxRadius9 -
-          2 * VISUALIZATION_CONFIG.legend.barHeight -
-          VISUALIZATION_CONFIG.legend.padding
+        .attr('transform', `translate(${VISUALIZATION_CONFIG.map.margin.left + 50}, ${
+          INNER_DIMENSIONS.height + 300
         })`),
       scale: magnitude => calculateMagnitudeRadius(magnitude),
-      title: 'Magnitude (M)'
+      title: 'Magnitud (M)'
     })
 
     createBarLegend({
       svg: mapSvg.append('g')
-        // .attr('class', 'legend-bar')
-        .attr('transform', `translate(80,${
-          INNER_DIMENSIONS.height -
-          2 * VISUALIZATION_CONFIG.legend.barHeight
-        })`),
+        .attr('transform', `translate(${
+      VISUALIZATION_CONFIG.map.margin.left + 20
+    }, ${INNER_DIMENSIONS.height + 470})`),
       domain: VISUALIZATION_CONFIG.map.depthSegmentation.map(d => d.depth),
       range: VISUALIZATION_CONFIG.map.depthSegmentation.map(d => d.color),
-      title: 'Depth (Km)'
+      title: 'Profundidad (Km)'
     })
 
     // Create timeline visualization

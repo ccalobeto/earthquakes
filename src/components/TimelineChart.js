@@ -19,27 +19,29 @@ export function createTimelineChart (data, {
   firstRowOffset = 0,
   leftPositionGridLine = 100
 } = {}) {
+  const margins = VISUALIZATION_CONFIG.timeline.margins
+
   const formatNum = format('.2f')
   const formatYear = timeFormat('%Y')
-  let height = 0
 
-  // Calculate total height based on data
-  for (let i = 0; i < data.length; i++) {
-    height += data[i].departments.length * rowSize
-  }
-
-  height = height + VISUALIZATION_CONFIG.timeline.margins.top + VISUALIZATION_CONFIG.timeline.margins.bottom
+  // Adjust height calculation to include margins
+  let height = data.reduce((acc, region) =>
+    acc + region.departments.length * rowSize, 0)
+  height += margins.top + margins.bottom
 
   // Create main SVG container with accessibility attributes
   const viz = create('svg')
     .attr('viewBox', `0 0 ${width} ${height}`)
+    .attr('width', width)
+    .attr('height', height)
     .attr('class', 'timeline-chart')
+    .attr('preserveAspectRatio', 'xMinYMin meet')
     .attr('role', 'img')
     .attr('aria-label', 'Timeline of earthquakes in Peru')
 
   const chart = viz
     .append('g')
-    .attr('transform', `translate(${VISUALIZATION_CONFIG.timeline.margins.left}, ${VISUALIZATION_CONFIG.timeline.margins.top})`)
+    .attr('transform', `translate(${margins.left}, ${margins.top})`)
     .attr('class', 'timeline-content')
     .attr('role', 'graphics-document')
     .attr('aria-roledescription', 'Timeline visualization')
@@ -78,7 +80,7 @@ export function createTimelineChart (data, {
   // Add region header
   yAxis
     .append('text')
-    .text('REGION')
+    .text('REGIÓN')
     .attr('role', 'columnheader')
     .attr('transform', `translate(0, ${firstRowOffset})`)
     .attr('aria-label', 'Region column header')
@@ -86,7 +88,7 @@ export function createTimelineChart (data, {
   // Add department header
   yAxis
     .append('text')
-    .text('DEPARTMENT')
+    .text('DEPARTMENTO')
     .attr('role', 'columnheader')
     .attr('transform', `translate(${leftPositionGridLine}, ${firstRowOffset})`)
     .attr('aria-label', 'Department column header')

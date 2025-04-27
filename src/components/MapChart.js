@@ -1,7 +1,6 @@
 import { geoPath } from 'd3-geo'
 import { VISUALIZATION_CONFIG } from '../config/constants.js'
 import { formatMagnitude } from '../utils/formatters.js'
-// import styles from '../css/Visualization.module.css'
 
 /**
  * Creates an accessible map chart visualization for earthquake data
@@ -23,23 +22,25 @@ export function createMapChart (data, {
   // Set viewBox for responsive scaling
   const width = VISUALIZATION_CONFIG.map.width
   const height = width * (3 / 2)
+  const margins = VISUALIZATION_CONFIG.map.margin
 
   svg
     .attr('width', width)
     .attr('height', height)
     .attr('viewBox', `0 0 ${width} ${height}`)
-    .attr('class', 'map')
     .attr('preserveAspectRatio', 'xMinYMin meet')
+    .attr('class', 'map')
+
+  projection.fitSize([width - margins.left - margins.right, height - margins.top - margins.bottom], feature)
 
   const path = geoPath(projection)
 
   const mapContainer = svg
     .append('g')
-    .attr('transform', `translate(${translationX}, ${translationY})`)
+    .attr('transform', `translate(${margins.left}, ${margins.top})`)
     .attr('class', 'map-container')
-    .attr('role', 'graphics-document')
-    .attr('aria-label', 'Map of Peru showing earthquake locations')
-    .attr('aria-roledescription', 'Map visualization')
+    .attr('width', width - margins.left - margins.right)
+    .attr('height', height - margins.top - margins.bottom)
 
   // Render map features
   mapContainer
