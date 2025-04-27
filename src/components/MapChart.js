@@ -21,7 +21,9 @@ export function createMapChart (data, {
   translationY = 0
 } = {}) {
   // Set viewBox for responsive scaling
-  svg.attr('viewBox', `0 0 ${VISUALIZATION_CONFIG.map.width} ${VISUALIZATION_CONFIG.map.height}`)
+  const width = VISUALIZATION_CONFIG.map.width
+  const height = width * 1.5
+  svg.attr('viewBox', `0 0 ${width} ${height}`)
 
   const path = geoPath(projection)
 
@@ -62,7 +64,7 @@ export function createMapChart (data, {
   // Render earthquake data points
   const circles = mapContainer
     .append('g')
-    .attr('class', 'mapData')
+    .attr('class', 'map-chart')
     .attr('role', 'graphics-symbol')
     .attr('aria-label', 'Earthquake locations')
     .selectAll('g')

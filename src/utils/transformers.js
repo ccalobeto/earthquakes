@@ -11,22 +11,27 @@ const dateParser = timeParse('%a %b %d %Y %H:%M:%S')
  * @returns {Object[]} Processed earthquake data
  */
 export function transformEarthquakeData (rawData) {
-  return rawData.map(row => ({
-    eventId: +row.eventId,
-    utcDate: row.utcDate,
-    geometry: {
-      type: 'Point',
-      coordinates: [+row.lon, +row.lat]
-    },
-    depth: +row.depth,
-    magnitude: +row.magnitude,
-    year: +row.year,
-    type: row.type,
-    id: row.id,
-    distanceFromCoast: +row.distanceFromCoast,
-    department: row.department,
-    description: row.description
-  }))
+  return rawData.map(row => {
+    // Clean up the geometry string by removing extra quotes
+    const cleanGeometryStr = row.geometry
+      .replace(/"{2,}/g, '"') // Replace multiple quotes with single quote
+      .replace(/;/g, ',') // Replace semicolons with commas
+
+    const geometry = JSON.parse(cleanGeometryStr)
+    return {
+      eventId: +row.eventId,
+      utcDate: row.utcDate,
+      geometry,
+      depth: +row.depth,
+      magnitude: +row.magnitude,
+      year: +row.year,
+      type: row.type,
+      id: row.id,
+      distanceFromCoast: +row.distanceFromCoast,
+      department: row.department,
+      description: row.description
+    }
+  })
 }
 
 /**
@@ -45,7 +50,7 @@ export function transformTimelineData (earthquakeData, minMagnitude = 7) {
       department: d.department === 'Lima' || d.department === 'Callao'
         ? 'Lima y Callao'
         : d.department,
-      date: dateParser(d.utcDate.slice(0, 24)),
+      date: dateParser(d.utcDate) || new Date(d.year, 0), // Fallback to January 1st of the year if parsing fails,
       type: d.type,
       region: getRegionFromCategories(VISUALIZATION_CONFIG.regions, d.department)
     }))
