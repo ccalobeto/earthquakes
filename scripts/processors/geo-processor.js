@@ -164,7 +164,7 @@ export function validatePeruCoordinates (coordinates) {
   // Longitude: -84 to -68 (West)
   // Latitude: -20 to 0 (South)
   const validLongitude = longitude >= -84 && longitude <= -68
-  const validLatitude = latitude >= -20 && latitude <= 0
+  const validLatitude = latitude >= -18.5 && latitude <= 0
 
   return validLongitude && validLatitude
 }
