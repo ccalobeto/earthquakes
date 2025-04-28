@@ -56,7 +56,7 @@ export const VISUALIZATION_CONFIG = {
       top: 30,
       right: 30,
       bottom: 30,
-      left: 0
+      left: 80
     }
   }
 }
@@ -74,32 +74,33 @@ export const margin = VISUALIZATION_CONFIG.timeline.margins
 export const mapAnnotations = [
   {
     note: {
-      label: '82km from Ocoña: 65 deads, 220,000 casualties and 24,500 destroyed homes.',
-      title: 'More Powerful',
-      wrap: 250, // try something smaller to see text split in several lines
-      padding: 10 // More = text lower
-
-    },
-    color: ['#2E5751'],
-    x: 713,
-    y: (INNER_DIMENSIONS.height - 210),
-    dy: 10,
-    dx: 60
-  },
-  {
-    note: {
-      label: '70,000 deads, 880,000 casualties and 160,000 destroyed homes only in Callejón of Huaylas.',
-      title: 'More Letal',
+      label: '70,000 muertos, 880,000 víctimas y 160,000 casas destruidas solo en Callejón de Huaylas.',
+      title: 'Más Letal',
       wrap: 250, // try something smaller to see text split in several lines
       padding: 10 // More = text lower
 
     },
     color: ['#2E5751'],
     x: 235,
-    y: (INNER_DIMENSIONS.height - 790),
+    y: (INNER_DIMENSIONS.height - 280),
     dy: 10,
     dx: 60
-  }]
+  },
+  {
+    note: {
+      label: '82 km de Ocoña: 65 muertos, 220,000 bajas y 24,500 casas destruidas.',
+      title: 'Mas Poderoso',
+      wrap: 250, // try something smaller to see text split in several lines
+      padding: 10 // More = text lower
+
+    },
+    color: ['#2E5751'],
+    x: 713,
+    y: (INNER_DIMENSIONS.height + 320),
+    dy: 10,
+    dx: 60
+  }
+]
 
 export const timeLineAnnotations = [
   {
