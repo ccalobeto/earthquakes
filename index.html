@@ -14,16 +14,33 @@
 <body>
 	<main class="container">
 		<h1>Visualización de Sismos en Peru</h1>
+		<p class="section-description">
+			Esta visualización presenta la cronología y distribución espacial de los sismos en Perú,
+			permitiendo explorar la actividad sísmica a lo largo del tiempo y su localización geográfica para los sismos más
+			recientes. Los datos utilizados provienen de la base de datos del <a
+				href="https://ultimosismo.igp.gob.pe/descargar-datos-sismicos/" target="_blank">Instituto
+				Geofísico del Peru
+				(IGP)</a> y arrojan una cantidad mounstrosa de <b>24,655</b> sismos a lo largo de nuestra catalogada historia.
+		</p>
 		<section id="timeline-section" class="visualization-section">
 			<header class="section-header">
 				<h2 class="section-title">Cronología de Sismos por Departamento</h2>
 				<p class="section-description">
-					Esta visualización presenta la cronología de sismos con magnitud superior a 7M registrados en cada
-					departamento.
-					Los eventos están diferenciados por época: en gris los ocurridos durante la Colonia y República temprana,
-					y en verde aquellos registrados con instrumentación sismológica moderna. El área de cada círculo representa
+					La visualización permite observar la actividad sísmica de terremotos <b>superiores a 7M</b>, registrada en
+					casi 490
+					años de historia. Los eventos sísmicos están representados por <em>círculos</em>
+					que indican la <b>Magnitud</b> del sismo y la <b>ubicación geográfica</b> según crónicas oficiales e
+					instrumentos sismológicos.
+					Los eventos están diferenciados por época: los ocurridos durante la <b><span style="color: #FF9A9F;"> Colonia
+							y
+							República temprana</span></b>,
+					y aquellos registrados con <b><span style="color: #FF3900;">Instrumentación Sismológica Moderna</span></b>. El
+					área
+					de cada círculo representa
 					la Magnitud del Momento (M), que indica la energía liberada por el sismo.
 				</p>
+				<p class="section-description">
+					La cantidad de eventos sísmicos <b>>= 7M</b> registrados en el período 1471 - 2023 fue de <b>107</b>.
 			</header>
 			<div id="vis-1">
 			</div>
@@ -33,10 +50,13 @@
 			<header class="section-header">
 				<h2 class="section-title">Distribución Espacial de Eventos Sísmicos</h2>
 				<p class="section-description">
-					Este mapa muestra la distribución geográfica de sismos con magnitud superior a 5.5M desde 1960,
+					Este mapa muestra la distribución geográfica de sismos con magnitudes superiores a <b>5.5M</b> y que suman
+					<b>1,208</b> desde 1960,
 					destacando los eventos de mayor intensidad. La visualización incorpora dos variables principales:
-					la <b>Magnitud del Momento (M)</b>, representada por el tamaño del círculo, que indica la energía
-					liberada por el sismo; y la <b>Profundidad Focal</b>, indicada por la escala de color, que señala
+					la <b><span style="color: #FF3900;">Magnitud del Momento (M)</span></b>, representada por el tamaño del
+					círculo, que indica la energía
+					liberada por el sismo; y la <b><span style="color: #8F451B;">Profundidad</span></b>, indicada por la
+					escala de color, que señala
 					la ubicación del hipocentro bajo la superficie terrestre.
 				</p>
 			</header>
@@ -48,8 +68,8 @@
 			<div class="footer-content">
 				<p>Visualización desarrollada con JavaScript y D3.js</p>
 				<nav class="footer-links">
-					<a href="https://www.carlosleon.dev/posts/earthquakes">Blog Post</a> |
-					<a href="https://github.com/ccalobeto/earthquakes">Code</a>
+					<a href="https://www.carlosleon.dev/posts/earthquakes" target="_blank">Blog Post</a> |
+					<a href="https://github.com/ccalobeto/earthquakes" target="_blank">Code</a>
 				</nav>
 			</div>
 		</footer>

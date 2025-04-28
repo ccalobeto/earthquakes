@@ -178,7 +178,7 @@ export function createCircleLegend (data, {
     .attr('cx', width / 2)
     .attr('cy', d => height - scale(d))
     .style('fill', 'none')
-    .style('stroke', 'black')
+    .style('stroke', '#E41A1C')
     .attr('stroke-width', d => d >= thresholdMagnitude ? 1.5 : 0.7)
     .style('opacity', 0.8)
     .attr('role', 'presentation')

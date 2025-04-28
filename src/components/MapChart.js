@@ -85,7 +85,7 @@ export function createMapChart (data, {
   // Add circles for earthquakes
   circles
     .append('circle')
-    .attr('stroke', 'black')
+    .attr('stroke', '#E41A1C')
     .attr('fill-opacity', 0.8)
     .attr('stroke-width', d => d.magnitude >= thresholdBigMagnitude ? 2 : 0.3)
     .attr('fill', d => colorScale(d[colorBy]))

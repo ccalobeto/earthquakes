@@ -18,7 +18,7 @@ async function initializeVisualization () {
       json('/earthquakes/data/input/peru-100k.json'),
       csv('/earthquakes/data/output/output.csv').then(transformEarthquakeData)
     ])
-
+    console.log('Cantidad de sismos', earthquakeData.length)
     // Fix Pisco earthquake data
     const piscoEarthquake = earthquakeData.find(d => d.magnitude >= 7.8 && d.year === 2007)
     if (piscoEarthquake) {
@@ -40,6 +40,7 @@ async function initializeVisualization () {
     const mapSvg = select('#vis')
       .append('svg')
 
+    console.log('Cantidad de sismos en map Chart', instrumentalData.length)
     // Create map visualization
     createMapChart(instrumentalData, {
       svg: mapSvg,
@@ -78,6 +79,10 @@ async function initializeVisualization () {
       width: VISUALIZATION_CONFIG.map.width
     })
 
+    const totalEarthquakes = transformedData.reduce((acc, region) =>
+      acc + region.earthquakes.length, 0
+    )
+    console.log('Cantidad de datos en timeline Chart', totalEarthquakes)
     select('#vis-1')
       .append(() => timelineChart)
   } catch (error) {

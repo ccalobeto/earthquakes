@@ -8,9 +8,9 @@ export const VISUALIZATION_CONFIG = {
     magnitudeThreshold: 5.5,
     historicalMagnitudeThreshold: 8,
     depthSegmentation: [
-      { depth: 70, color: '#efedf5' },
-      { depth: 300, color: '#bcbddc' },
-      { depth: 700, color: '#756bb1' }
+      { depth: 70, color: '#FF9457' },
+      { depth: 300, color: '#CD4A00' },
+      { depth: 700, color: '#8F451B' }
     ]
   },
 
@@ -80,7 +80,7 @@ export const mapAnnotations = [
       padding: 10 // More = text lower
 
     },
-    color: ['#cc0000'],
+    color: ['#2E5751'],
     x: 713,
     y: (INNER_DIMENSIONS.height - 210),
     dy: 10,
@@ -94,7 +94,7 @@ export const mapAnnotations = [
       padding: 10 // More = text lower
 
     },
-    color: ['#cc0000'],
+    color: ['#2E5751'],
     x: 235,
     y: (INNER_DIMENSIONS.height - 790),
     dy: 10,
@@ -110,7 +110,7 @@ export const timeLineAnnotations = [
       padding: 10 // More = text lower
 
     },
-    color: ['#cc0000'],
+    color: ['#2E5751'],
     x: 1045,
     y: 35,
     dy: 250,
@@ -124,7 +124,7 @@ export const timeLineAnnotations = [
       padding: 10 // More = text lower
 
     },
-    color: ['#cc0000'],
+    color: ['#2E5751'],
     x: 400,
     y: 123,
     dy: 5,
