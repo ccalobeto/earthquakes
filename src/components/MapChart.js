@@ -1,5 +1,6 @@
 import { geoPath } from 'd3-geo'
-import { VISUALIZATION_CONFIG } from '../config/constants.js'
+import { annotation } from 'd3-svg-annotation'
+import { VISUALIZATION_CONFIG, mapAnnotations } from '../config/constants.js'
 import { formatMagnitude } from '../utils/formatters.js'
 
 /**
@@ -123,6 +124,14 @@ export function createMapChart (data, {
       const title = `${d.description}, ${d.department}`
       return d.magnitude >= thresholdMidMagnitude ? title : null
     })
+
+  const makeAnnotations = annotation()
+    .annotations(mapAnnotations)
+
+  mapContainer
+    .append('g')
+    .attr('class', 'annotations')
+    .call(makeAnnotations)
 
   return mapContainer.node()
 }

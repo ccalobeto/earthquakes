@@ -69,3 +69,64 @@ export const INNER_DIMENSIONS = {
 
 // Export margin constant for direct use
 export const margin = VISUALIZATION_CONFIG.timeline.margins
+
+// reference for annotations https://d3-annotation.susielu.com/
+export const mapAnnotations = [
+  {
+    note: {
+      label: '82km from Ocoña: 65 deads, 220,000 casualties and 24,500 destroyed homes.',
+      title: 'More Powerful',
+      wrap: 250, // try something smaller to see text split in several lines
+      padding: 10 // More = text lower
+
+    },
+    color: ['#cc0000'],
+    x: 713,
+    y: (INNER_DIMENSIONS.height - 210),
+    dy: 10,
+    dx: 60
+  },
+  {
+    note: {
+      label: '70,000 deads, 880,000 casualties and 160,000 destroyed homes only in Callejón of Huaylas.',
+      title: 'More Letal',
+      wrap: 250, // try something smaller to see text split in several lines
+      padding: 10 // More = text lower
+
+    },
+    color: ['#cc0000'],
+    x: 235,
+    y: (INNER_DIMENSIONS.height - 790),
+    dy: 10,
+    dx: 60
+  }]
+
+export const timeLineAnnotations = [
+  {
+    note: {
+      label: '8.4M Atico, Arequipa (2001)',
+      title: 'More Powerful since 1960',
+      wrap: 250, // try something smaller to see text split in several lines
+      padding: 10 // More = text lower
+
+    },
+    color: ['#cc0000'],
+    x: 1045,
+    y: 35,
+    dy: 250,
+    dx: -2
+  },
+  {
+    note: {
+      label: '9.4M Ite, Tacna (1604)',
+      title: 'More Powerful in History',
+      wrap: 250, // try something smaller to see text split in several lines
+      padding: 10 // More = text lower
+
+    },
+    color: ['#cc0000'],
+    x: 400,
+    y: 123,
+    dy: 5,
+    dx: 10
+  }]

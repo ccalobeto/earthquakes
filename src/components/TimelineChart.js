@@ -5,8 +5,9 @@ import { timeYear } from 'd3-time'
 import { format } from 'd3-format'
 import { min, max } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
+import { annotation } from 'd3-svg-annotation'
 
-import { VISUALIZATION_CONFIG } from '../config/constants.js'
+import { VISUALIZATION_CONFIG, timeLineAnnotations } from '../config/constants.js'
 // import styles from '../css/Visualization.module.css'
 
 /**
@@ -208,6 +209,15 @@ export function createTimelineChart (data, {
   xAxis.selectAll('text')
     .style('font-size', VISUALIZATION_CONFIG.timeline.fontSizes.axis)
     .attr('aria-hidden', 'false')
+
+  // Add annotations
+  const makeAnnotations = annotation()
+    .annotations(timeLineAnnotations)
+
+  chart
+    .append('g')
+    .attr('class', 'annotations2')
+    .call(makeAnnotations)
 
   return viz.node()
 }
