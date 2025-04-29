@@ -106,7 +106,7 @@ export function createTimelineChart (data, {
 
   // Create table body
   const tbody = table.append('g')
-    .attr('class', 'timelinePlot')
+    .attr('class', 'timeline-plot')
     .attr('transform', `translate(0, ${rowSize})`)
 
   // Render data rows
@@ -217,7 +217,7 @@ export function createTimelineChart (data, {
 
   chart
     .append('g')
-    .attr('class', 'annotations2')
+    .attr('class', 'timeline-annotations')
     .call(makeAnnotations)
 
   return viz.node()

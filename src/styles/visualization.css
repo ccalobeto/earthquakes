@@ -106,12 +106,6 @@ h1 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.labels {
-  font-family: system-ui, -apple-system, sans-serif;
-  font-style: italic;
-  font-size: 0.875rem;
-}
-
 text>tspan {
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 1.2rem;
@@ -126,12 +120,13 @@ text>tspan {
 .annotation-note-title>tspan {
   font-family: system-ui, -apple-system, sans-serif;
   font-weight: 600;
-  font-size: 1.3rem;
+  font-size: 2rem;
 }
 
 .annotation-note-label>tspan {
   font-family: system-ui, -apple-system, sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.8rem;
+  /* transform: translateY(2.5em); */
 }
 
 .earthquake-table {

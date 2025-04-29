@@ -77,7 +77,7 @@ export const mapAnnotations = [
       label: '70,000 muertos, 880,000 víctimas y 160,000 casas destruidas solo en Callejón de Huaylas.',
       title: 'Más Letal',
       wrap: 250, // try something smaller to see text split in several lines
-      padding: 10 // More = text lower
+      padding: 20 // More = text lower
 
     },
     color: ['#2E5751'],
@@ -91,7 +91,7 @@ export const mapAnnotations = [
       label: '82 km de Ocoña: 65 muertos, 220,000 bajas y 24,500 casas destruidas.',
       title: 'Mas Poderoso',
       wrap: 250, // try something smaller to see text split in several lines
-      padding: 10 // More = text lower
+      padding: 20 // More = text lower
 
     },
     color: ['#2E5751'],
@@ -106,28 +106,28 @@ export const timeLineAnnotations = [
   {
     note: {
       label: '8.4M Atico, Arequipa (2001)',
-      title: 'More Powerful since 1960',
+      title: 'Mas Poderoso desde 1960',
       wrap: 250, // try something smaller to see text split in several lines
-      padding: 10 // More = text lower
+      padding: 20 // More = text lower
 
     },
     color: ['#2E5751'],
-    x: 1045,
+    x: 1110,
     y: 35,
     dy: 250,
-    dx: -2
+    dx: -125
   },
   {
     note: {
       label: '9.4M Ite, Tacna (1604)',
       title: 'More Powerful in History',
       wrap: 250, // try something smaller to see text split in several lines
-      padding: 10 // More = text lower
+      padding: 20 // More = text lower
 
     },
     color: ['#2E5751'],
-    x: 400,
-    y: 123,
-    dy: 5,
-    dx: 10
+    x: 510,
+    y: 203,
+    dy: 40,
+    dx: 60
   }]

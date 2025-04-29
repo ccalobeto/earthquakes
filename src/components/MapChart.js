@@ -131,7 +131,7 @@ export function createMapChart (data, {
 
   mapContainer
     .append('g')
-    .attr('class', 'annotations')
+    .attr('class', 'map-annotations')
     .call(makeAnnotations)
 
   return mapContainer.node()
