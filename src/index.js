@@ -9,15 +9,20 @@ import { createTimelineChart } from './components/TimelineChart.js'
 import { createCircleLegend, createBarLegend } from './components/Legend.js'
 import { createDepthColorScale, calculateMagnitudeRadius } from './utils/scales.js'
 import { transformEarthquakeData, transformTimelineData, filterInstrumentalData } from './utils/transformers.js'
-// import styles from './css/Visualization.module.css'
+import { loadEarthquakeStats } from './utils/statsLoader.js'
 
 async function initializeVisualization () {
   try {
+    // Load and display earthquake statistics
+    const stats = await loadEarthquakeStats()
+    console.log('Earthquake statistics loaded', stats)
+
     // Load and transform data
     const [geoData, earthquakeData] = await Promise.all([
       json('/earthquakes/data/input/peru-100k.json'),
       csv('/earthquakes/data/output/output.csv').then(transformEarthquakeData)
     ])
+
     console.log('Cantidad de sismos', earthquakeData.length)
     console.log('Cantidad de sismos instrumentales', earthquakeData.filter(d => d.type === 'Instrumental').length)
     console.log(`Lugar de máximo sismo: ${earthquakeData.find(d => d.magnitude === Math.max(...earthquakeData.map(d => d.magnitude))).department}, ${Math.max(...earthquakeData.map(d => d.magnitude))}(M)`)

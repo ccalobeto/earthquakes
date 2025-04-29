@@ -30,7 +30,6 @@ export function createTimelineChart (data, {
     acc + region.departments.length * rowSize, 0)
   height += margins.top + margins.bottom
 
-  console.log('width', width)
   // Create main SVG container with accessibility attributes
   svg
     .attr('width', width)
