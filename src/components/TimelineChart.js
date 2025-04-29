@@ -1,11 +1,11 @@
 import { axisTop } from 'd3-axis'
 import { scaleTime, scaleSqrt } from 'd3-scale'
-import { create } from 'd3-selection'
+// import { create } from 'd3-selection'
 import { timeYear } from 'd3-time'
 import { format } from 'd3-format'
 import { min, max } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
-import { annotation } from 'd3-svg-annotation'
+import { annotation, annotationCustomType, annotationLabel } from 'd3-svg-annotation'
 
 import { VISUALIZATION_CONFIG, timeLineAnnotations } from '../config/constants.js'
 
@@ -13,6 +13,7 @@ import { VISUALIZATION_CONFIG, timeLineAnnotations } from '../config/constants.j
  * Creates an accessible timeline visualization of earthquakes
  */
 export function createTimelineChart (data, {
+  svg,
   vars,
   width,
   rowSize = 40,
@@ -29,20 +30,23 @@ export function createTimelineChart (data, {
     acc + region.departments.length * rowSize, 0)
   height += margins.top + margins.bottom
 
+  console.log('width', width)
   // Create main SVG container with accessibility attributes
-  const viz = create('svg')
-    .attr('viewBox', `0 0 ${width} ${height}`)
+  svg
     .attr('width', width)
     .attr('height', height)
+    .attr('viewBox', `0 0 ${width} ${height}`)
     .attr('class', 'timeline-chart')
     .attr('preserveAspectRatio', 'xMinYMin meet')
     .attr('role', 'img')
     .attr('aria-label', 'Timeline of earthquakes in Peru')
 
-  const chart = viz
+  const chart = svg
     .append('g')
     .attr('transform', `translate(${margins.left}, ${margins.top})`)
-    .attr('class', 'timeline-content')
+    .attr('class', 'chart-container')
+    .attr('width', width - margins.left - margins.right)
+    .attr('height', height - margins.top - margins.bottom)
     .attr('role', 'graphics-document')
     .attr('aria-roledescription', 'Timeline visualization')
 
@@ -211,7 +215,20 @@ export function createTimelineChart (data, {
     .attr('aria-hidden', 'false')
 
   // Add annotations
+  const type = annotationCustomType(
+    annotationLabel,
+    {
+      className: 'custom',
+      connector: { type: 'line' },
+      note: {
+        align: 'right',
+        orientation: 'topBottom'
+      }
+    })
+
   const makeAnnotations = annotation()
+    .editMode(true)
+    .type(type)
     .annotations(timeLineAnnotations)
 
   chart
@@ -219,5 +236,5 @@ export function createTimelineChart (data, {
     .attr('class', 'timeline-annotations')
     .call(makeAnnotations)
 
-  return viz.node()
+  return chart.node()
 }

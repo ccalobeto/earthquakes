@@ -56,7 +56,7 @@ export const VISUALIZATION_CONFIG = {
       top: 30,
       right: 30,
       bottom: 30,
-      left: 80
+      left: 30
     }
   }
 }
@@ -108,14 +108,14 @@ export const timeLineAnnotations = [
       label: '8.4M Atico, Arequipa (2001)',
       title: 'Mas Poderoso desde 1960',
       wrap: 250, // try something smaller to see text split in several lines
-      padding: 20 // More = text lower
+      padding: 10
 
     },
     color: ['#2E5751'],
     x: 1110,
     y: 35,
     dy: 250,
-    dx: -125
+    dx: -2
   },
   {
     note: {
@@ -128,6 +128,6 @@ export const timeLineAnnotations = [
     color: ['#2E5751'],
     x: 510,
     y: 203,
-    dy: 40,
-    dx: 60
+    dy: 50,
+    dx: -10
   }]

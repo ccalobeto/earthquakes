@@ -120,11 +120,6 @@ text.title-legend {
 .annotation-note-label>tspan {
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 1.8rem;
-  transform: translateY(20px);
-}
-
-.annotation-note-content {
-  transform: translateY(5px);
 }
 
 .earthquake-table {

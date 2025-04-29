@@ -76,17 +76,23 @@ async function initializeVisualization () {
 
     // Create timeline visualization
     const transformedData = transformTimelineData(earthquakeData)
-    const timelineChart = createTimelineChart(transformedData, {
-      vars: { cx: 'date', cy: 'department', r: 'magnitude' },
-      width: VISUALIZATION_CONFIG.map.width
-    })
 
     const totalEarthquakes = transformedData.reduce((acc, region) =>
       acc + region.earthquakes.length, 0
     )
     console.log('Cantidad de datos en timeline Chart', totalEarthquakes)
-    select('#vis-1')
-      .append(() => timelineChart)
+
+    const timelineSvg = select('#vis-1')
+      .append('svg')
+
+    createTimelineChart(transformedData, {
+      svg: timelineSvg,
+      vars: { cx: 'date', cy: 'department', r: 'magnitude' },
+      width: VISUALIZATION_CONFIG.map.width
+    })
+
+    // select('#vis-1')
+    //   .append(() => timelineChart)
   } catch (error) {
     console.error('Error initializing visualization:', error)
   }
