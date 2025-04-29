@@ -2,7 +2,6 @@ import { create } from 'd3-selection'
 import { scaleLinear, scaleThreshold } from 'd3-scale'
 import { axisBottom } from 'd3-axis'
 import { quantize, interpolate, interpolateRound } from 'd3-interpolate'
-// import styles from '../css/Visualization.module.css'
 
 /**
  * Creates an accessible color or circle size legend

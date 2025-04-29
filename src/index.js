@@ -19,6 +19,7 @@ async function initializeVisualization () {
       csv('/earthquakes/data/output/output.csv').then(transformEarthquakeData)
     ])
     console.log('Cantidad de sismos', earthquakeData.length)
+    console.log('Cantidad de sismos instrumentales', earthquakeData.filter(d => d.type === 'Instrumental').length)
     console.log(`Lugar de máximo sismo: ${earthquakeData.find(d => d.magnitude === Math.max(...earthquakeData.map(d => d.magnitude))).department}, ${Math.max(...earthquakeData.map(d => d.magnitude))}(M)`)
     // Fix Pisco earthquake data
     const piscoEarthquake = earthquakeData.find(d => d.magnitude >= 7.8 && d.year === 2007)

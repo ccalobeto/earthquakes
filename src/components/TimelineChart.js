@@ -8,7 +8,6 @@ import { timeFormat } from 'd3-time-format'
 import { annotation } from 'd3-svg-annotation'
 
 import { VISUALIZATION_CONFIG, timeLineAnnotations } from '../config/constants.js'
-// import styles from '../css/Visualization.module.css'
 
 /**
  * Creates an accessible timeline visualization of earthquakes

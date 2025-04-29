@@ -4,17 +4,8 @@
   padding: 2rem;
 }
 
-h1 {
-  text-align: center;
-}
-
 .visualization-section {
   margin-bottom: 3rem;
-}
-
-.section-header {
-  margin-bottom: 2rem;
-  text-align: center;
 }
 
 .section-title {
@@ -22,7 +13,6 @@ h1 {
   color: #333;
   font-size: 3rem;
   font-weight: 600;
-
 }
 
 .section-description {
@@ -108,7 +98,11 @@ h1 {
 
 text>tspan {
   font-family: system-ui, -apple-system, sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
+}
+
+text.title-legend {
+  font-size: 1.8rem;
 }
 
 .title-legend {
@@ -126,7 +120,11 @@ text>tspan {
 .annotation-note-label>tspan {
   font-family: system-ui, -apple-system, sans-serif;
   font-size: 1.8rem;
-  /* transform: translateY(2.5em); */
+  transform: translateY(20px);
+}
+
+.annotation-note-content {
+  transform: translateY(5px);
 }
 
 .earthquake-table {
