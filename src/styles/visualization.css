@@ -4,32 +4,109 @@
   padding: 2rem;
 }
 
-.visualization-section {
+/* Site Header */
+.site-header {
+  background: linear-gradient(90deg, #0f172a, #1e293b);
+  padding: 2rem 0;
   margin-bottom: 3rem;
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.site-header h1 {
+  color: #fff;
+  margin: 0;
+  text-align: center;
+}
+
+/* Stats Cards */
+.stats-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin: 3rem 0;
+}
+
+.stat-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 2rem;
+  flex: 1 0 calc(33.333% - 2rem);
+  min-width: 200px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+.stat-label {
+  color: #64748b;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.stat-value {
+  color: #0f172a;
+  font-size: 2.2rem;
+  font-weight: 600;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.intro-section {
+  margin-bottom: 4rem;
+}
+
+.visualization-section {
+  margin-bottom: 6rem;
+  padding: 0.5rem;
 }
 
 .section-title {
-  margin-bottom: 1rem;
-  color: #333;
+  margin-bottom: 1.5rem;
+  color: #0f172a;
   font-size: 3rem;
   font-weight: 600;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -0.8rem;
+  left: 0;
+  width: 6rem;
+  height: 0.3rem;
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
+  border-radius: 4px;
 }
 
 .section-description {
   max-width: 800px;
-  margin: 0 auto;
-  line-height: 1.6;
-  color: #666;
-  font-size: 1.5rem;
+  margin: 2rem auto;
+  line-height: 1.8;
+  color: #334155;
+  font-size: 1.6rem;
   text-align: left;
+}
+
+.section-header {
+  margin-bottom: 3rem;
 }
 
 .timeline-chart,
 .map-chart {
   position: relative;
   width: 100%;
-  margin: 2rem auto;
-  border-radius: 8px;
+  margin: 3rem auto;
+  border-radius: 12px;
   overflow: hidden;
   display: flex;
   justify-content: center;
@@ -56,8 +133,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #fff;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.chart-container:hover,
+.map-container:hover {
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
 }
 
 .map-container {
@@ -69,8 +155,47 @@
   position: relative;
   overflow: hidden;
   width: 100%;
-  border-radius: 8px;
+  border-radius: 12px;
   height: auto;
+}
+
+/* Prevent flickering on hover for charts */
+.map-chart circle,
+.earthquake-circles circle {
+  pointer-events: all;
+  transition: opacity 0.2s ease;
+}
+
+.map-features path,
+.map-borders path {
+  pointer-events: none;
+}
+
+.map-annotations path,
+.timeline-annotations path {
+  pointer-events: none;
+}
+
+.map-annotations text,
+.timeline-annotations text {
+  pointer-events: none;
+}
+
+.earthquake-table text,
+.axisY text,
+.xAxis text {
+  pointer-events: none;
+}
+
+/* Create a reliable hover effect for annotations without flickering */
+.annotation-note-bg {
+  pointer-events: none;
+}
+
+/* Ensure SVG container handles mouse events properly */
+.map,
+.timeline-chart {
+  isolation: isolate;
 }
 
 .circle-legend {
@@ -80,56 +205,76 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(241, 245, 249, 0.8);
 }
 
 .bar-legend {
   position: absolute;
   bottom: 40px;
   right: 50px;
-  background: rgba(255, 255, 255, 0.9);
-  padding: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(241, 245, 249, 0.8);
 }
 
 text>tspan {
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 1.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.4rem;
 }
 
 text.title-legend {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
+  font-weight: 500;
 }
 
 .title-legend {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #0f172a;
 }
 
 .annotation-note-title>tspan {
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 1.6rem;
 }
 
 .annotation-note-label>tspan {
-  font-family: system-ui, -apple-system, sans-serif;
-  font-size: 1.8rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.4rem;
 }
 
 .earthquake-table {
   transform-origin: top left;
 }
 
+/* Highlight colors for data points */
+.historical-data {
+  color: #FF9A9F;
+}
+
+.instrumental-data {
+  color: #FF3900;
+}
+
+.depth-data {
+  color: #8F451B;
+}
+
 .visualization-footer {
-  margin-top: 4rem;
-  padding: 2rem 0;
-  border-top: 1px solid #eee;
+  margin-top: 6rem;
+  padding: 3rem 0;
+  border-top: 1px solid #e2e8f0;
 }
 
 .footer-content {
@@ -137,34 +282,111 @@ text.title-legend {
 }
 
 .footer-links {
-  margin-top: 1rem;
+  margin-top: 1.5rem;
 }
 
 .footer-links a {
-  color: #666;
+  color: #64748b;
   text-decoration: none;
-  margin: 0 0.5rem;
+  margin: 0 1rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  box-shadow: none;
+  padding: 0.5rem 0;
 }
 
 .footer-links a:hover {
-  color: #333;
-  text-decoration: underline;
+  color: #2563eb;
+  box-shadow: none;
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 1rem;
+    padding: 1.5rem;
   }
 
-  .section-header h2 {
-    font-size: 1.5rem;
+  .site-header {
+    padding: 1.5rem 0;
+  }
+
+  .site-header h1 {
+    font-size: 3rem;
+  }
+
+  .stats-container {
+    gap: 1.5rem;
+  }
+
+  .stat-card {
+    padding: 1.5rem;
+    min-width: 150px;
+  }
+
+  .stat-value {
+    font-size: 1.8rem;
+  }
+
+  .section-title {
+    font-size: 2.4rem;
+  }
+
+  .section-title::after {
+    width: 4rem;
   }
 
   .section-description {
-    font-size: 1rem;
+    font-size: 1.5rem;
+    margin: 1.5rem auto;
   }
 
   .timeline-chart {
     aspect-ratio: 3/2;
+  }
+
+  .circle-legend,
+  .bar-legend {
+    padding: 15px;
+    bottom: 20px;
+  }
+
+  .circle-legend {
+    left: 20px;
+  }
+
+  .bar-legend {
+    right: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-header h1 {
+    font-size: 2.6rem;
+  }
+
+  .stats-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .stat-card {
+    flex: 1 0 100%;
+  }
+
+  .section-title {
+    font-size: 2.2rem;
+  }
+
+  .section-description {
+    font-size: 1.4rem;
+  }
+
+  .visualization-footer {
+    margin-top: 4rem;
+    padding: 2rem 0;
+  }
+
+  .footer-links a {
+    margin: 0 0.5rem;
+    display: inline-block;
   }
 }

@@ -31,6 +31,7 @@ export function createMapChart (data, {
     .attr('viewBox', `0 0 ${width} ${height}`)
     .attr('preserveAspectRatio', 'xMinYMin meet')
     .attr('class', 'map')
+    .style('pointer-events', 'all')
 
   projection.fitSize([width - margins.left - margins.right, height - margins.top - margins.bottom], feature)
 
@@ -42,6 +43,7 @@ export function createMapChart (data, {
     .attr('class', 'map-container')
     .attr('width', width - margins.left - margins.right)
     .attr('height', height - margins.top - margins.bottom)
+    .style('pointer-events', 'all')
 
   // Render map features
   mapContainer
@@ -54,6 +56,7 @@ export function createMapChart (data, {
     .join('path')
     .attr('d', path)
     .attr('fill', '#ddd')
+    .attr('pointer-events', 'none')
 
   // Render borders
   mapContainer
@@ -81,6 +84,7 @@ export function createMapChart (data, {
     .join('g')
     .attr('transform', d => `translate(${projection(d.geometry.coordinates)})`)
     .attr('role', 'graphics-symbol')
+    .style('pointer-events', 'all')
     .attr('aria-label', d => `Earthquake of magnitude ${d.magnitude} at ${d.department}`)
 
   // Add circles for earthquakes
@@ -91,6 +95,21 @@ export function createMapChart (data, {
     .attr('stroke-width', d => d.magnitude >= thresholdBigMagnitude ? 2 : 0.3)
     .attr('fill', d => colorScale(d[colorBy]))
     .attr('r', d => radiusScale(d[radiusBy]))
+    .style('pointer-events', 'all')
+    // Add hover state without causing flickers
+    .on('mouseenter', function () {
+      svg.selectAll('circle').style('opacity', 0.4)
+      this.setAttribute('fill-opacity', 1)
+      this.setAttribute('stroke-width', '2')
+      this.__originalZIndex = this.style.zIndex
+      this.style.zIndex = 10
+    })
+    .on('mouseleave', function () {
+      svg.selectAll('circle').style('opacity', 1)
+      this.setAttribute('fill-opacity', 0.8)
+      this.setAttribute('stroke-width', this.__magnitude >= thresholdBigMagnitude ? 2 : 0.3)
+      this.style.zIndex = this.__originalZIndex || 'auto'
+    })
 
   // Add labels
   const textCircles = circles
@@ -101,6 +120,7 @@ export function createMapChart (data, {
     .attr('y', 0)
     .attr('stroke-width', 0.25)
     .attr('text-anchor', 'middle')
+    .attr('pointer-events', 'none')
     .attr('stroke', d => d.magnitude >= thresholdBigMagnitude ? 'black' : d.magnitude >= thresholdMidMagnitude ? '#f0f0f0' : null)
     .attr('aria-hidden', d => d.magnitude < thresholdMidMagnitude ? 'true' : 'false')
 
@@ -108,6 +128,7 @@ export function createMapChart (data, {
   textCircles
     .append('tspan')
     .attr('y', d => -(radiusScale(d[radiusBy]) + 20))
+    .attr('pointer-events', 'none')
     .text(d => {
       const title = `${formatMagnitude(d[radiusBy])}M, ${d.year}`
       return d.magnitude >= thresholdMidMagnitude ? title : null
@@ -121,6 +142,7 @@ export function createMapChart (data, {
       return -(title.length - 10)
     })
     .attr('y', d => -(radiusScale(d[radiusBy]) + 5))
+    .attr('pointer-events', 'none')
     .text(d => {
       const title = `${d.description}, ${d.department}`
       return d.magnitude >= thresholdMidMagnitude ? title : null
@@ -132,6 +154,7 @@ export function createMapChart (data, {
   mapContainer
     .append('g')
     .attr('class', 'map-annotations')
+    .attr('pointer-events', 'none')
     .call(makeAnnotations)
 
   return mapContainer.node()

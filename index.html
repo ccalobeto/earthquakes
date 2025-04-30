@@ -7,38 +7,60 @@
 	<title>Peru Earthquakes Visualization</title>
 	<link rel="stylesheet" href="src/styles/base.css">
 	<link rel="stylesheet" href="src/styles/visualization.css">
+	<link rel="stylesheet" href="src/styles/loading.css">
 	<link rel="icon" type="image/png" sizes="96x96" href="src/favicon-96x96.png">
 	<script type="module" src="/src/index.js"></script>
 </head>
 
 <body>
+	<header class="site-header">
+		<div class="container">
+			<h1>Sismos en Perú: Una Mirada Interactiva</h1>
+		</div>
+	</header>
+
 	<main class="container">
-		<h1>Sismos en Perú: Una Mirada Interactiva</h1>
-		<p class="section-description">
-			Esta visualización te permite ver cómo y dónde han ocurrido los sismos en Perú a lo largo del tiempo.
-			Puedes explorar cuándo sucedieron y en qué parte del país se sintieron los más recientes. Toda la información
-			viene del <a href="https://ultimosismo.igp.gob.pe/descargar-datos-sismicos/" target="_blank">Instituto
-				Geofísico del Peru
-				(IGP).</a> En total, se han registrado <b id="total-earthquakes">Loading...</b> sismos, y
-			<em id="modern-recorded">Loading...</em> de ellos han sido medidos con equipos modernos desde 1960.
-		</p>
-		<p class="section-description">
-			El último evento sísmico registrado en esta herramienta fue el <b id="most-recent-event">Loading...</b>.
-		</p>
+		<section class="intro-section">
+			<p class="section-description">
+				Esta visualización te permite explorar cómo y dónde han ocurrido los sismos en Perú a lo largo del tiempo.
+				Navega por los datos para descubrir cuándo sucedieron y en qué regiones se sintieron los más recientes y
+				poderosos.
+				Toda la información proviene del <a href="https://ultimosismo.igp.gob.pe/descargar-datos-sismicos/"
+					target="_blank">Instituto
+					Geofísico del Peru (IGP)</a>.
+			</p>
+			<div class="stats-container">
+				<div class="stat-card">
+					<span class="stat-label">Sismos registrados</span>
+					<span class="stat-value" id="total-earthquakes">Cargando...</span>
+				</div>
+				<div class="stat-card">
+					<span class="stat-label">Sismos instrumentales desde 1960</span>
+					<span class="stat-value" id="modern-recorded">Cargando...</span>
+				</div>
+				<div class="stat-card">
+					<span class="stat-label">Último evento registrado</span>
+					<span class="stat-value" id="most-recent-event">Cargando...</span>
+				</div>
+			</div>
+		</section>
+
 		<section id="timeline-section" class="visualization-section">
 			<header class="section-header">
 				<h2 class="section-title">Línea de Tiempo de Sismos por Departamento</h2>
 				<p class="section-description">
-					Aquí puedes ver los sismos fuertes, de más de 7 grados de magnitud, que han ocurrido en los últimos 550 años.
-					Cada círculo representa un sismo, y su tamaño muestra cuánta energía liberó. Hay dos tipos de registros: los
-					<b><span style="color: #FF9A9F;">históricos </span></b>(de la época colonial hasta 1960),
-					y los que fueron detectados con <b><span style="color: #FF3900;">tecnología moderna</span></b>.
+					Aquí puedes visualizar los sismos de magnitud superior a 7 grados ocurridos en los últimos 550 años.
+					El tamaño de cada círculo representa la magnitud del sismo. Los datos se dividen en dos categorías:
+					<span class="historical-data">históricos</span> (época colonial hasta 1960) y
+					<span class="instrumental-data">instrumentales</span> (medidos con tecnología moderna).
 				</p>
 				<p class="section-description">
-					Entre 1471 y <b id="most-recent-year">Loading...</b>, se registraron <b
-						id="high-magnitude-count">Loading...</b> sismos de magnitud 7 ó más.
+					Entre 1471 y <b id="most-recent-year">Cargando...</b>, se han registrado <b
+						id="high-magnitude-count">Cargando...</b> sismos de magnitud 7 o superior.
+				</p>
 			</header>
-			<div id="vis-1">
+			<div id="vis-1" class="chart-container">
+				<!-- Timeline visualization will be rendered here -->
 			</div>
 		</section>
 
@@ -46,14 +68,14 @@
 			<header class="section-header">
 				<h2 class="section-title">Mapa de Sismos Recientes</h2>
 				<p class="section-description">
-					Este mapa muestra dónde han ocurrido los sismos más fuertes (mayores a 5.5M) desde 1960;
-					<b id="recent-high-magnitude">Loading...</b> en total. El área del círculo indica qué<b><span
-							style="color: #FF3900;">
-							tan fuerte </span></b>fue el sismo, y el color muestra qué <b><span style="color: #8F451B;">tan
-							profundo</span></b> fue bajo la tierra.
+					Este mapa muestra la ubicación de los sismos más fuertes (magnitud superior a 5.5) desde 1960;
+					<b id="recent-high-magnitude">Cargando...</b> en total. El tamaño de cada círculo indica
+					la <span class="instrumental-data">intensidad</span> del sismo, mientras que el color representa
+					la <span class="depth-data">profundidad</span> bajo la superficie terrestre.
 				</p>
 			</header>
-			<div id="vis">
+			<div id="vis" class="chart-container">
+				<!-- Map visualization will be rendered here -->
 			</div>
 		</section>
 
@@ -62,7 +84,7 @@
 				<p>Visualización desarrollada con JavaScript y D3.js</p>
 				<nav class="footer-links">
 					<a href="https://www.carlosleon.dev/posts/earthquakes" target="_blank">Blog Post</a> |
-					<a href="https://github.com/ccalobeto/earthquakes" target="_blank">Code</a>
+					<a href="https://github.com/ccalobeto/earthquakes" target="_blank">Código Fuente</a>
 				</nav>
 			</div>
 		</footer>

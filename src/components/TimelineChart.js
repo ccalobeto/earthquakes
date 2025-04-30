@@ -38,6 +38,7 @@ export function createTimelineChart (data, {
     .attr('class', 'timeline-chart')
     .attr('preserveAspectRatio', 'xMinYMin meet')
     .attr('role', 'img')
+    .style('pointer-events', 'all')
     .attr('aria-label', 'Timeline of earthquakes in Peru')
 
   const chart = svg
@@ -46,6 +47,7 @@ export function createTimelineChart (data, {
     .attr('class', 'chart-container')
     .attr('width', width - margins.left - margins.right)
     .attr('height', height - margins.top - margins.bottom)
+    .style('pointer-events', 'all')
     .attr('role', 'graphics-document')
     .attr('aria-roledescription', 'Timeline visualization')
 
@@ -69,11 +71,13 @@ export function createTimelineChart (data, {
     .append('g')
     .attr('class', 'earthquake-table')
     .attr('transform', 'translate(0, 0)')
+    .style('pointer-events', 'all')
 
   // Add header section with proper ARIA labels
   const yAxis = table.append('g')
     .attr('class', 'axisY')
     .attr('role', 'graphics-symbol')
+    .attr('pointer-events', 'none')
     .attr('aria-label', 'Timeline headers')
     .style('font-size', VISUALIZATION_CONFIG.timeline.fontSizes.header)
     .style('font-weight', 'bold')
@@ -85,6 +89,7 @@ export function createTimelineChart (data, {
     .append('text')
     .text('REGIÓN')
     .attr('role', 'columnheader')
+    .attr('pointer-events', 'none')
     .attr('transform', `translate(0, ${firstRowOffset})`)
     .attr('aria-label', 'Region column header')
 
@@ -93,6 +98,7 @@ export function createTimelineChart (data, {
     .append('text')
     .text('DEPARTMENTO')
     .attr('role', 'columnheader')
+    .attr('pointer-events', 'none')
     .attr('transform', `translate(${leftPositionGridLine}, ${firstRowOffset})`)
     .attr('aria-label', 'Department column header')
 
@@ -104,12 +110,14 @@ export function createTimelineChart (data, {
     .attr('y1', rowSize * 0.25)
     .attr('y2', rowSize * 0.25)
     .attr('role', 'separator')
+    .attr('pointer-events', 'none')
     .style('stroke', '#444')
 
   // Create table body
   const tbody = table.append('g')
     .attr('class', 'timeline-plot')
     .attr('transform', `translate(0, ${rowSize})`)
+    .style('pointer-events', 'all')
 
   // Render data rows
   let yOffset = 0
@@ -122,6 +130,7 @@ export function createTimelineChart (data, {
         .append('g')
         .attr('transform', `translate(0, ${j * rowSize + yOffset})`)
         .attr('role', 'row')
+        .attr('pointer-events', 'none')
         .attr('aria-label', `${region} - ${departments[j].department}`)
 
       // Add grid line
@@ -131,6 +140,7 @@ export function createTimelineChart (data, {
         .attr('x2', width)
         .attr('y1', rowSize * 0.25)
         .attr('y2', rowSize * 0.25)
+        .attr('pointer-events', 'none')
         .style('stroke', '#eee')
 
       // Add region name
@@ -140,6 +150,7 @@ export function createTimelineChart (data, {
         .style('font-size', VISUALIZATION_CONFIG.timeline.fontSizes.text)
         .style('font-family', 'sans-serif')
         .style('fill', '#444')
+        .attr('pointer-events', 'none')
         .attr('transform', 'translate(0, 0)')
 
       if (j === 0) {
@@ -156,12 +167,14 @@ export function createTimelineChart (data, {
         .text(`${departments[j].department} (${departments[j].earthquakes.length})`)
         .style('font-size', VISUALIZATION_CONFIG.timeline.fontSizes.text)
         .style('font-family', 'sans-serif')
+        .attr('pointer-events', 'none')
         .attr('aria-label', `Department: ${departments[j].department}, ${departments[j].earthquakes.length} earthquakes`)
 
       // Add earthquake circles
       const earthquakeGroup = row.append('g')
         .attr('class', 'earthquake-circles')
         .attr('role', 'graphics-symbol')
+        .style('pointer-events', 'all')
         .attr('aria-label', `Earthquakes in ${departments[j].department}`)
 
       earthquakeGroup
@@ -176,7 +189,21 @@ export function createTimelineChart (data, {
         .attr('stroke-width', 1.5)
         .attr('opacity', 0.7)
         .attr('role', 'graphics-symbol')
+        .style('pointer-events', 'all')
         .attr('aria-label', d => `${d.type} earthquake, magnitude ${d[vars.r]}, year ${formatYear(d[vars.cx])}`)
+        // Add hover state without causing flickers
+        .on('mouseenter', function () {
+          svg.selectAll('.earthquake-circles circle').style('opacity', 0.4)
+          this.setAttribute('opacity', 1)
+          this.setAttribute('stroke-width', '2')
+          this.__originalZIndex = this.style.zIndex
+          this.style.zIndex = 10
+        })
+        .on('mouseleave', function () {
+          svg.selectAll('.earthquake-circles circle').style('opacity', 0.7)
+          this.setAttribute('stroke-width', '1.5')
+          this.style.zIndex = this.__originalZIndex || 'auto'
+        })
     }
 
     yOffset += departments.length * rowSize
@@ -192,6 +219,7 @@ export function createTimelineChart (data, {
   const xAxis = table.append('g')
     .attr('class', 'xAxis')
     .attr('role', 'graphics-symbol')
+    .attr('pointer-events', 'none')
     .attr('aria-label', 'Timeline years')
     .attr('transform', 'translate(0, 10)')
     .style('font-family', 'sans-serif')
@@ -199,19 +227,23 @@ export function createTimelineChart (data, {
   xAxis.call(xAxisGenerator)
     .selectAll('.tick text')
     .style('text-anchor', 'middle')
+    .attr('pointer-events', 'none')
     .attr('dy', '-0.5em')
 
   xAxis.select('.domain')
     .attr('stroke', '#000')
     .attr('stroke-width', 1)
+    .attr('pointer-events', 'none')
 
   xAxis.selectAll('.tick line')
     .attr('stroke', '#000')
     .attr('stroke-width', 1)
+    .attr('pointer-events', 'none')
 
   xAxis.selectAll('text')
     .style('font-size', VISUALIZATION_CONFIG.timeline.fontSizes.axis)
     .attr('aria-hidden', 'false')
+    .attr('pointer-events', 'none')
 
   // Add annotations
   const type = annotationCustomType(
@@ -233,6 +265,7 @@ export function createTimelineChart (data, {
   chart
     .append('g')
     .attr('class', 'timeline-annotations')
+    .attr('pointer-events', 'none')
     .call(makeAnnotations)
 
   return chart.node()
