@@ -189,7 +189,7 @@ export function createTimelineChart (data, {
         .attr('stroke-width', 1.5)
         .attr('opacity', 0.7)
         .attr('role', 'graphics-symbol')
-        .style('pointer-events', 'all')
+        .style('pointer-events', 'none')
         .attr('aria-label', d => `${d.type} earthquake, magnitude ${d[vars.r]}, year ${formatYear(d[vars.cx])}`)
         // Add hover state without causing flickers
         .on('mouseenter', function () {

@@ -95,21 +95,7 @@ export function createMapChart (data, {
     .attr('stroke-width', d => d.magnitude >= thresholdBigMagnitude ? 2 : 0.3)
     .attr('fill', d => colorScale(d[colorBy]))
     .attr('r', d => radiusScale(d[radiusBy]))
-    .style('pointer-events', 'all')
-    // Add hover state without causing flickers
-    .on('mouseenter', function () {
-      svg.selectAll('circle').style('opacity', 0.4)
-      this.setAttribute('fill-opacity', 1)
-      this.setAttribute('stroke-width', '2')
-      this.__originalZIndex = this.style.zIndex
-      this.style.zIndex = 10
-    })
-    .on('mouseleave', function () {
-      svg.selectAll('circle').style('opacity', 1)
-      this.setAttribute('fill-opacity', 0.8)
-      this.setAttribute('stroke-width', this.__magnitude >= thresholdBigMagnitude ? 2 : 0.3)
-      this.style.zIndex = this.__originalZIndex || 'auto'
-    })
+    .style('pointer-events', 'none')
 
   // Add labels
   const textCircles = circles
