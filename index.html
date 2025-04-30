@@ -13,40 +13,30 @@
 
 <body>
 	<main class="container">
-		<h1>Visualización de Sismos en Peru</h1>
+		<h1>Sismos en Perú: Una Mirada Interactiva</h1>
 		<p class="section-description">
-			Esta visualización presenta la cronología y distribución espacial de los sismos en Perú,
-			permitiendo explorar la actividad sísmica a lo largo del tiempo y su localización geográfica para los sismos más
-			recientes. Los datos utilizados provienen de la base de datos del <a
-				href="https://ultimosismo.igp.gob.pe/descargar-datos-sismicos/" target="_blank">Instituto
+			Esta visualización te permite ver cómo y dónde han ocurrido los sismos en Perú a lo largo del tiempo.
+			Puedes explorar cuándo sucedieron y en qué parte del país se sintieron los más recientes. Toda la información
+			viene del <a href="https://ultimosismo.igp.gob.pe/descargar-datos-sismicos/" target="_blank">Instituto
 				Geofísico del Peru
-				(IGP)</a> y arrojan una cantidad mounstrosa de <b id="total-earthquakes">Loading...</b> sismos de los cuales
-			<em id="modern-recorded">Loading...</em> fueron
-			registrados con tecnología sismológica a partir de 1960.
+				(IGP).</a> En total, se han registrado <b id="total-earthquakes">Loading...</b> sismos, y
+			<em id="modern-recorded">Loading...</em> de ellos han sido medidos con equipos modernos desde 1960.
 		</p>
 		<p class="section-description">
-			El último evento sísmico registrado en ésta visualización fue el <b id="most-recent-event">Loading...</b>.
+			El último evento sísmico registrado en esta herramienta fue el <b id="most-recent-event">Loading...</b>.
 		</p>
 		<section id="timeline-section" class="visualization-section">
 			<header class="section-header">
-				<h2 class="section-title">Cronología de Sismos por Departamento</h2>
+				<h2 class="section-title">Línea de Tiempo de Sismos por Departamento</h2>
 				<p class="section-description">
-					La visualización permite observar la actividad sísmica de terremotos <b>superiores a 7M</b>, registrada en
-					casi 554
-					años de historia. Los eventos sísmicos están representados por <em>círculos</em>
-					que indican la <b>Magnitud</b> del sismo y la <b>ubicación geográfica</b> según crónicas oficiales e
-					instrumentos sismológicos.
-					Los eventos están diferenciados por época: los ocurridos durante <b><span style="color: #FF9A9F;"> La Colonia
-							y
-							República Temprana</span></b>,
-					y aquellos registrados con <b><span style="color: #FF3900;">Instrumentación Sismológica Moderna</span></b>. El
-					área
-					de cada círculo representa
-					la Magnitud del Momento (M), que indica la energía liberada por el sismo.
+					Aquí puedes ver los sismos fuertes, de más de 7 grados de magnitud, que han ocurrido en los últimos 550 años.
+					Cada círculo representa un sismo, y su tamaño muestra cuánta energía liberó. Hay dos tipos de registros: los
+					<b><span style="color: #FF9A9F;">históricos </span></b>(de la época colonial hasta 1960),
+					y los que fueron detectados con <b><span style="color: #FF3900;">tecnología moderna</span></b>.
 				</p>
 				<p class="section-description">
-					La cantidad de eventos sísmicos <b>>= 7M</b> registrados en el período 1471 - <b
-						id="most-recent-year">Loading...</b> fue de <b id="high-magnitude-count">Loading...</b>.
+					Entre 1471 y <b id="most-recent-year">Loading...</b>, se registraron <b
+						id="high-magnitude-count">Loading...</b> sismos de magnitud 7 ó más.
 			</header>
 			<div id="vis-1">
 			</div>
@@ -54,16 +44,13 @@
 
 		<section id="map-section" class="visualization-section">
 			<header class="section-header">
-				<h2 class="section-title">Distribución Espacial de Eventos Sísmicos</h2>
+				<h2 class="section-title">Mapa de Sismos Recientes</h2>
 				<p class="section-description">
-					Este mapa muestra la distribución geográfica de sismos con magnitudes superiores a <b>5.5M</b> y que suman
-					<b id="recent-high-magnitude">Loading...</b> desde 1960,
-					destacando los eventos de mayor intensidad. La visualización incorpora dos variables principales:
-					la <b><span style="color: #FF3900;">Magnitud del Momento (M)</span></b>, representada por el tamaño del
-					círculo, que indica la energía
-					liberada por el sismo; y la <b><span style="color: #8F451B;">Profundidad</span></b>, indicada por la
-					escala de color, que señala
-					la ubicación del hipocentro bajo la superficie terrestre.
+					Este mapa muestra dónde han ocurrido los sismos más fuertes (mayores a 5.5M) desde 1960;
+					<b id="recent-high-magnitude">Loading...</b> en total. El área del círculo indica qué<b><span
+							style="color: #FF3900;">
+							tan fuerte </span></b>fue el sismo, y el color muestra qué <b><span style="color: #8F451B;">tan
+							profundo</span></b> fue bajo la tierra.
 				</p>
 			</header>
 			<div id="vis">
