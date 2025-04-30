@@ -11,8 +11,54 @@ import { createDepthColorScale, calculateMagnitudeRadius } from './utils/scales.
 import { transformEarthquakeData, transformTimelineData, filterInstrumentalData } from './utils/transformers.js'
 import { loadEarthquakeStats } from './utils/statsLoader.js'
 
+// Import loading styles
+import './styles/loading.css'
+
+/**
+ * Creates a loading indicator element in the specified container
+ * @param {string} containerId - The ID of the container element
+ * @param {string} message - The loading message to display
+ */
+function createLoadingIndicator (containerId, message) {
+  const container = select(`#${containerId}`)
+
+  const loadingContainer = container
+    .append('div')
+    .attr('class', 'loading-container')
+
+  loadingContainer
+    .append('div')
+    .attr('class', 'loading-spinner')
+
+  loadingContainer
+    .append('div')
+    .attr('class', 'loading-text')
+    .text(message)
+
+  return container
+}
+
+/**
+ * Shows an error message in the specified container
+ * @param {string} containerId - The ID of the container element
+ * @param {string} message - The error message to display
+ */
+function showErrorMessage (containerId, message) {
+  const container = select(`#${containerId}`)
+  container.html('')
+
+  container
+    .append('div')
+    .attr('class', 'error-message')
+    .text(message)
+}
+
 async function initializeVisualization () {
   try {
+    // Show loading indicators
+    createLoadingIndicator('vis', 'Cargando mapa de sismos...')
+    createLoadingIndicator('vis-1', 'Cargando línea de tiempo...')
+
     // Load and display earthquake statistics
     const stats = await loadEarthquakeStats()
     console.log('Earthquake statistics loaded', stats)
@@ -44,6 +90,8 @@ async function initializeVisualization () {
     const instrumentalData = filterInstrumentalData(earthquakeData)
     const depthScale = createDepthColorScale()
 
+    // Clear loading indicator and add map SVG
+    select('#vis').html('')
     const mapSvg = select('#vis')
       .append('svg')
 
@@ -87,6 +135,8 @@ async function initializeVisualization () {
     )
     console.log('Cantidad de datos en timeline Chart', totalEarthquakes)
 
+    // Clear loading indicator and add timeline SVG
+    select('#vis-1').html('')
     const timelineSvg = select('#vis-1')
       .append('svg')
 
@@ -100,6 +150,8 @@ async function initializeVisualization () {
     //   .append(() => timelineChart)
   } catch (error) {
     console.error('Error initializing visualization:', error)
+    showErrorMessage('vis', 'Error al cargar el mapa de sismos. Por favor, intente nuevamente.')
+    showErrorMessage('vis-1', 'Error al cargar la línea de tiempo. Por favor, intente nuevamente.')
   }
 }
 

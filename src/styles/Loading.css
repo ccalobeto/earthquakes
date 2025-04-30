@@ -1,0 +1,49 @@
+/* Loading styles for charts */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 5px;
+}
+
+.loading-spinner {
+  border: 4px solid rgba(228, 26, 28, 0.2);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border-left-color: #E41A1C;
+  margin-bottom: 16px;
+  animation: spin 1s linear infinite;
+}
+
+.loading-text {
+  font-size: 16px;
+  color: #333;
+  font-family: sans-serif;
+  font-weight: 500;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.error-message {
+  color: #d32f2f;
+  background-color: #ffebee;
+  padding: 15px;
+  border-radius: 4px;
+  text-align: center;
+  margin: 20px 0;
+  font-weight: 500;
+  font-family: sans-serif;
+}
