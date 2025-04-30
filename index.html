@@ -1,49 +1,92 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Earthquakes</title>
-	<link rel="stylesheet" type="text/css" href="./src/css/base.css">
-	<link rel="stylesheet" type="text/css" href="./src/css/visualization.css">
-	<link rel="icon" type="image/png" sizes="32x32" href="./src/images/favicon-96x96.png" />
+	<title>Peru Earthquakes Visualization</title>
+	<link rel="icon" type="image/png" sizes="96x96" href="/earthquakes/assets/favicon-96x96-D4R0c9gU.png">
+  <script type="module" crossorigin src="/earthquakes/assets/index-ChWUQc4U.js"></script>
+  <link rel="stylesheet" crossorigin href="/earthquakes/assets/index-BlZjeTJ-.css">
 </head>
 
-<!-- viewbox="0 0 800 1200" -->
-
 <body>
-	<div class="container">
-		<h1>Earthquakes in Perú</h1>
-		<h2>Events by Department</h2>
-		<h3>The visualization shows all the Earthquakes by <b>department</b> that had more than 7M of intensity since there
-			was a
-			record, in color gray for the time of the Colony and Republic and in green with the sismometers. The <b>Moment
-				Magnitude (M)</b> which
-			is the intensity of the event is represented by the area of the circle.
-		</h3>
-		<div id="vis-1" class="circleChart"></div>
-		<div class="main-info">
-			<h2>Where are the events located?</h2>
-			<h3>The visualization shows all the Earthquakes that had more than 5.5M of intensity since 1960, labelling the
-				more intensive ones. The variables describe in the visualization are the <b>Moment Magnitude (M)</b> which
-				is
-				the intensity of the event and it is represented by the area of the circle and the <b>Depth</b> of the event
-				represented by the color inside the circle.
-			</h3>
+	<header class="site-header">
+		<div class="container">
+			<h1>Sismos en Perú: Una Mirada Interactiva</h1>
 		</div>
-		<div id="vis" class="visualization-container"></div>
+	</header>
 
-		<div class="footer">
-			<p>A demonstration chart in JavaScript and D3.js</p>
-			<p><a href="https://www.carlosleon.dev/posts/earthquakes/">Blog Post</a> | <a
-					href="https://github.com/ccalobeto/earthquakes">Code</a></p>
-		</div>
-	</div>
+	<main class="container">
+		<section class="intro-section">
+			<p class="section-description">
+				Esta visualización te permite explorar cómo y dónde han ocurrido los sismos en Perú a lo largo del tiempo.
+				Navega por los datos para descubrir cuándo sucedieron y en qué regiones se sintieron los más recientes y
+				poderosos.
+				Toda la información proviene del <a href="https://ultimosismo.igp.gob.pe/descargar-datos-sismicos/"
+					target="_blank">Instituto
+					Geofísico del Peru (IGP)</a>.
+			</p>
+			<div class="stats-container">
+				<div class="stat-card">
+					<span class="stat-label">Sismos registrados</span>
+					<span class="stat-value" id="total-earthquakes">Cargando...</span>
+				</div>
+				<div class="stat-card">
+					<span class="stat-label">Sismos instrumentales desde 1960</span>
+					<span class="stat-value" id="modern-recorded">Cargando...</span>
+				</div>
+				<div class="stat-card">
+					<span class="stat-label">Último evento registrado</span>
+					<span class="stat-value" id="most-recent-event">Cargando...</span>
+				</div>
+			</div>
+		</section>
 
+		<section id="timeline-section" class="visualization-section">
+			<header class="section-header">
+				<h2 class="section-title">Línea de Tiempo de Sismos por Departamento</h2>
+				<p class="section-description">
+					Aquí puedes visualizar los sismos de magnitud superior a 7 grados ocurridos en los últimos 550 años.
+					El tamaño de cada círculo representa la magnitud del sismo. Los datos se dividen en dos categorías:
+					<span class="historical-data">históricos</span> (época colonial hasta 1960) e
+					<span class="instrumental-data">instrumentales</span> (medidos con tecnología moderna).
+				</p>
+				<p class="section-description">
+					Entre 1471 y <b id="most-recent-year">Cargando...</b>, se han registrado <b
+						id="high-magnitude-count">Cargando...</b> sismos de magnitud 7 o superior.
+				</p>
+			</header>
+			<div id="vis-1" class="chart-container">
+				<!-- Timeline visualization will be rendered here -->
+			</div>
+		</section>
 
-	<!-- Load your scripts here -->
-	<script type="module" src="./src/index.js"></script>
+		<section id="map-section" class="visualization-section">
+			<header class="section-header">
+				<h2 class="section-title">Mapa de Sismos Recientes</h2>
+				<p class="section-description">
+					Este mapa muestra la ubicación de los sismos más fuertes (magnitud superior a 5.5) desde 1960;
+					<b id="recent-high-magnitude">Cargando...</b> en total. El tamaño de cada círculo indica
+					la <span class="instrumental-data">intensidad</span> del sismo, mientras que el color representa
+					la <span class="depth-data">profundidad</span> bajo la superficie terrestre.
+				</p>
+			</header>
+			<div id="vis" class="chart-container">
+				<!-- Map visualization will be rendered here -->
+			</div>
+		</section>
+
+		<footer class="visualization-footer">
+			<div class="footer-content">
+				<p>Visualización desarrollada con D3.js</p>
+				<nav class="footer-links">
+					<a href="https://www.carlosleon.dev/posts/earthquakes" target="_blank"> Post</a> |
+					<a href="https://github.com/ccalobeto/earthquakes" target="_blank"> Source </a>
+				</nav>
+			</div>
+		</footer>
+	</main>
 </body>
 
 </html>
