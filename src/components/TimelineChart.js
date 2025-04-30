@@ -1,11 +1,10 @@
 import { axisTop } from 'd3-axis'
 import { scaleTime, scaleSqrt } from 'd3-scale'
-// import { create } from 'd3-selection'
 import { timeYear } from 'd3-time'
 import { format } from 'd3-format'
 import { min, max } from 'd3-array'
 import { timeFormat } from 'd3-time-format'
-import { annotation, annotationCustomType, annotationLabel } from 'd3-svg-annotation'
+import { annotation } from 'd3-svg-annotation'
 
 import { VISUALIZATION_CONFIG, timeLineAnnotations } from '../config/constants.js'
 
@@ -222,20 +221,20 @@ export function createTimelineChart (data, {
     .attr('pointer-events', 'none')
 
   // Add annotations
-  const type = annotationCustomType(
-    annotationLabel,
-    {
-      className: 'custom',
-      connector: { type: 'line' },
-      note: {
-        align: 'right',
-        orientation: 'topBottom'
-      }
-    })
+  // const type = annotationCustomType(
+  //   annotationLabel,
+  //   {
+  //     className: 'custom',
+  //     connector: { type: 'line' },
+  //     note: {
+  //       align: 'right',
+  //       orientation: 'topBottom'
+  //     }
+  //   })
 
   const makeAnnotations = annotation()
-    .editMode(true)
-    .type(type)
+    // .editMode(true)
+    // .type(type)
     .annotations(timeLineAnnotations)
 
   chart

@@ -120,14 +120,14 @@ export const timeLineAnnotations = [
   {
     note: {
       label: '9.4M Ite, Tacna (1604)',
-      title: 'More Powerful in History',
+      title: 'Mas Poderoso en la Historia',
       wrap: 250, // try something smaller to see text split in several lines
       padding: 20 // More = text lower
 
     },
     color: ['#2E5751'],
     x: 510,
-    y: 203,
-    dy: 50,
+    y: 178,
+    dy: 20,
     dx: -10
   }]
