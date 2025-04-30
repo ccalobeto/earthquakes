@@ -8,6 +8,7 @@ import { processHistoricalData } from './processors/historical-processor.js'
 import { mergeDatasets } from './processors/merger.js'
 import { exportToCSV } from './exporters/csv-exporter.js'
 import { filterCoastalCentroids, calculateDistrictCentroids } from './processors/geo-processor.js'
+import { addGeoBoundsValidation } from './processors/geo-validator.js'
 
 async function main () {
   try {
@@ -42,9 +43,24 @@ async function main () {
     )
     console.log(`Combined dataset contains ${mergedData.length} seismic events`)
 
+    // Add geoBounds validation
+    let validatedData = addGeoBoundsValidation(mergedData)
+
+    // Calculate and log validation stats
+    const stats = {
+      total: validatedData.length,
+      inBounds: validatedData.filter(d => d.geoInBounds === 'Yes').length,
+      outOfBounds: validatedData.filter(d => d.geoInBounds === 'No').length
+    }
+    console.log('Geographic bounds validation stats:', stats)
+
+    // Filter out records outside Peru's geographic bounds
+    console.log('Filter out records outside Peru bounds')
+    validatedData = validatedData.filter(record => record.geoInBounds === 'Yes')
+
     // Export the processed data
     const outputPath = path.resolve(config.outputPath)
-    await exportToCSV(mergedData, outputPath)
+    await exportToCSV(validatedData, outputPath)
 
     console.log(`Data successfully exported to: ${outputPath}`)
   } catch (error) {
