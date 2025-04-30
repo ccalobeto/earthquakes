@@ -16,7 +16,7 @@ export function createTimelineChart (data, {
   svg,
   vars,
   width,
-  rowSize = 40,
+  rowSize = 35,
   firstRowOffset = 0,
   leftPositionGridLine = 100
 } = {}) {
@@ -28,7 +28,7 @@ export function createTimelineChart (data, {
   // Adjust height calculation to include margins
   let height = data.reduce((acc, region) =>
     acc + region.departments.length * rowSize, 0)
-  height += margins.top + margins.bottom
+  height += margins.top // + margins.bottom
 
   // Create main SVG container with accessibility attributes
   svg
@@ -101,17 +101,6 @@ export function createTimelineChart (data, {
     .attr('pointer-events', 'none')
     .attr('transform', `translate(${leftPositionGridLine}, ${firstRowOffset})`)
     .attr('aria-label', 'Department column header')
-
-  // Add separator line
-  yAxis
-    .append('line')
-    .attr('x1', 0)
-    .attr('x2', width)
-    .attr('y1', rowSize * 0.25)
-    .attr('y2', rowSize * 0.25)
-    .attr('role', 'separator')
-    .attr('pointer-events', 'none')
-    .style('stroke', '#444')
 
   // Create table body
   const tbody = table.append('g')
@@ -191,19 +180,6 @@ export function createTimelineChart (data, {
         .attr('role', 'graphics-symbol')
         .style('pointer-events', 'none')
         .attr('aria-label', d => `${d.type} earthquake, magnitude ${d[vars.r]}, year ${formatYear(d[vars.cx])}`)
-        // Add hover state without causing flickers
-        .on('mouseenter', function () {
-          svg.selectAll('.earthquake-circles circle').style('opacity', 0.4)
-          this.setAttribute('opacity', 1)
-          this.setAttribute('stroke-width', '2')
-          this.__originalZIndex = this.style.zIndex
-          this.style.zIndex = 10
-        })
-        .on('mouseleave', function () {
-          svg.selectAll('.earthquake-circles circle').style('opacity', 0.7)
-          this.setAttribute('stroke-width', '1.5')
-          this.style.zIndex = this.__originalZIndex || 'auto'
-        })
     }
 
     yOffset += departments.length * rowSize
