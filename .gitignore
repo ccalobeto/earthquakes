@@ -6,11 +6,13 @@ node_modules
 **/.DS_Store
 .cache
 
-data
+# data
+data/output/old
 scripts
 
 codebase.md
 .aidigestignore
 dist
 docs
-# .github
+app
+.github
